@@ -3,7 +3,7 @@
 
 
 
-## Initial Virtual Environment with command:
+## Initiate Virtual Environment with command:
 - python3 -m venv myenv
 
 ## Start Envirnoment with command:
