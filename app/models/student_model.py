@@ -18,7 +18,7 @@ class student(db.Model):
     Admission_Number = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
     Name = db.Column(db.String(255), nullable=False)
     Date_of_birth = db.Column(db.Date, nullable=False)
-    Department_id = db.Column(db.Integer, db.foreignKey('departments.Department_ID'), nullable=False)
+    Department_id = db.Column(db.Integer, db.foreignKey('departments.Department_id'), nullable=False)
     Department_level = db.Column(db.String(3), nullable=False)
     Email = db.Column(db.String(255), nullable=False, unique=True)
     Phone_number = db.Column(db.String(20), nullable=False)
