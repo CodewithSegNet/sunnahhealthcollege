@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+pymysql
+Werkzeug
+python-dotenv
+python-decouple
+psycopg2-binary
+Flask-cors
+gunicorn
