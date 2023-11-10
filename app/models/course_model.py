@@ -2,7 +2,7 @@
 
 # Import
 from app.app import db
-from app.department_model import Department
+from app.models.department_model import Department
 from sqlalchemy.orm import relationship
 
 
@@ -12,7 +12,7 @@ class Course(db.Model):
     '''
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('Department.departments.id'), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), nullable=False)
     course_title = db.Column(db.String(255), nullable=False)
     course_code = db.Column(db.String(20), nullable=False, unique=True)
     

@@ -12,7 +12,7 @@ class Department(db.Model):
     '''
     __tablename__ = 'departments'
     department_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    department_name = db.Column(db.Sting(255), nullable=False, unique=True)
+    department_name = db.Column(db.String(255), nullable=False, unique=True)
 
 
     # Constructor to initialize Student Object with attributes.

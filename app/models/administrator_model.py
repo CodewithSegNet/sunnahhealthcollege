@@ -2,6 +2,7 @@
 
 # Imports
 from app.app import db
+from app.models.role_model import Role
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -21,7 +22,7 @@ class Administrator(db.Model):
     # Constructor to initialize Administrator Object with attributes.
     def __init__(self, username, password, role_id):
         self.username = username
-        self.password_hash = generate_password_hash(password, method='sha256')
+        self.password_hash = generate_password_hash(password)
         self.role_id = role_id
 
     # Check if the entered password matches the stored hashed password

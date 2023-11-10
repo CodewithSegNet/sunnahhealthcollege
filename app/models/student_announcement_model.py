@@ -11,7 +11,7 @@ class StudentAnnouncement(db.Model):
     '''
     __tablename__ = 'student_announcements'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    announcement_id = db.Column(db.Integer, db.ForeignKey('announcements.id'), nullable=False)
+    announcement_id = db.Column(db.Integer, db.ForeignKey('announcements.announcement_id'), nullable=False)
     admission_number = db.Column(db.Integer, db.ForeignKey('students.admission_number'), nullable=False)
     read_status = db.Column(db.Boolean, default=False, nullable=False)
     

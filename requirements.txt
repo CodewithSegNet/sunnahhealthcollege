@@ -2,6 +2,7 @@ Flask
 Flask-SQLAlchemy
 pymysql
 Werkzeug
+mysqlclient
 python-dotenv
 python-decouple
 psycopg2-binary

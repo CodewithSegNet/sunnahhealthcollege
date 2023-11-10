@@ -6,9 +6,9 @@ import re
 from app.app import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
-from app.department_model import Department
+from app.models.department_model import Department
 from sqlalchemy.orm import relationship
-import course_model 
+import app.models.course_model 
 
 
 
@@ -29,17 +29,12 @@ class Student(db.Model):
     admission_number = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
     name = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('Department.department_id'), nullable=False)
-    department_level = db.Column(db.Integer(3), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), nullable=False)
+    department_level = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone_number = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
-
-    # Define a relationship with the Role model
-    role = db.relationship('Role', backref=db.backref('students', lazy=True))
-
 
      # Define a relationship with the Course model through the association table
     courses = db.relationship('Course', secondary=student_courses_association, backref=db.backref('students', lazy=True))

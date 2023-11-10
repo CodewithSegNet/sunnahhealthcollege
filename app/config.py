@@ -8,7 +8,7 @@ class Config:
     '''
     Base Configuration class
     '''
-    SQLALCHRMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
     # Disable track modifictions to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -20,11 +20,26 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
-# Mapping config names to their respective classes
+class TestingConfig(Config):
+    '''Testing configuration class
+    '''
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") 
+    DEBUG = True
+
+class ProductionConfig(Config):
+    '''Production configuration class
+    '''
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+
+    # Mapping config names to their respective classes
 config_map = {
-        'Development': DevelopmentConfig,
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
 }
 
 # Set the active configuration based on an environment variable
-active_env = os.getenv('FLASK_ENV', 'Development')
+active_env = os.getenv('FLASK_ENV', 'testing')
 config = config_map[active_env]
