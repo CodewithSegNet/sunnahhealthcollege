@@ -4,6 +4,7 @@
 from app.app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class Administrator(db.Model):
     '''
     A class that defines the Administrator Description

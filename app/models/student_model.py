@@ -7,6 +7,7 @@ from app.app import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from app.department_model import Department
+from sqlalchemy.orm import relationship
 import course_model 
 
 

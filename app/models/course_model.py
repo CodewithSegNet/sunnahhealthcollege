@@ -3,6 +3,8 @@
 # Import
 from app.app import db
 from app.department_model import Department
+from sqlalchemy.orm import relationship
+
 
 class Course(db.Model):
     '''
