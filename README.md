@@ -22,5 +22,3 @@
 - export FLASK_ENV=Development
 
 - flask run
-
-

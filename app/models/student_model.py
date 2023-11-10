@@ -25,14 +25,19 @@ class Student(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
 
+    # Define a relationship with the Role model
+    role = db.relationship('Role', backref=db.backref('students', lazy=True))
+
+
     # Constructor to initialize Student Object with attributes.
-    def __init__(self, name, date_of_birth, department_id, department_level, email, phone_number):
+    def __init__(self, name, date_of_birth, department_id, department_level, email, phone_number, role_id):
         self.name = name
         self.date_of_birth = date_of_birth
         self.department_id = department_id
         self.department_level = department_level
         self.email = email
         self.phone_number = phone_number
+        self.role_id = role_id
     
 
 
