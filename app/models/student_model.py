@@ -7,6 +7,17 @@ from app.app import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from app.department_model import Department
+import course_model 
+
+
+
+# Association Table for the many-to-many relationship
+student_courses_association = db.Table('student_courses_association',
+    db.Column('admission_number', db.Integer, db.ForeignKey('students.admission_number')),
+    db.Column('course_id', db.Integer, db.ForeignKey('courses.id')),
+    db.Column('course_title', db.String(255), nullable=True),
+)
+
 
 
 class Student(db.Model):
@@ -18,7 +29,7 @@ class Student(db.Model):
     name = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('Department.department_id'), nullable=False)
-    department_level = db.Column(db.String(3), nullable=False)
+    department_level = db.Column(db.Integer(3), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone_number = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
@@ -29,15 +40,20 @@ class Student(db.Model):
     role = db.relationship('Role', backref=db.backref('students', lazy=True))
 
 
+     # Define a relationship with the Course model through the association table
+    courses = db.relationship('Course', secondary=student_courses_association, backref=db.backref('students', lazy=True))
+
+
     # Constructor to initialize Student Object with attributes.
-    def __init__(self, name, date_of_birth, department_id, department_level, email, phone_number, role_id):
+    def __init__(self, name, date_of_birth, department_id, department_level, email, phone_number):
         self.name = name
         self.date_of_birth = date_of_birth
         self.department_id = department_id
         self.department_level = department_level
         self.email = email
         self.phone_number = phone_number
-        self.role_id = role_id
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
     
 
 
