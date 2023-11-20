@@ -26,7 +26,7 @@ class Student(db.Model):
     A class that defines the Student Description
     '''
     __tablename__ = 'students'
-    admission_number = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
+    admission_number = db.Column(db.String(20), primary_key=True, nullable=True)
     name = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), nullable=False)
@@ -41,7 +41,8 @@ class Student(db.Model):
 
 
     # Constructor to initialize Student Object with attributes.
-    def __init__(self, name, date_of_birth, department_id, department_level, email, phone_number):
+    def __init__(self, admission_number, name, date_of_birth, department_id, department_level, email, phone_number):
+        self.admission_number = admission_number
         self.name = name
         self.date_of_birth = date_of_birth
         self.department_id = department_id
