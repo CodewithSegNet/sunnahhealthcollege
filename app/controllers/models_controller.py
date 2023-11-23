@@ -2,9 +2,12 @@
 
 
 # Import
-from flask import Blueprint, request, session, jsonify
+from datetime import datetime
 from app.app import create_app, db
+from flask import Blueprint, request, jsonify, session
+from sqlalchemy.exc import SQLAlchemyError
 from app.app.models.student_model import Student
+
 
 
 # create a blueprint for user related routes
@@ -44,5 +47,58 @@ def get_student_info(identifier):
         }
         return jsonify(student_info), 200
     else:
-        return jsonify({'message': 'Student Not Found'}), 400
+        return jsonify({'message': 'Student Not Found'}), 404
+    
+
+
+@user_bp.route('/register', methods=['POST'])
+def registration():
+    '''
+    A function that handles users registration
+    '''
+
+
+    #
+    data = request.json
+    existing_student = Student.query.filter_by(admission_number = data['admission_number'])
+    existing_email = Student.query.filter_by(email = data['email'])
+
+    if existing_student:
+        return jsonify({'error': 'Admission Number Aready Exist!'}), 400
+    if existing_email:
+        return jsonify({'error': 'Email Already Exist!'}), 400
+
+
+    try:
+        # extract registration data from json
+        new_user = Student(
+            admission_number = data['admission_number'],
+            name = data['name'],
+            date_of_birth = data['date_of_birth'],
+            department_level = data['department_level'],
+            email = data['email'],
+            phone_number = data['phone_number'],
+            created_at = datetime.utcnow(),
+            update_at = datetime.utcnow(),
+        )
+
+        try:
+            new_user.validate_email(data['email'])
+        except ValueError as e:
+            return jsonify({'error': str(e)}), 400
+        
+        # add New User to the Database
+        db.session.add(new_user)
+        db.session.commit()
+
+        # return JSON successful message if data's works
+        return jsonify({'message': 'User Registration Successfully Created!'}), 201
+    
+    # handles database issues(connection or constraint violation)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+    
+                
 
