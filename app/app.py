@@ -4,7 +4,6 @@
 from flask import Flask
 from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
-from app.app.controllers.models_controller import user_bp
 
 
 # create a sqlalchemy object
@@ -25,7 +24,13 @@ def create_app():
 
 
     # Register blueprints
+    from app.controllers.models_controller import user_bp
     app.register_blueprint(user_bp, url_prefix='/api')
+
+
+    # create the datebase tables
+    with app.app_context():
+        db.create_all()
 
 
     # Return the Flask app instance

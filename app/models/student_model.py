@@ -14,9 +14,9 @@ import app.models.course_model
 
 # Association Table for the many-to-many relationship
 student_courses_association = db.Table('student_courses_association',
-    db.Column('admission_number', db.Integer, db.ForeignKey('students.admission_number')),
-    db.Column('course_id', db.Integer, db.ForeignKey('courses.id')),
-    db.Column('course_title', db.String(255), nullable=True),
+    db.Column('admission_number', db.String(20), db.ForeignKey('students.admission_number')),
+    db.Column('course_title', db.String(255), db.ForeignKey('courses.course_title')),
+    db.Column('course_code', db.String(20), nullable=True),
 )
 
 
@@ -26,11 +26,12 @@ class Student(db.Model):
     A class that defines the Student Description
     '''
     __tablename__ = 'students'
-    admission_number = db.Column(db.String(20), primary_key=True, nullable=True)
+    admission_number = db.Column(db.String(20), primary_key=True, nullable=False)
+    password = db.Column(db.String(20), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), nullable=False)
-    department_level = db.Column(db.Integer, nullable=False)
+    department_level = db.Column(db.Integer, db.ForeignKey('departments.department_level'), nullable=False)
+    department_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone_number = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
@@ -39,19 +40,7 @@ class Student(db.Model):
      # Define a relationship with the Course model through the association table
     courses = db.relationship('Course', secondary=student_courses_association, backref=db.backref('students', lazy=True))
 
-
-    # Constructor to initialize Student Object with attributes.
-    def __init__(self, admission_number, name, date_of_birth, department_id, department_level, email, phone_number):
-        self.admission_number = admission_number
-        self.name = name
-        self.date_of_birth = date_of_birth
-        self.department_id = department_id
-        self.department_level = department_level
-        self.email = email
-        self.phone_number = phone_number
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
-    
+    department = db.relationship('Department', backref='related_students', overlaps="related_department.department_level")
 
 
     # A validation check for email format using python library 'validate_email'

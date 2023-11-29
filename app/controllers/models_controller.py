@@ -6,7 +6,8 @@ from datetime import datetime
 from app.app import create_app, db
 from flask import Blueprint, request, jsonify, session
 from sqlalchemy.exc import SQLAlchemyError
-from app.app.models.student_model import Student
+from app.models.student_model import Student
+from app.models.department_model import Department
 
 
 
@@ -20,26 +21,34 @@ app = create_app()
 
 
 # route to get student by name or admission 
-@user_bp.route('/student/<identifier>', methods=['GET'])
+@user_bp.route('/student/<path:identifier>', methods=['GET'])
 def get_student_info(identifier):
     '''
     A function that retrieves a student information
     '''
+    student = None
+
+    print("Identifier:", identifier)
+
     # Check if the identifier matches admission number criteria
-    if len(identifier) <= 20 and identifier.isdigit():
+    if identifier:
         student = Student.query.filter_by(admission_number=identifier).first()
     else:
-        # Assuming name is longer than 20 charaters
-        student = Student.query.filter_by(name=identifier).first()
+        # Assuming name is longer than 20 characters
+        student = Student.query.filter(Student.name.ilike("%{}%".format(identifier))).first()
 
 
     if student:
         # Student model has attributes: admission_number, name, date_of_birth, etc.
+        print("Retrieved Admission Number:", student.admission_number)
+
+
         student_info = {
             'admission_number': student.admission_number,
             'name': student.name,
             'date_of_birth': student.date_of_birth.strftime('%Y-%m-%d'),
             'department_level': student.department_level,
+            'department_name': student.department_name,
             'email': student.email,
             'phone_number': student.phone_number,
             'created_at': student.created_at,
@@ -60,8 +69,8 @@ def registration():
 
     #
     data = request.json
-    existing_student = Student.query.filter_by(admission_number = data['admission_number'])
-    existing_email = Student.query.filter_by(email = data['email'])
+    existing_student = Student.query.filter_by(admission_number = data['admission_number']).first()
+    existing_email = Student.query.filter_by(email = data['email']).first()
 
     if existing_student:
         return jsonify({'error': 'Admission Number Aready Exist!'}), 400
@@ -73,14 +82,27 @@ def registration():
         # extract registration data from json
         new_user = Student(
             admission_number = data['admission_number'],
+            password = data['password'],
             name = data['name'],
             date_of_birth = data['date_of_birth'],
             department_level = data['department_level'],
+            department_name = data['department_name'],
             email = data['email'],
             phone_number = data['phone_number'],
             created_at = datetime.utcnow(),
-            update_at = datetime.utcnow(),
+            updated_at = datetime.utcnow()
         )
+
+       # Check if the provided department_level exists in the departments table
+        department_level = data.get('department_level')
+        department_name = data.get('department_name')
+
+        department = Department.query.filter_by(department_level=department_level).first()
+        if department is None:
+            # If department doesn't exist, create a new department
+            new_department = Department(department_level=department_level, department_name=department_name)
+            db.session.add(new_department)
+            db.session.flush()
 
         try:
             new_user.validate_email(data['email'])
@@ -100,5 +122,3 @@ def registration():
         return jsonify({'error': str(e)}), 500
 
     
-                
-

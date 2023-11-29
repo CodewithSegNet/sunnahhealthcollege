@@ -11,11 +11,8 @@ class Department(db.Model):
     A class that defines the Student Department
     '''
     __tablename__ = 'departments'
-    department_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    department_level = db.Column(db.Integer, primary_key=True, nullable=False)
     department_name = db.Column(db.String(255), nullable=False, unique=True)
 
 
-    # Constructor to initialize Student Object with attributes.
-    def __init__(self, department_name):
-        self.department_name = department_name
-  
+    students = db.relationship('Student', backref='related_department', overlaps="related_department.department_level")
