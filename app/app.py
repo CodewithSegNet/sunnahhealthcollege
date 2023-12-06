@@ -26,7 +26,10 @@ def create_app():
     # Register blueprints
     from app.controllers.models_controller import user_bp
     app.register_blueprint(user_bp, url_prefix='/api')
+    
 
+    from app.blueprints.schoolpage.page import pages_bp
+    app.register_blueprint(pages_bp)
 
     # create the datebase tables
     with app.app_context():

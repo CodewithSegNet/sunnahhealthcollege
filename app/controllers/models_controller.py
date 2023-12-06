@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 # Import
 from datetime import datetime
 from app.app import create_app, db
@@ -120,5 +119,3 @@ def registration():
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
-
-    
