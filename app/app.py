@@ -4,10 +4,15 @@
 from flask import Flask
 from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_caching import Cache
+import os
 
 
 # create a sqlalchemy object
 db = SQLAlchemy()
+
+# create a cache object
+cache = Cache()
 
 
 def create_app():
@@ -18,9 +23,16 @@ def create_app():
     # Load configuration from Config class
     app.config.from_object(Config)
 
+    # Initialize Flask-caching
+    cache.init_app(app)
+
 
     # Initialize the database with the app
     db.init_app(app)
+
+
+    # Access the app's configuration through the 'app' instance
+    app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img')
 
 
     # Register blueprints

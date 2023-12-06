@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 # Imports
 import os
 
@@ -13,6 +14,10 @@ class Config:
     # Disable track modifictions to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+
+    # Flask-Caching configuration
+    CACHE_TYPE = 'simple'
+    CACHE_DEFAULT_TIMEOUT = 300
     
 class DevelopmentConfig(Config):
     '''Development configuration class
