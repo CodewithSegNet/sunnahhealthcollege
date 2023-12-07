@@ -53,6 +53,7 @@ body{
 	font-weight: 400;
 	font-size:14px;
 	color:#888;
+	min-width: 271px;
 }
 .pro-features {
 	position: fixed;

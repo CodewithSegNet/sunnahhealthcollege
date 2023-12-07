@@ -1,14 +1,24 @@
+.mobile-btn{
+	display: none;
+}
+
+
+
+
+
+
+
 /* =====================================
-Template Name: 	Mediplus.
-Author Name: Naimur Rahman
-Website: http://wpthemesgrid.com/
-Description: Mediplus - Doctor HTML Template.
-Version:	1.1
-========================================*/   
+
+========================================*/  
 /* Tablet Screen */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 /* Header Sticky */
 .image-container{
+	display: none;
+}
+
+.mobile-nav{
 	display: none;
 }
 
@@ -385,6 +395,41 @@ Version:	1.1
 	.image-container{
 		display: none;
 	}
+
+	.header .logo {
+		margin-top: 18px;
+	}
+	
+	.max{
+		max-width: 16%;
+	}
+
+
+	.mobile-btn{
+		display: block;
+		padding: 13px 25px;
+		font-size: 14px;
+		text-transform: capitalize;
+		font-weight: 500;
+		background: #1A76D1;
+		position: relative;
+		box-shadow: none;
+		display: inline-block;
+		-webkit-transition: all 0.4s ease;
+		-moz-transition: all 0.4s ease;
+		transition: all 0.4s ease;
+		text-align: center;
+		-webkit-transform: perspective(1px) translateZ(0);
+		transform: perspective(1px) translateZ(0);
+		border: none;
+		border-radius: 0;
+		border-radius: 4px;
+		color: #fff;
+	}
+
+	a.mobile-btn{
+	color: #fff;	
+}
 	
 .header.sticky{
 	
@@ -527,6 +572,14 @@ Version:	1.1
 	margin: 0;
 	padding: 0;
 }
+.mobile-nav .header-inner .get-quote .btn {
+	color: #fff;
+	display: block;
+	margin: 0;
+	padding: 1rem 2rem;
+}
+
+
 .header .header-inner .get-quote .btn {
 	color: #fff;
 	display: none;

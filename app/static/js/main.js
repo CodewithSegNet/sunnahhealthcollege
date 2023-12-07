@@ -54,6 +54,14 @@ Version:	1.1
 				$('.header').removeClass("sticky");
 			}
 		});
+
+		jQuery(window).on('scroll', function() {
+			if ($(this).scrollTop() > 100) {
+				$('.logo').addClass("max");
+			} else {
+				$('.logo').removeClass("max");
+			}
+		});
 		
 		$('.pro-features .get-pro').on( "click", function(){
 			$('.pro-features').toggleClass('active');
