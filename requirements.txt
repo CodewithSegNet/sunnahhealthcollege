@@ -4,6 +4,8 @@ pymysql
 Werkzeug
 Flask-Caching
 python-dotenv
+requests
+Flask-Login
 python-decouple
 psycopg2-binary
 Flask-cors

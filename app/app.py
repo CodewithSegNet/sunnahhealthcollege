@@ -5,6 +5,7 @@ from flask import Flask
 from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
+from decouple import config
 import os
 
 
@@ -29,6 +30,13 @@ def create_app():
 
     # Initialize the database with the app
     db.init_app(app)
+
+
+    # secret key from the .env file using python-decouple
+    secret_key = config('SECRET_KEY')
+
+    # set key for app
+    app.secret_key = secret_key
 
 
     # Access the app's configuration through the 'app' instance

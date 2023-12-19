@@ -54,10 +54,10 @@
         <h2>Sign In</h2>
         <br>
         <p>Welcome to Sunnah Health College Portal | Student</p>
-        <form id="signInForm">
+        <form action="/login" method="POST" id="signInForm">
           <div class="group">
             <label for="username">Admission Number</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="admission_number" name="admission_number" required>
           </div>
           <div class="group">
             <label for="password">Password</label>
@@ -67,7 +67,7 @@
             <input type="checkbox" id="rememberMe">
             <label for="rememberMe">Remember me</label>
           </div>
-          <button type="submit" class="btn">Sign in</button>
+          <button type="submit" class="btn" value="Sign In">Sign in</button>
         </form>
         <a href="#" class="forgot-password">Forgot password?</a>
         <div class="input-group home">

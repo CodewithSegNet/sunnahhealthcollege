@@ -3,3 +3,4 @@ test/
 .env
 myenv/
 *.pyc
+config_setup.py

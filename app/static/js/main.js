@@ -32,6 +32,21 @@ Version:	1.1
 =========================================
 [End Activation Code]
 =========================================*/ 
+$(document).ready(function() {
+	$('.sidebar-item').click(function(e) {
+	  e.preventDefault();
+	  // Get the data-content attribute value
+	  var contentToShow = $(this).data('content');
+
+	  // Hide all content sections
+	  $('.content-section').hide();
+
+	  // Show the selected content section
+	  $('#' + contentToShow).show();
+	});
+  });
+
+
 (function($) {
     "use strict";
      $(document).on('ready', function() {
@@ -158,6 +173,9 @@ Version:	1.1
 				},
 			}
 		});
+
+
+	
 		
 		/*=====================================
 			Counter Up JS

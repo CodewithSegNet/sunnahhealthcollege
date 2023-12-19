@@ -1,0 +1,78 @@
+/* Reset some default styles */
+body, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-transform: capitalize;
+  }
+  
+  /* Styles for the dashboard layout */
+  .dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 90vh; /* Full height */
+  }
+
+  .black{
+    color: #000;
+  }
+  
+
+  .profile-pic {
+	width: 150px;
+	height: 150px;
+  }
+
+  /* Sidebar styles */
+  .sidebar {
+    width: 200px;
+    background-color: #f2f2f2;
+  }
+  
+  .sidebar ul {
+    padding: 20px;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sidebar ul li a.active {
+    font-weight: bold;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #444;
+    color: #fff;
+    width: 100%;
+  }
+  
+  .navbar__left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+  .navbar__right img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Main Content Area styles */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    /* Additional styles as needed */
+  }
+  

@@ -1,0 +1,254 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Sunnah Health College">
+		<meta name="description" content="Sunnah Health College Mararaba New Karu Nassarawa">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+        <title>Home - Sunnah Health College</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+		
+    </head>
+<body>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+   <!-- Nav -->
+   <nav class="navbar">
+    <div class="navbar__left">
+      <img src={{user_image}}>
+      <span>Hello, {{ student.name }}</span>
+    
+    </div>
+    <div class="navbar__right">
+      <i class="icofont-ui-message"></i>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+   
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" class="sidebar-item active" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+        <li><a href="#" class="sidebar-item" data-content="transcript"><i class="icofont-certificate-alt-1"></i> Transcript</a></li>
+        <li><a href="#" class="sidebar-item" data-content="Certification"><i class="icofont-learn"></i> Certification</a></li>
+        <li><a href="#" class="sidebar-item" data-content="settings"><i class="icofont-settings-alt"></i> Settings</a></li>
+        <li><a href="#"  data-content="settings"><i class="icofont-exit"></i> Log Out</a></li>
+
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div id="dashboard" class="content-section">
+        <div class="container mt-4">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-left">
+                    <img src="{{user_image2}}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
+                    <h6 class="mt-3">Name: {{ student.name }}</h6>
+                    <p class="black"> Admission Number: {{ student.admission_number }}</p>
+                    <p>State: {{ student.department_level }}</p>
+                    <p>Gender: {{ student.department_level }}</p>
+                    <p>Date of Birth: {{ student.date_of_birth }}</p>
+                    <p>Phone Number: {{ student.phone_number}}</p>
+                    <p>Email:  {{ student.email }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+           
+                  <div class="d-flex align-items-center justify-content-between text-left">
+                    <h6>Department: {{ student.department_name }}</h6>
+                    <h6>Semester: {{ student.semester }}</h6>
+                    <h6>Level: {{ student.department_level }}</h6>
+                </div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Credit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for course in courses %}
+                      <tr>
+                        <td>{{ course.course_code }}</td>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.grade }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="transcript" class="content-section", style="display: none;">
+     
+        <!-- Assuming this is within the section where you want to display student information -->
+<div class="row mb-4">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+              <h4>Student Transcript</h4>
+              <hr>
+              <div class="row">
+                  <div class="col-md-6">
+                      <p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
+                      <p><strong>Name:</strong> {{ student.name }}</p>
+                      <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                      <!-- Add other student details here... -->
+                  </div>
+                  <div class="col-md-6">
+                      <p><strong>Email:</strong> {{ student.email }}</p>
+                      <p><strong>Phone Number:</strong> {{ student.phone_number }}</p>
+                      <p><strong>Department:</strong> {{ student.department_name }}</p>
+                      <!-- Add other student details here... -->
+                  </div>
+
+
+                  <!-- Course Details Section -->
+    <div class="row pt-4 mx-1">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between text-left">
+                  <h4>Semester: {{semester}}</h4>
+                  <h4>Level: {{ student.department_level }}</h4>
+              </div>
+                  <hr>
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th>Course Code</th>
+                              <th>Course Title</th>
+                              <th>Credit</th>
+                              <th>T</th>
+                              <th>P</th>
+                              <th>L</th>
+                              <th>Grade</th>
+                              <th>Remark</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for course in courses %}
+                              <tr>
+                                  <td>{{ course.code or 'N/A' }}</td>
+                                  <td>{{ course.name or 'N/A' }}</td>
+                                  <td>{{ course.ca1 or 'N/A' }}</td>
+                                  <td>{{ course.ca2 or 'N/A' }}</td>
+                                  <td>{{ course.ca3 or 'N/A' }}</td>
+                                  <td>{{ course.exam_mark or 'N/A' }}</td>
+                                  <td>{{ course.grade or 'N/A' }}</td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+  
+
+
+      </div>
+      </div>
+
+      
+      <div id="settings" class="content-section" style="display: none;">
+    
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>
+
+
+
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- jquery Min JS -->
+<!-- Include jQuery before other scripts using it -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Include your other scripts -->
+<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+<!-- ... other scripts ... -->
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your custom scripts -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- ... other custom scripts ... -->
+
+</body>
+</html>

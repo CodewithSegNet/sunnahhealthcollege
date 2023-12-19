@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 # Import
-from datetime import datetime
-from app.app import create_app, db
 from flask import Blueprint, request, jsonify, session
-from sqlalchemy.exc import SQLAlchemyError
 from app.models.student_model import Student
 from app.models.department_model import Department
+from app.app import create_app, db
+from datetime import datetime
+from werkzeug.security import generate_password_hash
+from sqlalchemy.exc import SQLAlchemyError
 
 
 
@@ -64,24 +65,24 @@ def registration():
     '''
     A function that handles users registration
     '''
-
-
-    #
-    data = request.json
-    existing_student = Student.query.filter_by(admission_number = data['admission_number']).first()
-    existing_email = Student.query.filter_by(email = data['email']).first()
-
-    if existing_student:
-        return jsonify({'error': 'Admission Number Aready Exist!'}), 400
-    if existing_email:
-        return jsonify({'error': 'Email Already Exist!'}), 400
-
-
     try:
+        data = request.json
+        existing_student = Student.query.filter_by(admission_number = data['admission_number']).first()
+        existing_email = Student.query.filter_by(email = data['email']).first()
+
+        if existing_student:
+            return jsonify({'error': 'Admission Number Aready Exist!'}), 400
+        if existing_email:
+            return jsonify({'error': 'Email Already Exist!'}), 400
+
+
+        # Hash the password before storing it in the database
+        hashed_password = generate_password_hash(data['password'])
+
         # extract registration data from json
         new_user = Student(
             admission_number = data['admission_number'],
-            password = data['password'],
+            password=hashed_password,
             name = data['name'],
             date_of_birth = data['date_of_birth'],
             department_level = data['department_level'],

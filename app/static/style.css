@@ -3587,6 +3587,8 @@ body{
 	font-weight: 500;
 	box-shadow: 0px 5px 15px rgba(188, 199, 255, 0.75);
 }
+
+
 .newsletter .btn:before{
 	border-radius: 5px;
 }
