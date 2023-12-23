@@ -2,6 +2,27 @@
 	display: none;
 }
 
+.icofont-navigation-menu{
+	display: none;
+}
+
+
+.course_table {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+
+.course_table thead tr th{
+	padding: 0.75rem;	
+}
+
+
+.course_table tbody tr td{
+	padding: 0.83rem;
+	}
+
 
 
 
@@ -382,15 +403,168 @@
 }
 
 
+/* dashboard_container */
+.sidebar {
+	display: none;
+	z-index: 1;
+	position: absolute;
+  }
+  .sidebar.active {
+	display: block;
+  }
+  /* Your burger menu styles */
+  .navbar__right .navbar__burger {
+	display: block;
+	cursor: pointer;
+	padding-left: 1rem;
+	}
+
+	.dashboard_container{
+			max-width: 680px;
+			position: relative;
+	}
+
+	.icofont-navigation-menu{
+		display: block;
+	}
+
+	.table-responsive-991 {
+		overflow-x: auto;
+	  }
 
 
+	  .table-responsive-991 table,
+	  .table-responsive-991 thead,
+	  .table-responsive-991 tbody,
+	  .table-responsive-991 th,
+	  .table-responsive-991 td,
+	  .table-responsive-991 tr {
+		display: block;
+	  }
 
+	  .table-responsive-991 thead {
+		display: inline-flex;
+	  }
+	  .table-responsive-991 tbody tr {
+		margin-bottom: 15px;
+		border: 1px solid #ddd;
+	  }
+	  .table-responsive-991 td {
+		border: none;
+		position: relative;
+	  }
+	  .table-responsive-991 td:before {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+	  }
 
+	  .course_table {
+		display: flex;
+		width: 100%;
+		height: 100%;
+	}
+	.course_table thead tr th{
+		padding: 0.75rem;	
+	}
 
+	
+	.course_table tbody tr td{
+		padding: 0.83rem;
+		}
 
 }
 /* Mobile Screen */
 @media only screen and (max-width: 767px) {
+
+	h6{
+		font-size: .6rem;
+	}
+
+	  .table-responsive-991 {
+		overflow-x: auto;
+	  }
+
+	  
+	  .course_table {
+		display: table;
+		width: 100%;
+		height: 100%;
+	}
+
+	  .table-responsive-991 table,
+	  .table-responsive-991 thead,
+	  .table-responsive-991 tbody,
+	  .table-responsive-991 th,
+	  .table-responsive-991 td,
+	  .table-responsive-991 tr {
+		display: block;
+	  }
+
+	  .table-responsive-991 thead {
+		display: inline-flex;
+	  }
+	  .table-responsive-991 tbody tr {
+		margin-bottom: 15px;
+		border: 1px solid #ddd;
+	  }
+	  .table-responsive-991 td {
+		border: none;
+		position: relative;
+	  }
+	  .table-responsive-991 td:before {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+	  }
+
+	  .course_table thead tr th{
+		padding: 0.75rem;	
+	}
+
+	
+	.course_table tbody tr td{
+		padding: 0.83rem;
+		}
+
+
+	
+	  
+
+	/* dashboard_container */
+.sidebar {
+	display: none;
+	z-index: 1;
+	position: absolute;
+  }
+  .sidebar.active {
+	display: block;
+  }
+  /* Your burger menu styles */
+  .navbar__right .navbar__burger {
+	display: block;
+	cursor: pointer;
+	padding-left: 1rem;
+	}
+
+	.dashboard_container{
+			max-width: 680px;
+			position: relative;
+
+	}
+
+	.icofont-navigation-menu{
+		display: block;
+	}
+
+		
+	
 
 	.image-container{
 		display: none;
@@ -1091,6 +1265,16 @@
 }
 /* Mobile Screen */
 @media only screen and (max-width: 450px) {
+
+
+	.course_table thead tr th{
+		padding: 0.75rem;	
+	}
+
+	
+	.course_table tbody tr td{
+		padding: 0.92rem;
+		}
 
 
 .section{

@@ -26,7 +26,9 @@ body, ul {
   /* Sidebar styles */
   .sidebar {
     width: 200px;
+    height: 100vh;
     background-color: #f2f2f2;
+    transition: opacity 0.5s ease-in;
   }
   
   .sidebar ul {
@@ -76,3 +78,45 @@ body, ul {
     /* Additional styles as needed */
   }
   
+
+  ul.dropdown {
+    padding: 10px 0 0 10px;
+}
+
+  
+form {
+  background-color: #fff;
+  padding-right: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="email"],
+input[type="number"],
+input[type="state"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 7px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #333;
+}

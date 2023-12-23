@@ -5,7 +5,7 @@ Werkzeug
 Flask-Caching
 python-dotenv
 requests
-Flask-Login
+Flask-WTF
 python-decouple
 psycopg2-binary
 Flask-cors

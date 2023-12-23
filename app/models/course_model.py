@@ -3,6 +3,8 @@
 # Import
 from app.app import db
 from app.models.department_model import Department
+import app.models.student_model
+from app.models.semester import Semester
 from sqlalchemy.orm import relationship
 
 
@@ -11,10 +13,9 @@ class Course(db.Model):
     A class that defines the Course Description
     '''
     __tablename__ = 'courses'
-    course_title = db.Column(db.String(255), primary_key=True, nullable=False)
-    department_level = db.Column(db.Integer, db.ForeignKey('departments.department_level'), nullable=False)
-    course_code = db.Column(db.String(20), nullable=False, unique=True)
-    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    course_title = db.Column(db.String(255), nullable=False)
+    course_code = db.Column(db.String(20), nullable=False)
+    credit = db.Column(db.Integer, nullable=False)
+    student_id = db.Column(db.String, db.ForeignKey('students.admission_number'))
 
-    # Define a relationship with the Department model
-    department = db.relationship('Department', backref=db.backref('courses', lazy=True))

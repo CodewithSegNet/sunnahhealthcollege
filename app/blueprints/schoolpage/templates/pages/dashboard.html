@@ -66,55 +66,99 @@
       <span>Hello, {{ student.name }}</span>
     
     </div>
-    <div class="navbar__right">
+    <div class="navbar__right  d-flex align-items-center justify-content-between">
       <i class="icofont-ui-message"></i>
+      <div class="navbar__burger">
+        <i class="icofont-navigation-menu"></i> 
+      </div>
+      
     </div>
   </nav>
 
   <div class="dashboard">
-   
-
     <!-- Sidebar -->
     <aside class="sidebar">
       <ul>
         <li><a href="#" class="sidebar-item active" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
         <li><a href="#" class="sidebar-item" data-content="transcript"><i class="icofont-certificate-alt-1"></i> Transcript</a></li>
         <li><a href="#" class="sidebar-item" data-content="Certification"><i class="icofont-learn"></i> Certification</a></li>
-        <li><a href="#" class="sidebar-item" data-content="settings"><i class="icofont-settings-alt"></i> Settings</a></li>
-        <li><a href="#"  data-content="settings"><i class="icofont-exit"></i> Log Out</a></li>
+        <li><a href="#" class="sidebar-item" data-content="settings"><i class="icofont-settings-alt">
 
+          
+        </i> Settings  <i class="icofont-rounded-down"></i></a> 
+        <ul class="dropdown"  style="display: none;">
+          <li><a href="#" class="sidebar-item" data-content="department">Department</a></li>
+          <li><a href="#" class="sidebar-item" data-content="course">courses</a></li>
+          <li><a href="#" class="sidebar-item" data-content="semester">semester</a></li>
+        </ul>
+      </li>
+        <li><a href="{{ url_for('pages.logout') }}"  data-content=""><i class="icofont-exit"></i> Log Out</a></li>
       </ul>
     </aside>
+
+    
 
     <!-- Main Content Area -->
     <main class="main-content">
       <div id="dashboard" class="content-section">
-        <div class="container mt-4">
+        <div class="dashboard_container container mt-4">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12 col-lg-4">
               <div class="card">
                 <div class="card-body">
                   <div class="text-left">
-                    <img src="{{user_image2}}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
-                    <h6 class="mt-3">Name: {{ student.name }}</h6>
+          
+                    {% if user_image2 %}
+                    <img src="{{ url_for('pages.get_image', filename=os.path.basename(user_image2)) }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
+                    {% else %}
+                    <!-- If no uploaded image -->
+                    <p>No image uploaded</p>
+                {% endif %}
+                <h6 class="mt-3">Name: {{ student.name }}</h6>
                     <p class="black"> Admission Number: {{ student.admission_number }}</p>
-                    <p>State: {{ student.department_level }}</p>
-                    <p>Gender: {{ student.department_level }}</p>
+                    <p>State: {{ student.state }}</p>
+                    <p>Gender: {{ student.gender }}</p>
                     <p>Date of Birth: {{ student.date_of_birth }}</p>
                     <p>Phone Number: {{ student.phone_number}}</p>
                     <p>Email:  {{ student.email }}</p>
                   </div>
                 </div>
+
+
+                <form action="/upload_image" method="post" enctype="multipart/form-data">
+                  <input type="file" name="user_image2" accept="image/*">
+                  <input class="btn" type="submit" value="Upload Image">
+                </form>
               </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-12 col-lg-8">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body text-center">
            
                   <div class="d-flex align-items-center justify-content-between text-left">
                     <h6>Department: {{ student.department_name }}</h6>
-                    <h6>Semester: {{ student.semester }}</h6>
-                    <h6>Level: {{ student.department_level }}</h6>
+                    {% if semesters %}
+                    <h6>Semesters:</h6>
+                    
+                        {% for semester in semesters %}
+                            {{ semester.semester }}
+                        {% endfor %}
+                
+                {% else %}
+                    <p>No semesters found.</p>
+                {% endif %}
+
+
+                {% if departments %}
+                <h6>Department Levels:</h6>
+                
+                    {% for department in departments %}
+                        {{ department.department_level }}
+                    {% endfor %}
+            
+            {% else %}
+                <p>No department levels found.</p>
+            {% endif %}
                 </div>
                   <table class="table">
                     <thead>
@@ -124,12 +168,12 @@
                         <th>Credit</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                       {% for course in courses %}
                       <tr>
-                        <td>{{ course.course_code }}</td>
-                        <td>{{ course.course_name }}</td>
-                        <td>{{ course.grade }}</td>
+                        <td> {{ course.course_code }} </td>
+                        <td> {{ course.course_title }} </td>
+                        <td > {{ course.credit }} </td>
                       </tr>
                       {% endfor %}
                     </tbody>
@@ -164,65 +208,278 @@
                       <p><strong>Department:</strong> {{ student.department_name }}</p>
                       <!-- Add other student details here... -->
                   </div>
-
-
-                  <!-- Course Details Section -->
-    <div class="row pt-4 mx-1">
-      <div class="col-md-12">
-          <div class="card">
-              <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between text-left">
-                  <h4>Semester: {{semester}}</h4>
-                  <h4>Level: {{ student.department_level }}</h4>
-              </div>
-                  <hr>
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th>Course Code</th>
-                              <th>Course Title</th>
-                              <th>Credit</th>
-                              <th>T</th>
-                              <th>P</th>
-                              <th>L</th>
-                              <th>Grade</th>
-                              <th>Remark</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for course in courses %}
-                              <tr>
-                                  <td>{{ course.code or 'N/A' }}</td>
-                                  <td>{{ course.name or 'N/A' }}</td>
-                                  <td>{{ course.ca1 or 'N/A' }}</td>
-                                  <td>{{ course.ca2 or 'N/A' }}</td>
-                                  <td>{{ course.ca3 or 'N/A' }}</td>
-                                  <td>{{ course.exam_mark or 'N/A' }}</td>
-                                  <td>{{ course.grade or 'N/A' }}</td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
               </div>
           </div>
       </div>
   </div>
-              </div>
-          </div>
-      </div>
-  </div>
+
+
+
+
+  <div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          
+
+               <!-- Course Details Section -->
+               <div class="row pt-4 mx-1">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="small d-flex align-items-center justify-content-between text-left">
+                                {% if semesters %}
+                            <h6>Semester:</h6>
+                        
+                                {% for semester in semesters %}
+                                    {{ semester.semester }}
+                                {% endfor %}
+                            
+                        {% else %}
+                            <p>No semesters found.</p>
+                        {% endif %}
+
+
+                        {% if departments %}
+                        <h6>Department Level:</h6>
+                        
+                            {% for department in departments %}
+                                {{ department.department_level }}
+                            {% endfor %}
+                    
+                    {% else %}
+                        <p>No department levels found.</p>
+                    {% endif %}
+                        </div>
+                            <hr>
+                            <table class="course_table table-bordered text-center  table-responsive-991">
+                                <thead>
+                                    <tr >
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Credit</th>
+                                        <th>T</th>
+                                        <th>P</th>
+                                        <th>L</th>
+                                        <th>Grade</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in courses %}
+                                        <tr>
+                                            <td> {{ course.course_code }}</td>
+                                            <td> {{ course.course_title }}</td>
+                                            <td> {{ course.credit }}</td>
+                                            <td>{{ course.ca2 or 'N/A' }}</td>
+                                            <td>{{ course.ca3 or 'N/A' }}</td>
+                                            <td>{{ course.exam_mark or 'N/A' }}</td>
+                                            <td>{{ course.grade or 'N/A' }}</td>
+                                            <td>{{ course.remark or 'N/A' }}</td>
+          
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
-  
+      </div>
 
 
-      </div>
-      </div>
 
       
       <div id="settings" class="content-section" style="display: none;">
+        <section class="container">
+          <div class="row d-flex align-items-center justify-content-center">
+              <div class="col-md-7 pt-5 pb-5">
+                  <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.update_profile') }}" method="post">
+                    <div class="row">
+                      <div class="col-md-6">
+                          <label for="name">Name *</label>
+                          <input type="text" id="name" name="name" required>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="Password">Password *</label>
+                          <input type="password" id="password" name="password" required>
+                      </div>
+                  </div>
+      
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label for="date_of_birth">Date of Birth *</label>
+                              <input type="date" id="date_of_birth" name="date_of_birth" required>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="gender">Gender *</label>
+                              <select id="gender" name="gender" required>
+                                  <option value="male">Male</option>
+                                  <option value="female">Female</option>
+                              </select>
+                          </div>
+                      </div>
+      
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label for="department_name">Department *</label>
+                              <input type="text" id="department_name" name="department_name" required>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="email">Email *</label>
+                              <input type="email" id="email" name="email" required>
+                          </div>
+                      </div>
+      
+                      <div class="row">
+                        <div class="col-md-6">
+                            <label for="state">State *</label>
+                            <input type="state" id="state" name="state" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone_number">Phone Number *</label>
+                            <input type="tel" id="phone_number" name="phone_number" required>
+                        </div>
+                    </div>
+                      </div>
+      
+                      <div class="row">
+                          <div class="col-md-12">
+                              <input type="submit" value="SUBMIT" id="submitBtn">
+                          </div>
+                      </div>
+                  </form>
+              </div>
+            </section>
+          </div>
+
+
+
+
+          <div id="department" class="content-section" style="display: none;">
+            <section class="container">
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col-md-7 pt-5 pb-5">
+                        <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.upload_department') }}" method="POST">
+                            <!-- CSRF Token -->
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="department_level">Department Level *</label>
+                                    <select type="number" id="department_level" name="department_level" required> 
+                                        <option value="100"> 100 </option>
+                                        <option value="100"> 200 </option>
+                                        <option value="100"> 300 </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="department_name">Department Name *</label>
+                                    <select type="text" id="department_name" name="department_name" required>
+                                        <option value="Community Health Extension">Community Health Extension</option>
+                                        <option value="medical Laboratory Technician">medical Laboratory Technician</option>
+                                        <option value="Pharmacy Technician">Pharmacy Technician</option>
+
+                                    </select>
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" value="SUBMIT" id="submitBtn">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
     
+      
+
+
+        <div id="semester" class="content-section" style="display: none;">
+          <section class="container">
+              <div class="row d-flex align-items-center justify-content-center">
+                  <div class="col-md-7 pt-5 pb-5">
+                      <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.upload_semester') }}" method="POST">
+                          <!-- CSRF Token -->
+                          
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <label for="semester">Semester *</label>
+                                  <select type="text" id="semester" name="semester" required> 
+                                    <option value="First">First</option>
+                                    <option value="Second">Second</option>
+
+                                  </select>
+                              </div>
+                          </div>
+          
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <input type="submit" value="SUBMIT" id="submitBtn">
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </section>
       </div>
+      
+
+
+
+
+          <div id="course" class="content-section" style="display: none;">
+            <section class="container">
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col-md-7 pt-5 pb-5">
+                        <form id="courseForm" class="form-base fade-in-alt" action="{{ url_for('user.update_course') }}" method="POST">
+                            <!-- CSRF Token -->
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="course_title">Course Title *</label>
+                                    <input type="text" id="course_title" name="course_title" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="course_code">Course Code *</label>
+                                    <input type="text" id="course_code" name="course_code" required>
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="credit">Credit *</label>
+                                    <input type="number" id="credit" name="credit" required>
+                                </div>
+                            </div>
+
+                          
+            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" value="SUBMIT" id="submitBtn">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+
+
+
+
+
+
+      </div>
+    </div>
 
     </main>
   </div>
@@ -233,10 +490,10 @@
 
 
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- jquery Min JS -->
 <!-- Include jQuery before other scripts using it -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
 
 <!-- Include your other scripts -->
 <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
@@ -244,8 +501,15 @@
 <!-- ... other scripts ... -->
 
 <!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
 
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <!-- Your custom scripts -->
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <!-- ... other custom scripts ... -->

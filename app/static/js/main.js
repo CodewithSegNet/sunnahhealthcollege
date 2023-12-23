@@ -355,3 +355,28 @@ $(document).ready(function() {
 	
 	
 })(jQuery);
+
+
+$(document).ready(function() {
+	// Toggle sidebar on burger icon click
+	$('.navbar__right').on('click', '.navbar__burger', function() {
+	  $('.sidebar').toggleClass('active');
+	});
+  
+	// Hide sidebar when window is resized to more than 999px
+	$(window).resize(function() {
+	  if ($(window).width() > 999) {
+		$('.sidebar').removeClass('active');
+	  }
+	});
+  });
+  
+  
+  $(document).ready(function() {
+	$('.sidebar-item').click(function(e) {
+	  e.preventDefault(); // Prevents default link behavior
+  
+	  // Toggle visibility of the dropdown using slideToggle()
+	  $(this).siblings('.dropdown').slideToggle();
+	});
+  });

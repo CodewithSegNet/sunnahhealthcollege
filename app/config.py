@@ -4,6 +4,14 @@
 # Imports
 import os
 
+
+# Define the absolute path for the upload folder
+UPLOAD_FOLDER = 'static/img'
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+
 # Base class configuration for database
 class Config:
     '''
