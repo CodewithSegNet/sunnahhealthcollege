@@ -44,7 +44,8 @@ class ProductionConfig(Config):
     '''Production configuration class
     '''
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") 
+    # SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
     # Mapping config names to their respective classes
 config_map = {

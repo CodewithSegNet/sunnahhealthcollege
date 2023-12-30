@@ -6,7 +6,7 @@ from app.models.student_model import Student
 from app.models.department_model import Department
 from app.models.semester import Semester
 from app.models.course_model import Course
-from app.app import create_app, db
+from app.app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError
@@ -15,11 +15,6 @@ from sqlalchemy.exc import SQLAlchemyError
 
 # create a blueprint for user related routes
 user_bp = Blueprint('user', __name__)
-
-
-# create a app instance
-app = create_app()
-
 
 
 # route to get student by name or admission 

@@ -5,8 +5,8 @@ Werkzeug
 Flask-Caching
 python-dotenv
 requests
-Flask-WTF
+pg8000
 python-decouple
-psycopg2-binary
+pyJWTsS
 Flask-cors
 gunicorn
