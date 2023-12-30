@@ -8,4 +8,5 @@ python-dotenv
 requests
 python-decouple
 Flask-cors
+psycopg2-binary
 gunicorn
