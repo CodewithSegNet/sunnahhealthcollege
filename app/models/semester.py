@@ -14,4 +14,4 @@ class Semester(db.Model):
     __tablename__ = 'semesters'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     semester = db.Column(db.String(20), nullable=False)
-    student_id = db.Column(db.String, db.ForeignKey('students.admission_number'), nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'), nullable=False)

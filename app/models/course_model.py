@@ -17,5 +17,5 @@ class Course(db.Model):
     course_title = db.Column(db.String(255), nullable=False)
     course_code = db.Column(db.String(20), nullable=False)
     credit = db.Column(db.Integer, nullable=False)
-    student_id = db.Column(db.String, db.ForeignKey('students.admission_number'))
+    student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'))
 

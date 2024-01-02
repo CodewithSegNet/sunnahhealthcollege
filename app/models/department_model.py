@@ -17,6 +17,6 @@ class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     department_level = db.Column(db.Integer, nullable=False)
     department_name = db.Column(db.String(255), nullable=False)
-    student_id = db.Column(db.String, db.ForeignKey('students.admission_number'), nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'), nullable=False)
 
 

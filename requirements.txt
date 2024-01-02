@@ -6,7 +6,7 @@ pyJWT
 Flask-Caching
 python-dotenv
 requests
+pg8000
 python-decouple
 Flask-cors
-psycopg2-binary
 gunicorn
