@@ -6,7 +6,8 @@ pyJWT
 Flask-Caching
 python-dotenv
 requests
-pg8000
+mysqlclient
+retrying
 python-decouple
 Flask-cors
 gunicorn

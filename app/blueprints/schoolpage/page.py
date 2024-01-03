@@ -42,7 +42,7 @@ def login():
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
-
+        
         user = Student.query.filter_by(admission_number=admission_number).first()
         if user and user.check_password(password):
             """
@@ -105,9 +105,6 @@ def make_authorized_request(url, method='GET', data=None, token=None):
             return {'error': f'Request failed: {e}'}
 
     return {'error': 'Token is missing'}
-
-
-
 
 
 

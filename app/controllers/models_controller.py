@@ -77,9 +77,6 @@ def registration():
         
 
 
-
-
-
         # Create a new user instance
         new_user = Student(
             admission_number=data['admission_number'],
@@ -163,13 +160,10 @@ def registration():
             new_user.courses.extend([course1, course2, course3, course4, course5, course6, course7])
 
         # Add new user to the Database
-
-        
-        
-        # Add new user to the Database
         db.session.add(new_department)
         db.session.add(new_semester)
         db.session.commit()
+
 
         # Return JSON successful message if data's works
         return jsonify({'message': 'User Registration Successfully Created!'}), 201
