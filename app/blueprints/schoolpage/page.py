@@ -11,11 +11,10 @@ from datetime import datetime, timedelta
 import os
 
 
-
 pages_bp = Blueprint("pages", __name__, template_folder="templates")
 
 
-@pages_bp.route('/home')
+@pages_bp.route('/')
 @cache.cached(timeout=500)
 def home():
     """
@@ -30,7 +29,6 @@ def home():
     # image6 = os.path.join(app.config['UPLOAD_FOLDER'], 'college.jpg')
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
     return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4)
-
 
 
 # Route for handling the student sign-in form submission

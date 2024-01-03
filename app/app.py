@@ -6,6 +6,7 @@ from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
 from decouple import config
+from flask_cors import CORS
 import os
 
 
@@ -57,6 +58,8 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    # Configure CORS to allow requests from any origin
+    CORS(app, supports_credentials=True)
 
     # Return the Flask app instance
     return app
