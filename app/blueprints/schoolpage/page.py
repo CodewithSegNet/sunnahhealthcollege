@@ -25,10 +25,10 @@ def home():
     image2 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'slider.jpg')
     image3 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'student.jpg')
     image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
-    # image5 = os.path.join(app.config['UPLOAD_FOLDER'], 'third.jpg')
+    image5 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics1.jpg')
     # image6 = os.path.join(app.config['UPLOAD_FOLDER'], 'college.jpg')
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
-    return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4)
+    return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4, user_image5 = image5)
 
 
 # Route for handling the student sign-in form submission
