@@ -55,17 +55,16 @@ def connect_to_mysql():
 
 # Function to reconnect to MySQL if the connection is lost
 def mysql_reconnect(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
-        db = connect_to_mysql()
         while True:
             try:
+                db = connect_to_mysql()  # Establish a new connection
                 return func(db, *args, **kwargs)
             except MySQLdb.OperationalError as e:
-                if e.args[0] in (2006, 2013): 
+                if e.args[0] in (2006, 2013):
                     print("Attempting to reconnect to MySQL...")
                     time.sleep(1)
-                    db.close()
-                    db = connect_to_mysql()
                     print("Reconnected to MySQL")
                 else:
                     raise
