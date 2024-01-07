@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import os
 import MySQLdb
+from MySQLdb import OperationalError
 from dotenv import load_dotenv
 import time 
 
@@ -50,19 +51,19 @@ def connect_to_mysql():
 
 # Function to reconnect to MySQL if the connection is lost
 def mysql_reconnect(func):
-
+    @wraps(func)
     def wrapper(*args, **kwargs):
         while True:
             try:
                 db = connect_to_mysql()  # Establish a new connection
                 return func(db, *args, **kwargs)
-            except MySQLdb.OperationalError as e:
-                if e.args[0] in (2006, 2013):
-                    print("Attempting to reconnect to MySQL...")
-                    time.sleep(1)
-                    print("Reconnected to MySQL")
+            except OperationalError as e:
+                error_code = e.args[0]
+                if error_code == 2006:
+                    print("MySQL server has gone away. Attempting to reconnect...")
+                    time.sleep(1)  # You may adjust the sleep time between retries
                 else:
-                    raise
+                    raise  # Re-raise if it's a different error
     return wrapper
 
 
