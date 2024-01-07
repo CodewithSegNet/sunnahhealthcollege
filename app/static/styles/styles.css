@@ -1,13 +1,19 @@
+html{
+  margin: 0 auto;
+  overflow-x: hidden;
+
+}
+
 body {
-    margin: 0;
+  margin: 0 auto;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
     height: 100vh;
     background-color: #f4f4f4;
   }
-  
   
 
   

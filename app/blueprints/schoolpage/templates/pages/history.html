@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Home - Sunnah Health College</title>
+        <title>History - Sunnah Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -44,7 +44,8 @@
 		
     </head>
     <body>
-		
+
+	
 		<!-- Header Area -->
 		<header class="header" >
 			<!-- Topbar -->
@@ -109,7 +110,7 @@
 													<li><a href="{{ url_for('pages.history') }}">Brief History</a></li>
 												</ul>
 											</li>
-											<li><a href="{{ url_for('pages.programmes') }}">Programmes</a>
+											<li><a href="{{ url_for('pages.programmes') }}">Programmes </a>
 											</li>
 												<li><a href="{{ url_for('pages.admission') }}">Admission </a></li>
 
@@ -136,23 +137,58 @@
 			<!--/ End Header Inner -->
 		</header>
 		<!-- End Header Area -->
-		
-		<!-- Error Page -->
-		<section class="error-page section">
+
+
+
+
+		<!-- Breadcrumbs -->
+		<div class="breadcrumbs overlay">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 offset-lg-3 col-12">
-						<!-- Error Inner -->
-						<div class="error-inner">
-							<h1>Portal<span>is Closed!</span></h1>
-						
+				<div class="bread-inner">
+					<div class="row">
+						<div class="col-12">
+							<h2>Brief History</h2>
+							<ul class="bread-list">
+								<li><a href="{{ url_for('pages.home') }}">Home</a></li>
+								<li><i class="icofont-simple-right"></i></li>
+								<li class="active">Brief History</li>
+							</ul>
 						</div>
-						<!--/ End Error Inner -->
 					</div>
 				</div>
 			</div>
-		</section>	
-		<!--/ End Error Page -->
+		</div>
+		<!-- End Breadcrumbs -->
+	
+		<!-- Start Portfolio Details Area -->
+		<section class="pf-details section">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="inner-content">
+						
+				
+							<div class="body-text">
+								<h3>Here is the name of this project here</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor a ti incididunt ut labore et dolore to in magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna aliqua uis nostrud.Lorem ipsum dolor sit amet, in a in to in a consectetur.ncididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna in a aliqua uis nostrud.Lorem ipsum dolor sit amet, in aed do eiusmod</p>
+								<p>ncididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna to in aliqua uis nostrud.Lorem ipsum dolor sit amet, in aed do eiusmod.ncididunt ut labore et dolore magna aliqua. </p>
+								<p>ncididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna a aliqua uis nostrud.Lorem ipsum dolor sit amet, in aed do eiusmod.ncididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna aliqua uis nostrud.Lorem ipsum dolor sit amet, in aed do eiusmod. dolor sit amet, in aed do eiusmod.ncididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis to the in nostrud.abore et dolore magna aliqua uis nostrud.</p>
+								<div class="share">
+									<h4>Share Now -</h4>
+									<ul>
+										<li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Portfolio Details Area -->
+		
 		
 			
 		<!-- Footer Area -->
@@ -239,7 +275,8 @@
 			<!--/ End Copyright -->
 		</footer>
 		<!--/ End Footer Area -->
-		
+
+
 		<!-- jquery Min JS -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
@@ -261,6 +298,5 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
     </body>
 </html>

@@ -541,6 +541,7 @@ def registration():
 
         # Add new user to the Database
         db.session.add(new_semester)
+        db.session.add(new_department)
         db.session.commit()
 
 
