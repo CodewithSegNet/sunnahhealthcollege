@@ -45,16 +45,13 @@ def connect_to_mysql():
         host=os.getenv('DATABASE_HOST'),
         user=os.getenv('DATABASE_USERNAME'),
         passwd=os.getenv('DATABASE_PASSWORD'),
-        db=os.getenv('DATABASE')
+        db=os.getenv('DATABASE'),
+        mysql_reconnect=True
     )
-
-
-
-
-
 
 # Function to reconnect to MySQL if the connection is lost
 def mysql_reconnect(func):
+
     def wrapper(*args, **kwargs):
         while True:
             try:
@@ -87,7 +84,9 @@ def login(db):
         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
         user = cursor.fetchone()
 
-        if user and Student.query.filter_by(admission_number=admission_number).first() and user.check_password(password):
+        user = Student.query.filter_by(admission_number=admission_number).first()
+
+        if user and user.check_password(password):
             """
             create a jwt token
             """
