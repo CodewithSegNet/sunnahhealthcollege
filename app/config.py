@@ -72,3 +72,13 @@ config_map = {
 # Set the active configuration based on an environment variable
 active_env = os.getenv('FLASK_ENV', 'testing')
 config = config_map[active_env]
+
+
+# Function to establish a MySQL connection
+def connect_to_mysql():
+    return MySQLdb.connect(
+        host=os.getenv('DATABASE_HOST'),
+        user=os.getenv('DATABASE_USERNAME'),
+        passwd=os.getenv('DATABASE_PASSWORD'),
+        db=os.getenv('DATABASE')
+    )

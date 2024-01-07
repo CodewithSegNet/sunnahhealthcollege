@@ -3,12 +3,14 @@ from flask import current_app, Blueprint, render_template, jsonify, request, url
 from app.models.student_model import Student
 from flask import send_from_directory
 from app.app import cache
+from app.config import connect_to_mysql
 from functools import wraps
 import requests
 import jwt
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import os
+import MySQLdb 
 
 
 pages_bp = Blueprint("pages", __name__, template_folder="templates")
@@ -30,7 +32,6 @@ def home():
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
     return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4, user_image5 = image5)
 
-
 # Route for handling the student sign-in form submission
 @pages_bp.route('/login', methods=['POST'])
 def login():
@@ -40,25 +41,36 @@ def login():
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
-        
+
+        # Attempt to connect to MySQL
+        db = connect_to_mysql()
+
         user = Student.query.filter_by(admission_number=admission_number).first()
+
+        # Close the database connection after retrieving data
+        db.close()
+
         if user and user.check_password(password):
             """
             create a jwt token
             """
             token = jwt.encode({
                 'user_id': user.admission_number,
-                'exp': datetime.utcnow() + timedelta(hours=2) # Token expiration Time
+                'exp': datetime.utcnow() + timedelta(hours=2)
             }, 'secret_key', algorithm='HS256')
 
-            session['token'] = token # Store token in the session
-            session['user_id'] = user.admission_number # Store user ID in the session
+            session['token'] = token
+            session['user_id'] = user.admission_number 
 
             return redirect(url_for('pages.dashboard'))
         else:
             return redirect(url_for('pages.signinstudent'))    
+    except MySQLdb.OperationalError as e:
+        db.close()
+        db = connect_to_mysql()  
+        return jsonify({'error': "MySQL connection error: {}".format(str(e))})
     except Exception as e:
-        return jsonify({'error': "An error occured: {}".format(str(e))})
+        return jsonify({'error': "An error occurred: {}".format(str(e))})
     
 
 
