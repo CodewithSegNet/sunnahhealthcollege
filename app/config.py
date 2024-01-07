@@ -3,14 +3,11 @@
 
 # Imports
 import os
-<<<<<<< HEAD
-
+from dotenv import load_dotenv
+import MySQLdb
 
 # Load environment variables from the .env file
 load_dotenv()
-=======
->>>>>>> Feature/DatabaseSchema
-
 
 # Define the absolute path for the upload folder
 UPLOAD_FOLDER = 'static/img'
