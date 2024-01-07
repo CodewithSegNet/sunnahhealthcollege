@@ -87,9 +87,7 @@ def login(db):
         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
         user = cursor.fetchone()
 
-        user = Student.query.filter_by(admission_number=admission_number).first()
-
-        if user and user.check_password(password):
+        if user and Student.query.filter_by(admission_number=admission_number).first() and user.check_password(password):
             """
             create a jwt token
             """
