@@ -3,7 +3,6 @@ from flask import current_app, Blueprint, render_template, jsonify, request, url
 from app.models.student_model import Student
 from flask import send_from_directory
 from app.app import cache
-from app.config import connect_to_mysql
 from functools import wraps
 import requests
 import jwt
