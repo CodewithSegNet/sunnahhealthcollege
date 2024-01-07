@@ -10,7 +10,8 @@ import jwt
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import os
-import MySQLdb 
+import MySQLdb
+import time 
 
 
 pages_bp = Blueprint("pages", __name__, template_folder="templates")
@@ -32,9 +33,32 @@ def home():
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
     return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4, user_image5 = image5)
 
+
+# Function to reconnect to MySQL if the connection is lost
+def mysql_reconnect(func):
+    def wrapper(*args, **kwargs):
+        db = connect_to_mysql()  # Create a new connection to MySQL
+        while True:
+            try:
+                return func(db, *args, **kwargs)  # Pass the db connection to the decorated function
+            except MySQLdb.OperationalError as e:
+                # If MySQL connection is lost, attempt to reconnect
+                if e.args[0] in (2006, 2013):  # MySQL server has gone away or Lost connection to MySQL server
+                    print("Attempting to reconnect to MySQL...")
+                    time.sleep(1)  # Add a delay before reconnection attempt
+                    db.close()  # Close the current connection
+                    db = connect_to_mysql()  # Reconnect to MySQL
+                    print("Reconnected to MySQL")
+                else:
+                    raise  # Re-raise other OperationalError exceptions
+    return wrapper
+
+
+
 # Route for handling the student sign-in form submission
 @pages_bp.route('/login', methods=['POST'])
-def login():
+@mysql_reconnect
+def login(db):
     """
     a route that handles students authentication
     """
@@ -42,13 +66,7 @@ def login():
         admission_number = request.form['admission_number']
         password = request.form['password']
 
-        # Attempt to connect to MySQL
-        db = connect_to_mysql()
-
         user = Student.query.filter_by(admission_number=admission_number).first()
-
-        # Close the database connection after retrieving data
-        db.close()
 
         if user and user.check_password(password):
             """
@@ -56,19 +74,15 @@ def login():
             """
             token = jwt.encode({
                 'user_id': user.admission_number,
-                'exp': datetime.utcnow() + timedelta(hours=2)
+                'exp': datetime.utcnow() + timedelta(hours=2) # Token expiration Time
             }, 'secret_key', algorithm='HS256')
 
-            session['token'] = token
-            session['user_id'] = user.admission_number 
+            session['token'] = token # Store token in the session
+            session['user_id'] = user.admission_number # Store user ID in the session
 
             return redirect(url_for('pages.dashboard'))
         else:
             return redirect(url_for('pages.signinstudent'))    
-    except MySQLdb.OperationalError as e:
-        db.close()
-        db = connect_to_mysql()  
-        return jsonify({'error': "MySQL connection error: {}".format(str(e))})
     except Exception as e:
         return jsonify({'error': "An error occurred: {}".format(str(e))})
     
