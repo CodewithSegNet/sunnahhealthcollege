@@ -53,7 +53,8 @@ def connect_to_mysql():
 def mysql_reconnect(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        while True:
+        retry_count = 3  # Number of retry attempts
+        while retry_count > 0:
             try:
                 db = connect_to_mysql()  # Establish a new connection
                 return func(db, *args, **kwargs)
@@ -62,8 +63,10 @@ def mysql_reconnect(func):
                 if error_code == 2006:
                     print("MySQL server has gone away. Attempting to reconnect...")
                     time.sleep(1)  # You may adjust the sleep time between retries
+                    retry_count -= 1
                 else:
                     raise  # Re-raise if it's a different error
+        return jsonify({'error': 'Failed to reconnect to the database after multiple attempts.'}), 500
     return wrapper
 
 
