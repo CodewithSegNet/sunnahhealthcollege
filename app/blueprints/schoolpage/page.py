@@ -55,7 +55,6 @@ def connect_to_mysql():
 
 # Function to reconnect to MySQL if the connection is lost
 def mysql_reconnect(func):
-    @wraps(func)
     def wrapper(*args, **kwargs):
         while True:
             try:
