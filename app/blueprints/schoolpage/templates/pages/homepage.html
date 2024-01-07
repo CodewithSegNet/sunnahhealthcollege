@@ -119,21 +119,19 @@
 								<div class="main-menu">
 									<nav class="navigation ">
 										<ul class="nav menu">
-											<li class="active"><a href="#">Home </a>
+											<li class="active"><a href="{{ url_for('pages.home') }}">Home </a>
 											</li>
 											<li><a href="#">About Us <i class="icofont-rounded-down"></i></a>
 											<ul class="dropdown">
-													<li><a href="404.html">404 Error</a></li>
+													<li><a href="{{ url_for('pages.vision') }}">Vision, Mission and Core Value</a></li>
+													<li><a href="{{ url_for('pages.history') }}">Brief History</a></li>
 												</ul>
 											</li>
-											<li><a href="#">Administration <i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="404.html">Faculties</a></li>
-												</ul>
+											<li><a href="{{ url_for('pages.programmes') }}">Programmes</i></a>
 											</li>
-												<li><a href="{{ url_for('pages.dashboard') }}">Admission </a></li>
+												<li><a href="{{ url_for('pages.admission') }}">Admission </a></li>
 
-											<li><a href="contact.html">Contact Us</a></li>
+											<li><a href="{{ url_for('pages.contact') }}">Contact Us</a></li>
 
 											<a href="{{ url_for('pages.signinstudent') }}" class="mobile-btn">Portal</a>
 										</ul>
@@ -177,8 +175,8 @@
 									<p>
 										The journey to higher education can be a significant step, and we aim to make the admission process as seamless as possible for our prospective students. </p>
 									<div class="button">
-										<a href="#" class="btn">Apply Now</a>
-										<a href="#" class="btn primary">Learn More</a>
+										<a href="{{ url_for('pages.application') }}" class="btn">Apply Now</a>
+										<a href="{{ url_for('pages.admission') }}" class="btn primary">Learn More</a>
 									</div>
 								</div>
 							</div>
@@ -197,8 +195,8 @@
 									<p>
 										Our institution is committed to delivering a comprehensive and enriching learning experience that empowers students to thrive in their chosen fields.</p>
 									<div class="button">
-										<a href="#" class="btn">Apply Now</a>
-										<a href="#" class="btn primary">Learn More</a>
+										<a href="{{ url_for('pages.application') }}" class="btn">Apply Now</a>
+										<a href="{{ url_for('pages.admission') }}" class="btn primary">Learn More</a>
 									</div>
 								</div>
 							</div>
@@ -228,7 +226,7 @@
 										<p>For information that will assist 
 											our propective students
 											to study at Sunnah Health College Of Science.</p>
-										<a href="#">APPLY NOW<i class="fa fa-long-arrow-right"></i></a>
+										<a href="{{ url_for('pages.admission') }}">APPLY NOW<i class="fa fa-long-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
@@ -248,7 +246,7 @@
 												<li class="day"><i class="icofont-learn"></i> Pharmacy Technician </li>
 												<li class="day"><i class="icofont-learn"></i> medical Laboratory Technician </li>
 											</ul>
-											<a href="#">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+											<a href="{{ url_for('pages.admission') }}">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
 
 										</div>
 									</div>
@@ -269,7 +267,7 @@
 											<li class="day">Saturday <span>9:00am-12:30pm</span></li>
 											<li class="day">Sunday<span>Unavailable</span></li>
 										</ul>
-										<a href="#">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+										<a href="{{ url_for('pages.contact') }}">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
@@ -397,7 +395,6 @@
 
 
 
-
 <!-- Start Blog Area -->
 <section class="blog section" id="blog">
 	<div class="container">
@@ -418,13 +415,31 @@
 					</div>
 					<div class="news-body">
 						<div class="news-content">
-							<h2><a href="blog-single.html">Jane Doe</a></h2>
-							<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
+							<h2><a>Rukkayat Muhammad</a></h2>
+							<p class="text">The strong sense of community at my school created a supportive network among students and faculty, Encouraging an environment conducive to academic growth and success.</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Single Blog -->
+
+			</div>
+			<div class="col-lg-4 col-md-6 col-12">
+				<!-- Single Blog -->
+				<div class="single-news">
+					<div class="news-head">
+						<img src={{user_image5}} alt="#">
+					</div>
+					<div class="news-body">
+						<div class="news-content">
+							<h2><a>Ummi Ibrahim</a></h2>
+							<p class="text">My journey has been a transformative experience for me. The dedicated faculty and their innovative teaching methods have significantly enriched my learning journey.
+							</p>
 						</div>
 					</div>
 				</div>
 				<!-- End Single Blog -->
 			</div>
+
 			<div class="col-lg-4 col-md-6 col-12">
 				<!-- Single Blog -->
 				<div class="single-news">
@@ -433,34 +448,18 @@
 					</div>
 					<div class="news-body">
 						<div class="news-content">
-							<h2><a href="blog-single.html">Jane Doe</a></h2>
-							<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
+							<h2><a>Rukkayat Muhammad</a></h2>
+							<p class="text">The strong sense of community at my school created a supportive network among students and faculty, Encouraging an environment conducive to academic growth and success.</p>
 						</div>
 					</div>
 				</div>
 				<!-- End Single Blog -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Single Blog -->
-				<div class="single-news">
-					<div class="news-head">
-						<img src={{user_image3}} alt="#">
-					</div>
-					<div class="news-body">
-						<div class="news-content">
-							<h2><a href="blog-single.html">Jane Doe</a></h2>
-							<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
-						</div>
-					</div>
-				</div>
-				<!-- End Single Blog -->
+
 			</div>
 		</div>
 	</div>
 </section>
 <!-- End Blog Area -->	
-		
-
 
 		
 		<!-- Start Newsletter Area -->
@@ -520,17 +519,17 @@
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-12">
 										<ul>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Admission</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>why Sunnah</a></li>	
+											<li><a href="{{ url_for('pages.home') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+											<li><a href="{{ url_for('pages.history') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+											<li><a href="{{ url_for('pages.admission') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Admission</a></li>
+											<li><a href="{{ url_for('pages.vision') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>why Sunnah</a></li>	
 										</ul>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<ul>
 										
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Faculties</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>	
+											<li><a href="{{ url_for('pages.programmes') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Programmes</a></li>
+											<li><a href="{{ url_for('pages.contact') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>	
 										</ul>
 									</div>
 								</div>

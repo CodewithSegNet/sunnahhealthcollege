@@ -24,7 +24,13 @@
 	}
 
 
-
+	.contact-us #myMap {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
 
 
@@ -38,6 +44,20 @@
 .image-container{
 	display: none;
 }
+
+
+.contact-us .contact-us-form {
+    padding: 171px 40px 40px 20px;
+}
+
+.max{
+	max-width: 16%;
+}
+
+.sidebar {
+	height: 250px;
+}
+
 
 .mobile-nav{
 	display: none;
@@ -440,6 +460,7 @@
 	  .table-responsive-991 td,
 	  .table-responsive-991 tr {
 		display: block;
+		width: 100%;
 	  }
 
 	  .table-responsive-991 thead {
@@ -480,8 +501,25 @@
 /* Mobile Screen */
 @media only screen and (max-width: 767px) {
 
+	.table-head{
+		width: 100%;
+	}
+
+
+	.contact-us .contact-us-form {
+		padding: 151px 40px 40px 20px;
+	}
+
+	.sidebar {
+		height: 250px;
+	}
+
+	.table-row{
+		width: 100%;
+	}
+
 	h6{
-		font-size: .6rem;
+		font-size: 1rem;
 	}
 
 	  .table-responsive-991 {
@@ -503,6 +541,11 @@
 	  .table-responsive-991 tr {
 		display: block;
 	  }
+
+	  .tbody{
+		width: 100%;
+	  }
+	
 
 	  .table-responsive-991 thead {
 		display: inline-flex;
@@ -1139,9 +1182,7 @@
 .contact-us .single-info {
 	margin: 10px 0;
 }
-.contact-us .contact-us-form {
-	padding: 30px 30px;
-}
+
 .doctor-details-area .doctor-details-right {
 	padding-left: 0;
 	padding-top: 30px;
@@ -1271,12 +1312,23 @@
 		padding: 0.75rem;	
 	}
 
+	.contact-us .contact-us-form {
+		padding:30px 40px 40px 20px;
+	}
+
+	.sidebar {
+		height: 250px;
+	}
 	
 	.course_table tbody tr td{
 		padding: 0.92rem;
 		}
 
-
+		.student-status {
+			display: block;
+			text-align: left;
+		}
+		
 .section{
 	padding:50px 0px;
 }

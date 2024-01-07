@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Home - Sunnah Health College</title>
+        <title>Dashboard - Sunnah Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -66,7 +66,7 @@
       <span>Hello, {{ student.name }}</span>
     
     </div>
-    <div class="navbar__right  d-flex align-items-center justify-content-between">
+    <div class="navbar__right d-flex align-items-center justify-content-between">
       <i class="icofont-ui-message"></i>
       <div class="navbar__burger">
         <i class="icofont-navigation-menu"></i> 
@@ -79,20 +79,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <ul>
-        <li><a href="#" class="sidebar-item active" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
-        <li><a href="#" class="sidebar-item" data-content="transcript"><i class="icofont-certificate-alt-1"></i> Transcript</a></li>
-        <li><a href="#" class="sidebar-item" data-content="Certification"><i class="icofont-learn"></i> Certification</a></li>
-        <li><a href="#" class="sidebar-item" data-content="settings"><i class="icofont-settings-alt">
-
-          
-        </i> Settings  <i class="icofont-rounded-down"></i></a> 
-        <ul class="dropdown"  style="display: none;">
-          <li><a href="#" class="sidebar-item" data-content="department">Department</a></li>
-          <li><a href="#" class="sidebar-item" data-content="course">courses</a></li>
-          <li><a href="#" class="sidebar-item" data-content="semester">semester</a></li>
-        </ul>
+        <li><a href="#" class="dash-btn sidebar-item active" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+        <li><a href="#" class="dash-btn sidebar-item" data-content="transcript"><i class="icofont-certificate-alt-1"></i> Transcript</a></li>
+        <li><a href="#" class="dash-btn sidebar-item" data-content="certification"><i class="icofont-learn"></i> Certification</a></li>
+        <li><a href="#" class="dash-btn sidebar-item" data-content="settings"><i class="icofont-settings-alt">
+        </i> Settings </a> 
       </li>
-        <li><a href="{{ url_for('pages.logout') }}"  data-content=""><i class="icofont-exit"></i> Log Out</a></li>
+        <li><a class="dash-btn" href="{{ url_for('pages.logout') }}"  data-content=""><i class="icofont-exit"></i> Log Out</a></li>
       </ul>
     </aside>
 
@@ -135,10 +128,12 @@
               <div class="card">
                 <div class="card-body text-center">
            
-                  <div class="d-flex align-items-center justify-content-between text-left">
-                    <h6>Department: {{ student.department_name }}</h6>
+                  <div class="student-status">
+                    <h6>Department:</h6>
+                    {{ student.department_name }}
+
                     {% if semesters %}
-                    <h6>Semesters:</h6>
+                    <h6>Semester:</h6>
                     
                         {% for semester in semesters %}
                             {{ semester.semester }}
@@ -150,7 +145,7 @@
 
 
                 {% if departments %}
-                <h6>Department Levels:</h6>
+                <h6>Department Level:</h6>
                 
                     {% for department in departments %}
                         {{ department.department_level }}
@@ -226,7 +221,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="small d-flex align-items-center justify-content-between text-left">
+                            <div class="student-status">
                                 {% if semesters %}
                             <h6>Semester:</h6>
                         
@@ -252,8 +247,8 @@
                         </div>
                             <hr>
                             <table class="course_table table-bordered text-center  table-responsive-991">
-                                <thead>
-                                    <tr >
+                                <thead class="table-head">
+                                    <tr class="table-row">
                                         <th>Course Code</th>
                                         <th>Course Title</th>
                                         <th>Credit</th>
@@ -264,7 +259,7 @@
                                         <th>Remark</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="tbody">
                                     {% for course in courses %}
                                         <tr>
                                             <td> {{ course.course_code }}</td>
@@ -294,9 +289,101 @@
 
 
       
+
+      
+      <div id="certification" class="content-section" style="display: none;">
+        <section class="container">
+          <div class="row px-4">
+            <article>
+                <h1 class="pt-4">Certification</h1>
+<div class="pt-4">
+    <p>At the end of the programme, the certificate awarded is a Diploma in Community Health</p>
+<br>
+<span class="black">condition for award of certificate</span>
+<p class="pb-5"> The final professional and Practice Licensing examination shall be organized and conducted by community health
+     practitioners registration board of nigeria (CHPRBN) based on their prescribed structue.
+     Research project shall be supervised by the training institution and assessed by the board.</p>
+
+
+     <table class="course_table table-bordered text-center  table-responsive-991 ">
+        <thead class="table-head">
+            <tr class="table-row">
+                <th>SCORE</th>
+                <th>LETTER GRADE</th>
+                <th>WEIGHTING POINTS</th>
+                <th>REMARK</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+                <td>
+                    <div> 70 - 100% </div>
+                    <div> 65 - 69</div>
+                    <div> 60 - 64</div>
+                    <div> 55 - 59</div>
+                    <div> 50 - 54</div>
+                    <div> Below 50%</div>
+                </td>
+
+                <td>
+                    <div> A </div>
+                    <div> B</div>
+                    <div> C </div>
+                    <div> D </div>
+                    <div> E </div>
+                    <div> F </div>
+                </td>
+
+                <td>
+                    <div> 4.00 </div>
+                    <div> 3.50 </div>
+                    <div> 3.00 </div>
+                    <div> 2.50 </div>
+                    <div> 2.00 </div>
+                    <div> 0.00 </div>
+                </td>
+
+                <td>
+                    <div> Execellent </div>
+                    <div> V.Good </div>
+                    <div> Good </div>
+                    <div> Fair </div>
+                    <div> Pass </div>
+                    <div> Failure </div>
+                </td>
+        </tbody>
+    </table>
+    
+    <div>
+        <p>The Four (4) point grading system shall be adopted for the diploma. please see table above.</p>
+        <br>
+<h6> Award of the Diploma in Community Health shall be classfied as fellows:</h6>
+<ul class="pt-3 pb-3">
+    <li>distinction -  CGPA of 3.50 - 4.00</li>
+    <li>Lower Credit -  CGPA of 3.00 - 3.49</li>
+    <li>Lower Credit -  CGPA of 2.50 - 2.99</li>
+    <li>Pass -  CGPA of 2.00 - 2.49</li>
+    <li>Fail -  CGPA of below 2.00</li>
+</ul>
+
+    </div>
+
+</div>
+
+
+
+            </article>
+
+          </div>
+            </section>
+          </div>
+
+
+
+      
       <div id="settings" class="content-section" style="display: none;">
         <section class="container">
           <div class="row d-flex align-items-center justify-content-center">
+            <h3><i class="icofont-warning"></i> Please ensure all fields are filled before submission to avoid encountering an error.</h3>
               <div class="col-md-7 pt-5 pb-5">
                   <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.update_profile') }}" method="post">
                     <div class="row">
@@ -356,127 +443,6 @@
               </div>
             </section>
           </div>
-
-
-
-
-          <div id="department" class="content-section" style="display: none;">
-            <section class="container">
-                <div class="row d-flex align-items-center justify-content-center">
-                    <div class="col-md-7 pt-5 pb-5">
-                        <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.upload_department') }}" method="POST">
-                            <!-- CSRF Token -->
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="department_level">Department Level *</label>
-                                    <select type="number" id="department_level" name="department_level" required> 
-                                        <option value="100"> 100 </option>
-                                        <option value="100"> 200 </option>
-                                        <option value="100"> 300 </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="department_name">Department Name *</label>
-                                    <select type="text" id="department_name" name="department_name" required>
-                                        <option value="Community Health Extension">Community Health Extension</option>
-                                        <option value="medical Laboratory Technician">medical Laboratory Technician</option>
-                                        <option value="Pharmacy Technician">Pharmacy Technician</option>
-
-                                    </select>
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="submit" value="SUBMIT" id="submitBtn">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
-    
-      
-
-
-        <div id="semester" class="content-section" style="display: none;">
-          <section class="container">
-              <div class="row d-flex align-items-center justify-content-center">
-                  <div class="col-md-7 pt-5 pb-5">
-                      <form id="myForm" class="form-base fade-in-alt" action="{{ url_for('user.upload_semester') }}" method="POST">
-                          <!-- CSRF Token -->
-                          
-                          <div class="row">
-                              <div class="col-md-12">
-                                  <label for="semester">Semester *</label>
-                                  <select type="text" id="semester" name="semester" required> 
-                                    <option value="First">First</option>
-                                    <option value="Second">Second</option>
-
-                                  </select>
-                              </div>
-                          </div>
-          
-                          <div class="row">
-                              <div class="col-md-12">
-                                  <input type="submit" value="SUBMIT" id="submitBtn">
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          </section>
-      </div>
-      
-
-
-
-
-          <div id="course" class="content-section" style="display: none;">
-            <section class="container">
-                <div class="row d-flex align-items-center justify-content-center">
-                    <div class="col-md-7 pt-5 pb-5">
-                        <form id="courseForm" class="form-base fade-in-alt" action="{{ url_for('user.update_course') }}" method="POST">
-                            <!-- CSRF Token -->
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="course_title">Course Title *</label>
-                                    <input type="text" id="course_title" name="course_title" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="course_code">Course Code *</label>
-                                    <input type="text" id="course_code" name="course_code" required>
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="credit">Credit *</label>
-                                    <input type="number" id="credit" name="credit" required>
-                                </div>
-                            </div>
-
-                          
-            
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="submit" value="SUBMIT" id="submitBtn">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
-        
-
-
-
-
-
 
       </div>
     </div>

@@ -23,14 +23,14 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-    # # Define SSL options in engine options
-    # SQLALCHEMY_ENGINE_OPTIONS = {
-    #     'connect_args': {
-    #         'ssl': {
-    #             'rejectUnauthorized': True
-    #         }
-    #     }
-    # }
+    # Define SSL options in engine options
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'connect_args': {
+            'ssl': {
+                'rejectUnauthorized': True
+            }
+        }
+    }
     
 
     # Flask-Caching configuration

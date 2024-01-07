@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Home - Sunnah Health College</title>
+        <title>Application - Sunnah Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -44,7 +44,8 @@
 		
     </head>
     <body>
-		
+
+	
 		<!-- Header Area -->
 		<header class="header" >
 			<!-- Topbar -->
@@ -109,7 +110,7 @@
 													<li><a href="{{ url_for('pages.history') }}">Brief History</a></li>
 												</ul>
 											</li>
-											<li><a href="{{ url_for('pages.programmes') }}">Programmes</a>
+											<li><a href="{{ url_for('pages.programmes') }}">Programmes </a>
 											</li>
 												<li><a href="{{ url_for('pages.admission') }}">Admission </a></li>
 
@@ -136,23 +137,62 @@
 			<!--/ End Header Inner -->
 		</header>
 		<!-- End Header Area -->
-		
-		<!-- Error Page -->
-		<section class="error-page section">
+
+		<!-- Breadcrumbs -->
+		<div class="breadcrumbs overlay">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 offset-lg-3 col-12">
-						<!-- Error Inner -->
-						<div class="error-inner">
-							<h1>Portal<span>is Closed!</span></h1>
-						
+				<div class="bread-inner">
+					<div class="row">
+						<div class="col-12">
+							<h2>Application Form Portal</h2>
+							<ul class="bread-list">
+								<li><a href="{{ url_for('pages.home') }}">Home</a></li>
+								<li><i class="icofont-simple-right"></i></li>
+								<li class="active">Application Form (Registration Page)</li>
+							</ul>
 						</div>
-						<!--/ End Error Inner -->
 					</div>
 				</div>
 			</div>
-		</section>	
-		<!--/ End Error Page -->
+		</div>
+		<!-- End Breadcrumbs -->
+	
+		<!-- Start Portfolio Details Area -->
+		<section class="pf-details section">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="inner-content">
+						
+				
+							<div class="body-text">
+								<h6>
+                                    Registration Steps
+                                </h6>
+
+                                <p><i class="fa fa-long-arrow-right"></i>  Register an Account on this page. The Email Address and phone number supplied has to be unique, and will serve as your Registration ID to make payment</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  The name provided must be the real name of the applicant</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  After successfully registering an Email Address, It will automatically sign you in, which you will eventually see a pay button</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  Once you click pay, it will redirect you to the payment gateway where you will need to provide your card details</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  After a successful payment, a registration number and a pin will be generated for you, and it will be used to complete your applicaton</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  Each applicant should write down or print the registration number and the pin generated because it will be used for all other process</p>
+                                <p><i class="fa fa-long-arrow-right"></i>  If you have previously registered but yet to make payment, <a style="color: blue;" href="{{ url_for('pages.notfound') }}">click here to login.</a> </p>
+								<div class="share">
+									<h4>Share Now -</h4>
+									<ul>
+										<li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Portfolio Details Area -->
+		
 		
 			
 		<!-- Footer Area -->
@@ -239,7 +279,8 @@
 			<!--/ End Copyright -->
 		</footer>
 		<!--/ End Footer Area -->
-		
+
+
 		<!-- jquery Min JS -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
@@ -261,6 +302,5 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
     </body>
 </html>

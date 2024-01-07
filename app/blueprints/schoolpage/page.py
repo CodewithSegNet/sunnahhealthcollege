@@ -15,7 +15,7 @@ import os
 pages_bp = Blueprint("pages", __name__, template_folder="templates")
 
 
-@pages_bp.route('/home')
+@pages_bp.route('/')
 @cache.cached(timeout=500)
 def home():
     """
@@ -26,10 +26,10 @@ def home():
     image2 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'slider.jpg')
     image3 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'student.jpg')
     image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
-    # image5 = os.path.join(app.config['UPLOAD_FOLDER'], 'third.jpg')
+    image5 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics1.jpg')
     # image6 = os.path.join(app.config['UPLOAD_FOLDER'], 'college.jpg')
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
-    return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4)
+    return render_template('pages/homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4, user_image5 = image5)
 
 
 
@@ -152,6 +152,103 @@ def signinadmin():
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
 
     return render_template('pages/signinAdmin.html', user_image = image1)
+
+
+
+
+@pages_bp.route('/contact')
+@cache.cached(timeout=500)
+def contact():
+    """
+     A Route thats handles the StudentSignIn
+    """
+
+    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'section-img.png')
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+    return render_template('pages/contact.html',  user_image = image1, user_image4 = image4)
+
+
+@pages_bp.route('/admission')
+@cache.cached(timeout=500)
+def admission():
+    """
+     A Route thats handles the admission page
+    """
+
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+    return render_template('pages/admission.html', user_image4 = image4)
+
+
+
+
+@pages_bp.route('/history')
+@cache.cached(timeout=500)
+def history():
+    """
+     A Route thats handles the history page
+    """
+
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/history.html', user_image4 = image4)
+
+
+
+
+@pages_bp.route('/vision')
+@cache.cached(timeout=500)
+def vision():
+    """
+     A Route thats handles the vision page
+    """
+
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+    return render_template('pages/vision.html', user_image4 = image4)
+
+
+
+@pages_bp.route('/programmes')
+@cache.cached(timeout=500)
+def programmes():
+    """
+     A Route thats handles the programmes page
+    """
+
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/programmes.html', user_image4 = image4)
+
+
+
+@pages_bp.route('/application')
+@cache.cached(timeout=500)
+def application():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/application.html', user_image4 = image4)
+
+
+
+@pages_bp.route('/notfound')
+@cache.cached(timeout=500)
+def notfound():
+    """
+     A Route thats handles the 404 page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+    return render_template('pages/404.html', user_image4 = image4)
+
+
+
+
+
 
 
 
