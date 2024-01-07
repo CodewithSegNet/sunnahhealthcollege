@@ -45,8 +45,7 @@ def connect_to_mysql():
         host=os.getenv('DATABASE_HOST'),
         user=os.getenv('DATABASE_USERNAME'),
         passwd=os.getenv('DATABASE_PASSWORD'),
-        db=os.getenv('DATABASE'),
-        mysql_reconnect=True
+        db=os.getenv('DATABASE')
     )
 
 # Function to reconnect to MySQL if the connection is lost
