@@ -37,20 +37,19 @@ def home():
 # Function to reconnect to MySQL if the connection is lost
 def mysql_reconnect(func):
     def wrapper(*args, **kwargs):
-        db = connect_to_mysql()  # Create a new connection to MySQL
+        db = connect_to_mysql()
         while True:
             try:
-                return func(db, *args, **kwargs)  # Pass the db connection to the decorated function
+                return func(db, *args, **kwargs)
             except MySQLdb.OperationalError as e:
-                # If MySQL connection is lost, attempt to reconnect
-                if e.args[0] in (2006, 2013):  # MySQL server has gone away or Lost connection to MySQL server
+                if e.args[0] in (2006, 2013): 
                     print("Attempting to reconnect to MySQL...")
-                    time.sleep(1)  # Add a delay before reconnection attempt
-                    db.close()  # Close the current connection
-                    db = connect_to_mysql()  # Reconnect to MySQL
+                    time.sleep(1)
+                    db.close()
+                    db = connect_to_mysql()
                     print("Reconnected to MySQL")
                 else:
-                    raise  # Re-raise other OperationalError exceptions
+                    raise
     return wrapper
 
 
@@ -65,6 +64,11 @@ def login(db):
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
+
+        # Using the provided 'db' connection object to execute the query
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
+        user = cursor.fetchone()
 
         user = Student.query.filter_by(admission_number=admission_number).first()
 
