@@ -29,22 +29,6 @@ class Config:
     # Flask-Caching configuration
     CACHE_TYPE = 'simple'
     CACHE_DEFAULT_TIMEOUT = 300
-
-    # Define SSL options in engine options
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        'connect_args': {
-            'ssl': {
-                'ca': '/etc/ssl/cert.pem',
-                'rejectUnauthorized': True
-            }
-        }
-    }
-    
-    
-
-    # Flask-Caching configuration
-    CACHE_TYPE = 'simple'
-    CACHE_DEFAULT_TIMEOUT = 300
     
 class DevelopmentConfig(Config):
     '''Development configuration class
