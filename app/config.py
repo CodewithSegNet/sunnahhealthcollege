@@ -30,15 +30,10 @@ class Config:
     CACHE_TYPE = 'simple'
     CACHE_DEFAULT_TIMEOUT = 300
 
-    # Define SSL options in engine options
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        'connect_args': {
-            'ssl': {
-                'ca': '/etc/ssl/cert.pem',
-                'rejectUnauthorized': True
-            }
-        }
-    }
+
+       # Adding SSL options
+    SQLALCHEMY_DATABASE_URI += "&ssl={\"ssl\": {\"rejectUnauthorized\": true}}"
+
     
     
 
