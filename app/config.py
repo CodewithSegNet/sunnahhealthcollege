@@ -21,21 +21,21 @@ class Config:
     '''
     Base Configuration class
     '''
-    SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}?charset=utf8mb4"
+    SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}?charset=utf8mb4&ssl_ca=/etc/ssl/certs/ca-certificates.crt"
 
-    # Disable track modifications to avoid warning
+
+    # Disable track modifictions to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Flask-Caching configuration
-    CACHE_TYPE = 'simple'
-    CACHE_DEFAULT_TIMEOUT = 300
 
-
-       # Adding SSL options
-    SQLALCHEMY_DATABASE_URI += "&ssl={\"ssl\": {\"rejectUnauthorized\": true}}"
-
-    
-    
+    # Define SSL options in engine options
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'connect_args': {
+            'ssl': {
+                'rejectUnauthorized': True
+            }
+        }
+    }
 
     # Flask-Caching configuration
     CACHE_TYPE = 'simple'
