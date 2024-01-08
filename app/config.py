@@ -23,6 +23,9 @@ class Config:
     '''
     SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}?charset=utf8mb4"
 
+    # Adding SSL options
+    SQLALCHEMY_DATABASE_URI += "&ssl={\"ssl\": {\"rejectUnauthorized\": true}}"
+
     # Disable track modifications to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
