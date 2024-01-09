@@ -34,33 +34,36 @@ def home():
 
 
 # Route for handling the student sign-in form submission
-@pages_bp.route('/login', methods=['POST'])
+@pages_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    a route that handles students authentication
-    """
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
-        
+
+        # Check if both admission_number and password are provided
+        if not admission_number or not password:
+            return jsonify({'error': 'Invalid credentials provided.'}), 400
+
         user = Student.query.filter_by(admission_number=admission_number).first()
         if user and user.check_password(password):
-            """
-            create a jwt token
-            """
+            # Generate JWT token with a configurable expiration time
+            expiration_time = datetime.utcnow() + timedelta(hours=2)
             token = jwt.encode({
                 'user_id': user.admission_number,
-                'exp': datetime.utcnow() + timedelta(hours=2) # Token expiration Time
-            }, 'secret_key', algorithm='HS256')
+                'exp': expiration_time
+            }, current_app.config['SECRET_KEY'], algorithm='HS256')
 
-            session['token'] = token # Store token in the session
-            session['user_id'] = user.admission_number # Store user ID in the session
+            # Store token and user ID in the session
+            session['token'] = token
+            session['user_id'] = user.admission_number
 
             return redirect(url_for('pages.dashboard'))
         else:
-            return redirect(url_for('pages.signinstudent'))    
+            return jsonify({'error': 'Invalid admission number or password.'}), 401
+    except KeyError:
+        return jsonify({'error': 'Missing admission number or password in request.'}), 400
     except Exception as e:
-        return jsonify({'error': "An error occured: {}".format(str(e))})
+        return jsonify({'error': f"An error occurred: {str(e)}"}), 500
     
 
 
