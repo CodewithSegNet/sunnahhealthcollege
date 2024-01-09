@@ -4,7 +4,7 @@
 # Imports
 import os
 from dotenv import load_dotenv
-import MySQLdb
+
 
 # Load environment variables from the .env file
 load_dotenv()
