@@ -2025,7 +2025,7 @@ body{
 	background: #fff;
 	z-index: 99;
 	position: relative;
-	padding: 30px;
+	padding: 30px 15px;
 	left: 0;
 	z-index: 0;
 }
