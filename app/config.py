@@ -21,8 +21,7 @@ class Config:
     '''
     Base Configuration class
     '''
-    SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}?charset=utf8mb4&ssl_ca=/etc/ssl/certs/ca-certificates.crt"
-
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}"
 
     # Disable track modifictions to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
