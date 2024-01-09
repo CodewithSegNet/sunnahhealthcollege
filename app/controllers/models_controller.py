@@ -539,9 +539,7 @@ def registration():
         assign_courses(new_user, department_name, department_level, semester_name)
 
 
-        # Add new user to the Database
-        db.session.add(new_semester)
-        db.session.add(new_department)
+
         db.session.commit()
 
 

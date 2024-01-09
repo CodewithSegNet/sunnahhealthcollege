@@ -9,7 +9,7 @@ import jwt
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import os
-import MySQLdb
+import pymysql
 from MySQLdb import OperationalError
 from dotenv import load_dotenv
 import time 
@@ -42,7 +42,7 @@ def home():
 
 # Function to establish a MySQL connection
 def connect_to_mysql():
-    return MySQLdb.connect(
+    return pymysql.connect(
         host=os.getenv('DATABASE_HOST'),
         user=os.getenv('DATABASE_USERNAME'),
         passwd=os.getenv('DATABASE_PASSWORD'),
@@ -76,36 +76,49 @@ def mysql_reconnect(func):
 @mysql_reconnect
 def login(db):
     """
-    a route that handles students authentication
+        a route that handles students authentication
     """
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
 
+        if not admission_number or not password:
+            return jsonify({'error': 'Invalid credentials provided.'}), 400
+
+
         # Using the provided 'db' connection object to execute the query
-        cursor = db.cursor()
+        cursor = db.cursor(pymysql.cursors.DictCursor)
         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
         user = cursor.fetchone()
 
-        user = Student.query.filter_by(admission_number=admission_number).first()
+        if not user:
+            return jsonify({'error': 'User not found.'}), 401
 
+        # Check if both admission_number and password are provided
+        if not admission_number or not password:
+            return jsonify({'error': 'Invalid credentials provided.'}), 400
+    
+        user = Student.query.filter_by(admission_number=admission_number).first()
         if user and user.check_password(password):
-            """
-            create a jwt token
-            """
+            #Generate JWT token with a configurable expiration time
+            expiration_time = datetime.utcnow() + timedelta(hours=2)
             token = jwt.encode({
                 'user_id': user.admission_number,
-                'exp': datetime.utcnow() + timedelta(hours=2) # Token expiration Time
-            }, 'secret_key', algorithm='HS256')
+                'exp': expiration_time
+            }, current_app.config['SECRET_KEY'], algorithm='HS256')
 
-            session['token'] = token # Store token in the session
-            session['user_id'] = user.admission_number # Store user ID in the session
+            # Store token and user ID in the session
+            session['token'] = token
+            session['user_id'] = user.admission_number
 
             return redirect(url_for('pages.dashboard'))
         else:
-            return redirect(url_for('pages.signinstudent'))    
+            return jsonify({'error': 'Invalid admission number or password.'}), 401
+    except KeyError:
+        return jsonify({'error': 'Missing admission number or password in request.'}), 400
     except Exception as e:
-        return jsonify({'error': "An error occurred: {}".format(str(e))})
+        return jsonify({'error': f"An error occurred: {str(e)}"}), 500
+
     
 
 
