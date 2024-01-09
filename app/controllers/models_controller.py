@@ -521,7 +521,7 @@ def registration():
         if semester_name:
             semester = Semester.query.filter_by(semester=semester_name).first()
             if semester is None:
-                new_semester = Semester(semester=semester_name)
+                new_semester = Semester(id=id)
                 new_user.semesters.append(new_semester)
                 db.session.add(new_semester)
                 db.session.commit()  # Commit changes after creating a new semester
@@ -539,7 +539,6 @@ def registration():
         assign_courses(new_user, department_name, department_level, semester_name)
 
 
-        db.session.add(new_semester)
         db.session.commit()
 
 
