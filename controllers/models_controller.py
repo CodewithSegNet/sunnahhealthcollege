@@ -283,7 +283,7 @@ def assign_courses(user, department_name, department_level, semester_name):
                 
         # Community Health Extention 300 first semester
         
-        if department_name == 'Community Health Extention' and department_level == 200 and semester_name == "first":
+        if department_name == 'Community Health Extention' and department_level == 300 and semester_name == "first":
             course1 = Course(course_title='Care of the Older Persons', course_code='CHE 251', credit=1)
             course2 = Course(course_title='Care of Persons with Special Needs', course_code='CHE 252', credit=2)
             course3 = Course(course_title='Health Statistics', course_code='CHE 253', credit=2)
@@ -304,8 +304,8 @@ def assign_courses(user, department_name, department_level, semester_name):
 
 
     
-        # Pharmacy Technician 300 second semester
-        if department_name == 'Community Health Extention' and department_level == 200 and semester_name == "second":
+        # Community Health Extention 300 second semester
+        if department_name == 'Community Health Extention' and department_level == 300 and semester_name == "second":
             course1 = Course(course_title='Primary Health Care Management', course_code='CHE 261', credit=2)
             course2 = Course(course_title='Referral System and Outreach services', course_code='CHE 262', credit=2)
             course3 = Course(course_title='Accounting System in Primary Health Care', course_code='CHE 263', credit=2)
