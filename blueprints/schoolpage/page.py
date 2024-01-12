@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect
+from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory
 from models.student_model import Student
 from flask import send_from_directory
-from app import cache
+from app import cache, db
 from functools import wraps
 import requests
 import jwt
+from io import BytesIO
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import os
@@ -324,11 +325,13 @@ def upload_image():
             file = request.files['user_image2']
 
             if file:
-                filename = secure_filename(file.filename)
-                upload_folder = current_app.config['UPLOAD_FOLDER']
-                file.save(os.path.join(upload_folder, filename))
-                session['user_image2'] = os.path.join(upload_folder, filename)
-                # Update the user's profile image in the database if needed
+                # Read the image file data
+                image_data = file.read()
+
+                # Update the user's profile image in the database
+                student = Student.query.get(admission_number)
+                student.image_data = image_data
+                db.session.commit()
 
                 # Redirect back to the dashboard or render the dashboard template again
                 return redirect(url_for('pages.dashboard'))
@@ -340,15 +343,16 @@ def upload_image():
         return jsonify({'error': 'File upload failed'}), 500
 
 
-@pages_bp.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+@pages_bp.route('/images/<admission_number>')
+def get_image(admission_number):
+    student = Student.query.get(admission_number)
 
-
-@pages_bp.route('/images/<path:filename>')
-def get_image(filename):
-    return send_from_directory('static/img', filename)
-
+    if student and student.image_data:
+        # Send the image data to the client
+        return send_file(io.BytesIO(student.image_data), mimetype='image/jpeg')
+    else:
+        # Return a placeholder image or an error message
+        return send_from_directory('static/img', 'placeholder.jpg')
 
 
 
