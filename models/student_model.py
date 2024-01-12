@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 # Import
-from app.models.course_model import Course
-from app.models.department_model import Department
-from app.app import db
-from app.models.student_record import StudentRecord
+from models.course_model import Course
+from models.department_model import Department
+from app import db
+from models.student_record import StudentRecord
 from datetime import datetime
 import re
 from flask_sqlalchemy import SQLAlchemy
