@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from app.app import db
+from app import db
 
 class Role(db.Model):
     '''

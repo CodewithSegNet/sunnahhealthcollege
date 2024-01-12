@@ -2,11 +2,11 @@
 
 # Import
 from flask import Blueprint, request, jsonify, session, redirect, url_for
-from app.models.student_model import Student
-from app.models.department_model import Department
-from app.models.semester import Semester
-from app.models.course_model import Course
-from app.app import db
+from models.student_model import Student
+from models.department_model import Department
+from models.semester import Semester
+from models.course_model import Course
+from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError

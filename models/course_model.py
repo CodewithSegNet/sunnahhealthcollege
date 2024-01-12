@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 # Import
-from app.app import db
-from app.models.department_model import Department
-import app.models.student_model
-from app.models.semester import Semester
+from app import db
+from models.department_model import Department
+import models.student_model
+from models.semester import Semester
 from sqlalchemy.orm import relationship
 
 

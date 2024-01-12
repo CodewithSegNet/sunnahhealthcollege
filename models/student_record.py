@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Import
-from app.app import db
+from app import db
 from datetime import datetime
 
 

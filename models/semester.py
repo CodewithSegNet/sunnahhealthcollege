@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 # Import
-from app.app import db
-import app.models.student_model
+from app import db
+import models.student_model
 from sqlalchemy.orm import relationship
 
 
