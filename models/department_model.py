@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 # Import
-from app.app import db
-import app.models.student_model
-from app.models.semester import Semester
+from app import db
+import models.student_model
+from models.semester import Semester
 from sqlalchemy.orm import relationship
 
 

@@ -2,11 +2,11 @@
 
 # Import
 from flask import Blueprint, request, jsonify, session, redirect, url_for
-from app.models.student_model import Student
-from app.models.department_model import Department
-from app.models.semester import Semester
-from app.models.course_model import Course
-from app.app import db
+from models.student_model import Student
+from models.department_model import Department
+from models.semester import Semester
+from models.course_model import Course
+from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError
@@ -519,7 +519,7 @@ def registration():
         # Check if the provided semester exists in the semesters table
         semester_name = data.get('semester')
         if semester_name:
-            semester = Semester.query.filter_by(id=id).first()
+            semester = Semester.query.filter_by(semester=semester_name).first()
             if semester is None:
                 new_semester = Semester(semester=semester_name)
                 new_user.semesters.append(new_semester)
@@ -539,7 +539,7 @@ def registration():
         assign_courses(new_user, department_name, department_level, semester_name)
 
 
-        db.session.add(new_semester)
+
         db.session.commit()
 
 
@@ -689,3 +689,4 @@ def upload_semester():
     except Exception as e:
         db.session.rollback()  # Rollback changes in case of an error
         return jsonify({'error': str(e)}), 500
+
