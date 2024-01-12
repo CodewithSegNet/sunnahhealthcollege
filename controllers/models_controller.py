@@ -147,7 +147,7 @@ def assign_courses(user, department_name, department_level, semester_name):
                 
         # Pharmacy Technician 300 first semester
         
-        if department_name == 'Pharmacy Technician' and department_level == 200 and semester_name == "first":
+        if department_name == 'Pharmacy Technician' and department_level == 300 and semester_name == "first":
             course1 = Course(course_title='Research Methodology', course_code='GNS 228', credit=6)
             course2 = Course(course_title='Family Planning and Reproductive Health', course_code='GNP 221', credit=3)
             course3 = Course(course_title='Citizenship', course_code='GNS 111', credit=3)
@@ -167,7 +167,7 @@ def assign_courses(user, department_name, department_level, semester_name):
 
     
         # Pharmacy Technician 300 second semester
-        if department_name == 'Pharmacy Technician' and department_level == 200 and semester_name == "second":
+        if department_name == 'Pharmacy Technician' and department_level == 300 and semester_name == "second":
             course1 = Course(course_title='Intro to Medical Sociolgy', course_code='GNS 213', credit=2)
             course2 = Course(course_title='Entrepreneurship', course_code='BUS 213', credit=2)
             course3 = Course(course_title='Research/Project Writing', course_code='CHE 265', credit=6)
