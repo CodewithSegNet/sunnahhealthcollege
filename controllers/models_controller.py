@@ -482,13 +482,7 @@ def registration():
         new_user = Student(
             admission_number=data['admission_number'],
             password=generate_password_hash(data['password']),
-            name=data['name'],
-            date_of_birth=data['date_of_birth'],
             department_name = data['department_name'],
-            state=data['state'],
-            gender=data['gender'],
-            email=data['email'],
-            phone_number=data['phone_number'],
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
         )
