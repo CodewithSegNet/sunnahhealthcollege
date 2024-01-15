@@ -3,6 +3,7 @@
 # Import
 from models.course_model import Course
 from models.department_model import Department
+from models.image import Image
 from app import db
 from models.student_record import StudentRecord
 from datetime import datetime

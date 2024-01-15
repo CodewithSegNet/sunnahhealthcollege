@@ -6,6 +6,7 @@ from models.image import Image
 from app import cache, db
 from functools import wraps
 import requests
+from urllib.parse import quote 
 import jwt
 from io import BytesIO
 from werkzeug.utils import secure_filename
@@ -88,7 +89,7 @@ def login(db):
             return jsonify({'error': 'Invalid credentials provided.'}), 400
 
 
-        # Using the provided 'db' connection object to execute the query
+        #Using the provided 'db' connection object to execute the query
         cursor = db.cursor(pymysql.cursors.DictCursor)
         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
         user = cursor.fetchone()
@@ -120,9 +121,7 @@ def login(db):
         return jsonify({'error': 'Missing admission number or password in request.'}), 400
     except Exception as e:
         return jsonify({'error': f"An error occurred: {str(e)}"}), 500
-
     
-
 
   # authenticate and authorize requests using JWT
 def token_required(func):
@@ -347,8 +346,11 @@ def get_image():
     admission_number = request.args.get('admission_number')
     
     if admission_number:
+        # Encode the admission_number parameter
+        encoded_admission_number = quote(admission_number)
+
         # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+        image = Image.query.filter_by(student_admission_number=encoded_admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
             # Send the image data to the client

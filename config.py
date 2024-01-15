@@ -22,18 +22,20 @@ class Config:
     Base Configuration class
     '''
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{os.getenv('DATABASE_USERNAME')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}/{os.getenv('DATABASE')}"
+
+
     # Disable track modifictions to avoid warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
     # Define SSL options in engine options
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        'connect_args': {
-            'ssl': {
-                'rejectUnauthorized': True
-            }
-        }
-    }
+    # SQLALCHEMY_ENGINE_OPTIONS = {
+    #     'connect_args': {
+    #         'ssl': {
+    #             'rejectUnauthorized': True
+    #         }
+    #     }
+    # }
 
     # Flask-Caching configuration
     CACHE_TYPE = 'simple'
