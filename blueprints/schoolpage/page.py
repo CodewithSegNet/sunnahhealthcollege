@@ -302,9 +302,12 @@ def dashboard():
     semesters = current_user.semesters       
     
 
-    encoded_admission_number = quote(current_user.admission_number)
+     # Manually replace slashes with %2F
+    encoded_admission_number = current_user.admission_number.replace('/', '%2F')
+
     # Retrieve the user's profile image path from the session
     user_image_path = f"/images?admission_number={encoded_admission_number}"
+    
     
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
