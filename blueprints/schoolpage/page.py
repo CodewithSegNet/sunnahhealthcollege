@@ -6,7 +6,7 @@ from models.image import Image
 from app import cache, db
 from functools import wraps
 import requests
-from urllib.parse import quote 
+from urllib.parse import quote_plus
 import jwt
 from io import BytesIO
 from werkzeug.utils import secure_filename
@@ -346,8 +346,11 @@ def get_image():
     admission_number = request.args.get('admission_number')
     
     if admission_number:
+        # Encode the admission_number parameter
+        encoded_admission_number = quote_plus(admission_number)
+
         # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+        image = Image.query.filter_by(student_admission_number=encoded_admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
             # Send the image data to the client
