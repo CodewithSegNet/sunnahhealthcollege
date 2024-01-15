@@ -325,7 +325,14 @@ def dashboard():
     current_user = Student.query.get(admission_number)
     courses = current_user.courses
     departments = current_user.departments  
-    semesters = current_user.semesters       
+    semesters = current_user.semesters 
+
+
+    # Manually replace slashes with %2F
+    encoded_admission_number = current_user.admission_number.replace('/', '%2F')
+
+    user_image_path = f"/images?admission_number={encoded_admission_number}"
+      
     
 
     # Retrieve the user's profile image path from the session
@@ -375,8 +382,10 @@ def get_image():
     admission_number = request.args.get('admission_number')
     
     if admission_number:
+        decoded_admission_number = unquote(admission_number)
+
         # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+        image = Image.query.filter_by(student_admission_number=decoded_admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
             # Send the image data to the client
