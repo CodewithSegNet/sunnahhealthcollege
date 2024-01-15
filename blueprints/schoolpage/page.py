@@ -345,10 +345,7 @@ def upload_image():
 def get_image():
     admission_number = request.args.get('admission_number')
     
-    if admission_number:
-        # Replace a special character with '/'
-        admission_number = admission_number.replace('_', '/')
-        
+    if admission_number: 
         # Retrieve the latest image associated with the student
         image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
