@@ -286,6 +286,30 @@ def notfound():
 
 
 
+
+@pages_bp.route('/dashboard')
+def dashboard():
+    if 'user_id' in session:
+        admission_number = session.get('user_id')
+        token = session.get('token')
+
+    if not admission_number or not token:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    current_user = Student.query.get(admission_number)
+    courses = current_user.courses
+    departments = current_user.departments  
+    semesters = current_user.semesters       
+    
+
+    # Retrieve the user's profile image path from the session
+    user_image_path = f"/images?admission_number={current_user.admission_number.replace('/', '-')}"
+    
+    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, os=os)
+
+
 @pages_bp.route('/upload_image', methods=['POST'])
 def upload_image():
     try:
@@ -337,28 +361,6 @@ def get_image():
 
 
 
-
-@pages_bp.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        admission_number = session.get('user_id')
-        token = session.get('token')
-
-    if not admission_number or not token:
-        return jsonify({'error': 'Unauthorized'}), 401
-    
-    current_user = Student.query.get(admission_number)
-    courses = current_user.courses
-    departments = current_user.departments  
-    semesters = current_user.semesters       
-    
-
-    # Retrieve the user's profile image path from the session
-    user_image_path = url_for('pages.get_image', admission_number=current_user.admission_number.replace('/', '-'))
-    
-    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
-
-    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, os=os)
 
 
 
