@@ -334,10 +334,6 @@ def dashboard():
     user_image_path = f"/images?admission_number={encoded_admission_number}"
       
     
-
-    # Retrieve the user's profile image path from the session
-    user_image_path = url_for('pages.get_image', admission_number=admission_number)
-    
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
     return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, os=os)
