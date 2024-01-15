@@ -44,84 +44,111 @@ def home():
 
 
 # Function to establish a MySQL connection
-def connect_to_mysql():
-    return pymysql.connect(
-        host=os.getenv('DATABASE_HOST'),
-        user=os.getenv('DATABASE_USERNAME'),
-        passwd=os.getenv('DATABASE_PASSWORD'),
-        db=os.getenv('DATABASE')
-    )
+# def connect_to_mysql():
+#     return pymysql.connect(
+#         host=os.getenv('DATABASE_HOST'),
+#         user=os.getenv('DATABASE_USERNAME'),
+#         passwd=os.getenv('DATABASE_PASSWORD'),
+#         db=os.getenv('DATABASE')
+#     )
 
 # Function to reconnect to MySQL if the connection is lost
-def mysql_reconnect(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        retry_count = 3  # Number of retry attempts
-        while retry_count > 0:
-            try:
-                db = connect_to_mysql()  # Establish a new connection
-                return func(db, *args, **kwargs)
-            except OperationalError as e:
-                error_code = e.args[0]
-                if error_code == 2006:
-                    print("MySQL server has gone away. Attempting to reconnect...")
-                    time.sleep(1)  # You may adjust the sleep time between retries
-                    retry_count -= 1
-                else:
-                    raise  # Re-raise if it's a different error
-        return jsonify({'error': 'Failed to reconnect to the database after multiple attempts.'}), 500
-    return wrapper
+# def mysql_reconnect(func):
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
+#         retry_count = 3  # Number of retry attempts
+#         while retry_count > 0:
+#             try:
+#                 db = connect_to_mysql()  # Establish a new connection
+#                 return func(db, *args, **kwargs)
+#             except OperationalError as e:
+#                 error_code = e.args[0]
+#                 if error_code == 2006:
+#                     print("MySQL server has gone away. Attempting to reconnect...")
+#                     time.sleep(1)  # You may adjust the sleep time between retries
+#                     retry_count -= 1
+#                 else:
+#                     raise  # Re-raise if it's a different error
+#         return jsonify({'error': 'Failed to reconnect to the database after multiple attempts.'}), 500
+#     return wrapper
 
 
 
 # Route for handling the student sign-in form submission
+# @pages_bp.route('/login', methods=['POST'])
+# @mysql_reconnect
+# def login(db):
+#     """
+#         a route that handles students authentication
+#     """
+#     try:
+#         admission_number = request.form['admission_number']
+#         password = request.form['password']
+
+#         if not admission_number or not password:
+#             return jsonify({'error': 'Invalid credentials provided.'}), 400
+
+
+#         #Using the provided 'db' connection object to execute the query
+#         cursor = db.cursor(pymysql.cursors.DictCursor)
+#         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
+#         user = cursor.fetchone()
+
+#         if not user:
+#             return jsonify({'error': 'User not found.'}), 401
+
+#         # Check if both admission_number and password are provided
+#         if not admission_number or not password:
+#             return jsonify({'error': 'Invalid credentials provided.'}), 400
+    
+#         user = Student.query.filter_by(admission_number=admission_number).first()
+#         if user and user.check_password(password):
+#             #Generate JWT token with a configurable expiration time
+#             expiration_time = datetime.utcnow() + timedelta(hours=2)
+#             token = jwt.encode({
+#                 'user_id': user.admission_number,
+#                 'exp': expiration_time
+#             }, current_app.config['SECRET_KEY'], algorithm='HS256')
+
+#             # Store token and user ID in the session
+#             session['token'] = token
+#             session['user_id'] = user.admission_number
+
+#             return redirect(url_for('pages.dashboard'))
+#         else:
+#             return jsonify({'error': 'Invalid admission number or password.'}), 401
+#     except KeyError:
+#         return jsonify({'error': 'Missing admission number or password in request.'}), 400
+#     except Exception as e:
+#         return jsonify({'error': f"An error occurred: {str(e)}"}), 500
+    
 @pages_bp.route('/login', methods=['POST'])
-@mysql_reconnect
-def login(db):
+def login():
     """
-        a route that handles students authentication
+    a route that handles students authentication
     """
     try:
         admission_number = request.form['admission_number']
         password = request.form['password']
-
-        if not admission_number or not password:
-            return jsonify({'error': 'Invalid credentials provided.'}), 400
-
-
-        #Using the provided 'db' connection object to execute the query
-        cursor = db.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
-        user = cursor.fetchone()
-
-        if not user:
-            return jsonify({'error': 'User not found.'}), 401
-
-        # Check if both admission_number and password are provided
-        if not admission_number or not password:
-            return jsonify({'error': 'Invalid credentials provided.'}), 400
-    
+        
         user = Student.query.filter_by(admission_number=admission_number).first()
         if user and user.check_password(password):
-            #Generate JWT token with a configurable expiration time
-            expiration_time = datetime.utcnow() + timedelta(hours=2)
+            """
+            create a jwt token
+            """
             token = jwt.encode({
                 'user_id': user.admission_number,
-                'exp': expiration_time
-            }, current_app.config['SECRET_KEY'], algorithm='HS256')
+                'exp': datetime.utcnow() + timedelta(hours=2) # Token expiration Time
+            }, 'secret_key', algorithm='HS256')
 
-            # Store token and user ID in the session
-            session['token'] = token
-            session['user_id'] = user.admission_number
+            session['token'] = token # Store token in the session
+            session['user_id'] = user.admission_number # Store user ID in the session
 
             return redirect(url_for('pages.dashboard'))
         else:
-            return jsonify({'error': 'Invalid admission number or password.'}), 401
-    except KeyError:
-        return jsonify({'error': 'Missing admission number or password in request.'}), 400
+            return redirect(url_for('pages.signinstudent'))    
     except Exception as e:
-        return jsonify({'error': f"An error occurred: {str(e)}"}), 500
-    
+        return jsonify({'error': "An error occured: {}".format(str(e))})
 
   # authenticate and authorize requests using JWT
 def token_required(func):
@@ -303,7 +330,6 @@ def dashboard():
     
 
      # Manually replace slashes with %2F
-    encoded_admission_number = current_user.admission_number.replace('/', '')
 
     # Retrieve the user's profile image path from the session
     user_image_path = f"/images?admission_number={encoded_admission_number}"
