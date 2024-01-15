@@ -343,14 +343,11 @@ def upload_image():
 
 @pages_bp.route('/images')
 def get_image():
-    admission_number = request.args.get('Admission_number')
+    admission_number = request.args.get('admission_number')
     
     if admission_number:
-        # Encode the admission_number parameter
-        encoded_admission_number = quote(admission_number)
-
         # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=encoded_admission_number).order_by(Image.created_at.desc()).first()
+        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
             # Send the image data to the client
