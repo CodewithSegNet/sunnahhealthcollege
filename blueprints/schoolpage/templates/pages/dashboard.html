@@ -102,6 +102,7 @@
                   <div class="text-left">
           
                     {% if user_image_path %}
+                    <p>{{ user_image_path }}</p>
                     <img src="{{ user_image_path }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
                     {% endif %}
                 <h6 class="mt-3">Name: {{ student.name }}</h6>
