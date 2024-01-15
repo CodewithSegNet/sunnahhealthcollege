@@ -343,7 +343,7 @@ def upload_image():
 
 @pages_bp.route('/images')
 def get_image():
-    admission_number = request.args.get('admission_number')
+    admission_number = request.args.get('Admission_number')
     
     if admission_number:
         # Encode the admission_number parameter
