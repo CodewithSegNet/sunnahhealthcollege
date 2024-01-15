@@ -343,22 +343,21 @@ def upload_image():
 
 @pages_bp.route('/images')
 def get_image():
-    admission_number = request.args.get('admission_number')
+    raw_admission_number = request.args.get('admission_number')
     
-    if admission_number:
-        # Encode the admission_number parameter
-        decoded_admission_number = unquote(admission_number)
-
+    if raw_admission_number:
+        # Replace a special character with '/'
+        admission_number = raw_admission_number.replace('_', '/')
+        
         # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=decoded_admission_number).order_by(Image.created_at.desc()).first()
+        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
             # Send the image data to the client
             return send_file(BytesIO(image.image_data), mimetype='image/jpeg')
-    
+        
     # Handle case where admission_number is not provided or image not found
     return jsonify({'error': 'Image not found'}), 404
-
 
 
 
