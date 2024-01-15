@@ -303,7 +303,7 @@ def dashboard():
     
 
      # Manually replace slashes with %2F
-    encoded_admission_number = current_user.admission_number.replace('/', '%2F')
+    encoded_admission_number = current_user.admission_number.replace('/', '')
 
     # Retrieve the user's profile image path from the session
     user_image_path = f"/images?admission_number={encoded_admission_number}"
