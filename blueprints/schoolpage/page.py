@@ -2,6 +2,7 @@
 from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory
 from models.student_model import Student
 from flask import send_from_directory
+from models.image import Image
 from app import cache, db
 from functools import wraps
 import requests
@@ -168,6 +169,7 @@ def make_authorized_request(url, method='GET', data=None, token=None):
 
 
 
+
 @pages_bp.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
@@ -181,13 +183,15 @@ def dashboard():
     courses = current_user.courses
     departments = current_user.departments  
     semesters = current_user.semesters       
+    
 
     # Retrieve the user's profile image path from the session
-    user_image2_filename = session.get('user_image2')
-
+    user_image_path = url_for('pages.get_image', admission_number=admission_number)
+    
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
-    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image2=user_image2_filename, os=os)
+    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, os=os)
+
 
 
 
@@ -306,34 +310,28 @@ def notfound():
 
 
 
-
-
-
-
-
 @pages_bp.route('/upload_image', methods=['POST'])
 def upload_image():
     try:
         if 'user_id' in session:
             admission_number = session.get('user_id')
             token = session.get('token')
-            
-            
+
             if not admission_number or not token:
                 return jsonify({'error': 'Unauthorized'}), 401
-        
-            file = request.files['user_image2']
+
+            file = request.files['pics']
 
             if file:
                 # Read the image file data
                 image_data = file.read()
 
-                # Update the user's profile image in the database
-                student = Student.query.get(admission_number)
-                student.image_data = image_data
+                # Create a new image record and associate it with the student
+                image = Image(student_admission_number=admission_number, image_data=image_data)
+                db.session.add(image)
                 db.session.commit()
 
-                # Redirect back to the dashboard or render the dashboard template again
+                # Redirect back to the dashboard
                 return redirect(url_for('pages.dashboard'))
 
             return jsonify({'error': 'No file uploaded'}), 400
@@ -343,16 +341,23 @@ def upload_image():
         return jsonify({'error': 'File upload failed'}), 500
 
 
-@pages_bp.route('/images/<admission_number>')
-def get_image(admission_number):
-    student = Student.query.get(admission_number)
 
-    if student and student.image_data:
-        # Send the image data to the client
-        return send_file(io.BytesIO(student.image_data), mimetype='image/jpeg')
-    else:
-        # Return a placeholder image or an error message
-        return send_from_directory('static/img', 'placeholder.jpg')
+@pages_bp.route('/images')
+def get_image():
+    admission_number = request.args.get('admission_number')
+    
+    if admission_number:
+        # Retrieve the latest image associated with the student
+        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+
+        if image and image.image_data:
+            # Send the image data to the client
+            return send_file(BytesIO(image.image_data), mimetype='image/jpeg')
+    
+    # Handle case where admission_number is not provided or image not found
+    return jsonify({'error': 'Image not found'}), 404
+
+
 
 
 

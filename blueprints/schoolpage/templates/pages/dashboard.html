@@ -101,12 +101,9 @@
                 <div class="card-body">
                   <div class="text-left">
           
-                    {% if user_image2 %}
-                  <img src="{{ url_for('pages.get_image', admission_number=student.admission_number) }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
-                {% else %}
-                  <!-- If no uploaded image, use a placeholder or any other default image -->
-                  <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
-                {% endif %}
+                    {% if user_image_path %}
+                    <img src="{{ user_image_path }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
+                    {% endif %}
                 <h6 class="mt-3">Name: {{ student.name }}</h6>
                     <p class="black"> Admission Number: {{ student.admission_number }}</p>
                     <p>State: {{ student.state }}</p>
@@ -119,7 +116,7 @@
 
 
                 <form action="/upload_image" method="post" enctype="multipart/form-data">
-                  <input type="file" name="user_image2" accept="image/*">
+                  <input type="file" name="pics" accept="image/*">
                   <input class="btn" type="submit" value="Upload Image">
                 </form>
               </div>
