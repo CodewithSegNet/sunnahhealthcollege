@@ -32,6 +32,13 @@
 		justify-content: center;
 	}
 
+.response{
+	color: #333;
+}
+
+.new-box{
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
 
 
