@@ -35,13 +35,13 @@ class Config:
 
 
     # Define SSL options in engine options
-    # SQLALCHEMY_ENGINE_OPTIONS = {
-    #     'connect_args': {
-    #         'ssl': {
-    #             'rejectUnauthorized': True
-    #         }
-    #     }
-    # }
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'connect_args': {
+            'ssl': {
+                'rejectUnauthorized': True
+            }
+        }
+    }
 
 
     # Flask-Caching configuration
