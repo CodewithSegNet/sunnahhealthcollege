@@ -384,7 +384,7 @@ def get_image():
 
         if image and image.image_data:
             # Send the image data to the client
-            return send_file(BytesIO(image.image_data), mimetype='image/jpeg')
+            return send_file(BytesIO(image.image_data))
     
     # Handle case where admission_number is not provided or image not found
     return jsonify({'error': 'Image not found'}), 404
