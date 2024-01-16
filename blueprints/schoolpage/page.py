@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory
+from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response
 from models.student_model import Student
 from flask import send_from_directory
 from models.image import Image
@@ -373,22 +373,27 @@ def upload_image():
         return jsonify({'error': 'File upload failed'}), 500
 
 
-
 @pages_bp.route('/images', methods=['GET'])
 def get_image():
-    admission_number = request.args.get('admission_number')
-    
-    if admission_number:
-        
-        # Retrieve the latest image associated with the student
-        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+    try:
+        admission_number = request.args.get('admission_number')
 
-        if image and image.image_data:
-            # Send the image data to the client
-            return send_file(BytesIO(image.image_data), mimetype='image/jpeg')
-    
-    # Handle case where admission_number is not provided or image not found
-    return jsonify({'error': 'Image not found'}), 404
+        if admission_number:
+            # Retrieve the latest image associated with the student
+            image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+
+            if image and image.image_data:
+                # Create a Flask response with the image data and appropriate content type
+                response = make_response(image.image_data)
+                response.headers['Content-Type'] = 'image/jpeg'
+                return response
+
+        # Handle case where admission_number is not provided or image not found
+        return jsonify({'error': 'Image not found'}), 404
+    except Exception as e:
+        # Log or print the exception for debugging
+        print(f"An error occurred: {str(e)}")
+        return jsonify({'error': 'Image retrieval failed'}), 500
 
 
 
