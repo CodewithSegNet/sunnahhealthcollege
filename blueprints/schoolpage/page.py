@@ -325,7 +325,8 @@ def dashboard():
     current_user = Student.query.get(admission_number)
     courses = current_user.courses
     departments = current_user.departments  
-    semesters = current_user.semesters 
+    semesters = current_user.semesters
+    images = current_user.images 
 
 
     # Manually replace slashes with %2F
@@ -336,7 +337,7 @@ def dashboard():
     
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
-    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, os=os)
+    return render_template('pages/dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, images=images, os=os)
 
 
 
