@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, Response
+from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response
 from models.student_model import Student
 from flask import send_from_directory
 from models.image import Image
@@ -382,8 +382,9 @@ def get_image():
         image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
-            # Create a Flask response with the image data and appropriate content type
-            response = Response(image.image_data, content_type='image/jpeg')
+            # Create a Flask response with the image data and set the appropriate content type
+            response = make_response(image.image_data)
+            response.headers['Content-Type'] = 'image/jpeg'
             return response
 
     # Handle case where admission_number is not provided or image not found
