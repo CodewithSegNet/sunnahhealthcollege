@@ -5,7 +5,6 @@ from flask import send_from_directory
 from models.image import Image
 from app import cache, db
 from functools import wraps
-import tempfile
 import requests
 from urllib.parse import quote, unquote
 import jwt
@@ -379,18 +378,17 @@ def get_image():
     admission_number = request.args.get('admission_number')
     
     if admission_number:
+        
         # Retrieve the latest image associated with the student
         image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
-            # Use a temporary file to avoid the "UnsupportedOperation" issue
-            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-                temp_file.write(image.image_data)
-                temp_file.seek(0)
-                return send_file(temp_file.name)
+            # Send the image data to the client
+            return send_file(BytesIO(image.image_data), mimetype='image/jpeg')
     
     # Handle case where admission_number is not provided or image not found
     return jsonify({'error': 'Image not found'}), 404
+
 
 
 
