@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response
+from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, Response
 from models.student_model import Student
 from flask import send_from_directory
 from models.image import Image
@@ -375,25 +375,19 @@ def upload_image():
 
 @pages_bp.route('/images', methods=['GET'])
 def get_image():
-    try:
-        admission_number = request.args.get('admission_number')
+    admission_number = request.args.get('admission_number')
 
-        if admission_number:
-            # Retrieve the latest image associated with the student
-            image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+    if admission_number:
+        # Retrieve the latest image associated with the student
+        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
-            if image and image.image_data:
-                # Create a Flask response with the image data and appropriate content type
-                response = make_response(image.image_data)
-                response.headers['Content-Type'] = 'image/jpeg'
-                return response
+        if image and image.image_data:
+            # Create a Flask response with the image data and appropriate content type
+            response = Response(image.image_data, content_type='image/jpeg')
+            return response
 
-        # Handle case where admission_number is not provided or image not found
-        return jsonify({'error': 'Image not found'}), 404
-    except Exception as e:
-        # Log or print the exception for debugging
-        print(f"An error occurred: {str(e)}")
-        return jsonify({'error': 'Image retrieval failed'}), 500
+    # Handle case where admission_number is not provided or image not found
+    return jsonify({'error': 'Image not found'}), 404
 
 
 
