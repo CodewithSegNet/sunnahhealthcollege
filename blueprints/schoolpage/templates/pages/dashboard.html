@@ -189,8 +189,11 @@
               <h4>Student Transcript</h4>
               <hr>
               <div class="row">
+                <div class="w-100 d-flex align-items-center justify-content-center">
+                  <img class="profile-pic d-flex align-items-center" src={{user_image}}>
+                </div>
                 <div class="pb-4 pl-4 pr-4">
-                  <h4 class="text-center">
+                  <h4 class="text-center pt-2">
                     SUNNAH COLLEGE OF SCIENCE & HEALTH TECHOLOGY MARARABA-GURKU, KARU L.G.A OF NASARAWA STATE
                   </h4>
                 </div>
@@ -264,20 +267,19 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody">
-                                    {% for course in courses %}
-                                        <tr>
-                                            <td> {{ course.course_code }}</td>
-                                            <td> {{ course.course_title }}</td>
-                                            <td> {{ course.credit }}</td>
-                                            <td>{{ course.ca2 or 'N/A' }}</td>
-                                            <td>{{ course.ca3 or 'N/A' }}</td>
-                                            <td>{{ course.exam_mark or 'N/A' }}</td>
-                                            <td>{{ course.grade or 'N/A' }}</td>
-                                            <td>{{ course.remark or 'N/A' }}</td>
-          
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
+                                  {% for course in courses %}
+                                          <tr>
+                                              <td>{{ course.course_code  or 'N/A'}}</td>
+                                              <td>{{ course.course_title  or 'N/A' }}</td>
+                                              <td>{{ course.credit  or 'N/A'}}</td>
+                                              <td>{{ course.ca_score  or 'N/A' }}</td>
+                                              <td>{{ course.exam_score  or 'N/A'}}</td>
+                                              <td>{{ course.total_score or 'N/A' }}</td>
+                                              <td>{{ course.grade or 'N/A' }}</td>
+                                              <td>{{ course.remark or 'N/A' }}</td>
+                                          </tr>
+                                  {% endfor %}
+                              </tbody>
                             </table>
                         </div>
                     </div>
@@ -415,20 +417,7 @@
                           </div>
                       </div>
       
-                      <div class="row">
-                          <div class="col-md-6">
-                              <label for="department_name">Department *</label>
-                              <select id="department_name" name="department_name" required>
-                                <option value="Community Health Extention">Community Health Extention</option>
-                                <option value="Pharmacy Technician">Pharmacy Technician</option>
-                                <option value="medical laboratory technician">medical laboratory technician</option>
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                              <label for="email">Email *</label>
-                              <input type="email" id="email" name="email" required>
-                          </div>
-                      </div>
+                      
       
                       <div class="row">
                         <div class="col-md-6">
@@ -440,13 +429,18 @@
                             <input type="tel" id="phone_number" name="phone_number" required>
                         </div>
                     </div>
+
+
+                    <div class="row">
+                      <div class="col-md-6">
+                          <label for="email">Email *</label>
+                          <input type="email" id="email" name="email" required>
                       </div>
-      
-                      <div class="row">
-                          <div class="col-md-12">
-                              <input type="submit" value="SUBMIT" id="submitBtn">
-                          </div>
+                  </div>
                       </div>
+                      <div class="col-md-12 text-center mb-4">
+                        <input type="submit" value="SUBMIT" id="submitBtn">
+                    </div>
                   </form>
               </div>
             </section>

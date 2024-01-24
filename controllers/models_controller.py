@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
 # Import
-from flask import Blueprint, request, jsonify, session, redirect, url_for
+from flask import Blueprint, request, jsonify, session, redirect, url_for, render_template
 from models.student_model import Student
 from models.department_model import Department
 from models.semester import Semester
 from models.course_model import Course
+from models.admin import Admin
+import json
 from app import db
 from datetime import datetime
+from urllib.parse import quote, unquote
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -17,44 +20,6 @@ from sqlalchemy.exc import SQLAlchemyError
 user_bp = Blueprint('user', __name__)
 
 
-# route to get student by name or admission 
-@user_bp.route('/student/<path:identifier>', methods=['GET'])
-def get_student_info(identifier):
-    '''
-    A function that retrieves a student information
-    '''
-    student = None
-
-    print("Identifier:", identifier)
-
-    # Check if the identifier matches admission number criteria
-    if identifier:
-        student = Student.query.filter_by(admission_number=identifier).first()
-    else:
-        # Assuming name is longer than 20 characters
-        student = Student.query.filter(Student.name.ilike("%{}%".format(identifier))).first()
-
-
-    if student:
-        # Student model has attributes: admission_number, name, date_of_birth, etc.
-        print("Retrieved Admission Number:", student.admission_number)
-
-
-        student_info = {
-            'admission_number': student.admission_number,
-            'name': student.name,
-            'date_of_birth': student.date_of_birth.strftime('%Y-%m-%d'),
-            'department_name': student.department_name,
-            'state': student.state,
-            'gender': student.gender,
-            'email': student.email,
-            'phone_number': student.phone_number,
-            'created_at': student.created_at,
-            'updated_at': student.updated_at
-        }
-        return jsonify(student_info), 200
-    else:
-        return jsonify({'message': 'Student Not Found'}), 404
     
 
 
@@ -449,10 +414,154 @@ def assign_courses(user, department_name, department_level, semester_name):
 
             # Assign the courses to the new user
             user.courses.extend([course1, course2, course3, course4, course5, course6])
+
+
+
+
+
+
+
+def add_courses_to_user(user, courses_data):
+    # Create and assign courses to the new user
+    for course_data in courses_data:
+        new_course = Course(
+            course_code=course_data['course_code'],
+            student_id=user.admission_number,
+            course_title=course_data['course_title'],
+            credit=course_data['credit'],
+            ca_score=None,
+            exam_score=None,
+            total_score=None,
+            grade=None,
+            remark=None
+        )
+        db.session.add(new_course)
+        user.courses.append(new_course)
             
 
 
+# route to get student by name or admission 
+@user_bp.route('/student', methods=['GET'])
+def get_student_info():
+    '''
+    A function that retrieves a student information
+    '''
 
+    identifier = request.args.get('identifier')
+
+    student = None
+
+    print("Identifier:", identifier)
+
+    # Check if the identifier matches admission number criteria
+    if identifier:
+        student = Student.query.filter_by(admission_number=identifier).first()
+    else:
+        # Assuming name is longer than 20 characters
+        student = Student.query.filter(Student.name.ilike("%{}%".format(identifier))).first()
+
+    if student:
+        # Student model has attributes: admission_number, name, date_of_birth, etc.
+        print("Retrieved Admission Number:", student.admission_number)
+
+        student_info = {
+            'admission_number': student.admission_number,
+            'name': student.name,
+            'date_of_birth': student.date_of_birth.strftime('%Y-%m-%d') if student.date_of_birth else None,
+            'department_name': student.department_name,
+            'state': student.state,
+            'gender': student.gender,
+            'email': student.email,
+            'phone_number': student.phone_number,
+        }
+
+        # Accessing related objects
+        if student.departments:
+            student_info['department'] = {
+                'department_level': student.departments[0].department_level,
+                'department_name': student.departments[0].department_name,
+            }
+
+        if student.images:
+            student_info['images'] = [
+                {
+                    'image_path': image.image_data.hex(),
+                    'mimetype': 'image/jpeg'
+                }
+                for image in student.images
+            ]
+
+        if student.courses:
+            student_info['courses'] = [
+                {
+                    'course_code': course.course_code,
+                    'course_title': course.course_title,
+                    'credit': course.credit,
+                    'ca_score': course.ca_score,
+                    'exam_score': course.exam_score,
+                    'total_score': course.total_score,
+                    'grade': course.grade,
+                    'remark': course.remark,
+                        }
+                        for course in student.courses
+
+                    ]
+                
+            
+        if student.semesters:
+            student_info['semesters'] = [
+                {
+                    'semester': semester.semester
+                }
+                for semester in student.semesters
+            ]
+
+        encoded_student_info = quote(json.dumps(student_info))
+
+        return redirect(url_for('pages.admindash', student_info=encoded_student_info))
+    else:
+        return jsonify({'message': 'Student Not Found'}), 404
+    
+
+
+
+
+
+
+@user_bp.route('/adminregister', methods=['POST'])
+def register():
+    '''
+    A function that handles admin registration
+    '''
+    
+    try:
+        data = request.json
+        existing_email = Student.query.filter_by(email=data['email']).first()
+
+        if existing_email:
+            return jsonify({'error': 'Email Already Exists!'}), 400
+        
+
+
+        # Create a new user instance
+        new_user = Admin(
+            email=data['email'],
+            password=generate_password_hash(data['password']),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+
+        # Return JSON successful message if data's works
+        return jsonify({'message': 'Admin Registration Successfully Created!'}), 201
+    
+    # Handles database issues (connection or constraint violation)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
 
 
@@ -530,6 +639,9 @@ def registration():
             return jsonify({'error': 'Semester value is missing or invalid'}), 400
         
 
+        for course in new_user.courses:
+                course.student_id = new_user.admission_number
+        
         assign_courses(new_user, department_name, department_level, semester_name)
 
 
@@ -550,49 +662,6 @@ def registration():
 
 
 
-    
-@user_bp.route('/update', methods=['POST', 'PUT'])
-def update_course():
-    # Assuming you receive data for the course update in the request
-    data = request.get_json()
-
-    # Check if data is None or not present
-    if data is None:
-        return jsonify({'error': 'No data received'}), 400
-
-    # Extract the necessary data for the course update
-    course_title = data.get('course_title')
-    course_code = data.get('course_code')
-    credit = data.get('credit')
-
-    # Check if the required data is present
-    if course_title is None or course_code is None or credit is None:
-        return jsonify({'error': 'Incomplete data provided'}), 400
-
-    # Assuming there's a Course instance to update (retrieve it based on an identifier)
-    course_to_update = Course.query.filter_by(course_code=course_code).first()
-
-    if course_to_update:
-        try:
-            # Update the course details
-            course_to_update.course_title = course_title
-            course_to_update.credit = credit
-
-            # Commit the changes to the database
-            db.session.commit()
-
-            return jsonify({'message': 'Course updated successfully'}), 200
-
-        except Exception as e:
-            db.session.rollback()  # Rollback changes in case of an error
-            return jsonify({'error': str(e)}), 500
-    else:
-        return jsonify({'error': 'Course not found'}), 404
-
-
-
-
-
 
 @user_bp.route('/update_profile', methods=['POST'])
 def update_profile():
@@ -602,7 +671,6 @@ def update_profile():
         password = request.form.get('password')
         date_of_birth = request.form.get('date_of_birth')
         gender = request.form.get('gender')
-        department_name = request.form.get('department_name')
         email = request.form.get('email')
         state = request.form.get('state')
         phone_number = request.form.get('phone_number')
@@ -618,7 +686,6 @@ def update_profile():
         current_user.password = hashed_password
         current_user.date_of_birth = date_of_birth
         current_user.gender = gender
-        current_user.department_name = department_name
         current_user.email = email
         current_user.state = state
         current_user.phone_number = phone_number
@@ -632,55 +699,41 @@ def update_profile():
 
 
 
-@user_bp.route('/upload_department', methods=['POST'])
-def upload_department():
-    # Fetch data from the form
-    department_level = request.form.get('department_level')
-    department_name = request.form.get('department_name')
 
-    # Check if the required data is present
-    if not department_level or not department_name:
-        return jsonify({'error': 'Incomplete data provided'}), 400
+# Create a route for updating the password using both PUT and POST methods
+@user_bp.route('/update_password', methods=['PUT', 'POST'])
+def update_password():
+    if request.method == 'POST' or request.form.get('_method') == 'PUT':
+        admission_number = request.form.get('admission_number')
+        new_password = request.form.get('new_password')
 
-    # Create a new Department instance
-    new_department = Department(department_level=department_level, department_name=department_name)
+        if not new_password:
+            return jsonify({'message': 'New password is required'}), 400
 
-    try:
-        # Add the new_department instance to the session
-        db.session.add(new_department)
+        # Get the current student based on admission_number
+        student = Student.query.get(admission_number)
 
-        # Commit the changes to the database
+        if not student:
+            return jsonify({'message': 'Student not found'}), 404
+
+        # Hash the new password before storing it
+        hashed_password = generate_password_hash(new_password, method='sha256')
+        student.password = hashed_password
+
+        # Update the 'updated_at' timestamp
+        student.updated_at = datetime.utcnow()
+
+        # Commit changes to the database
         db.session.commit()
 
-        return jsonify({'message': 'Department added successfully'}), 200
+        return redirect(url_for('pages.admin'))
 
-    except Exception as e:
-        db.session.rollback()  # Rollback changes in case of an error
-        return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'message': 'Method not allowed'}), 405
 
 
-@user_bp.route('/upload_semester', methods=['POST'])
-def upload_semester():
-    # Fetch data from the form
-    semester_name = request.form.get('semester')
 
-    # Check if the required data is present
-    if not semester_name:
-        return jsonify({'error': 'Incomplete data provided'}), 400
 
-    # Create a new Semester instance
-    new_semester = Semester(semester=semester_name)
 
-    try:
-        # Add the new_semester instance to the session
-        db.session.add(new_semester)
 
-        # Commit the changes to the database
-        db.session.commit()
-
-        return jsonify({'message': 'Semester added successfully'}), 200
-
-    except Exception as e:
-        db.session.rollback()  # Rollback changes in case of an error
-        return jsonify({'error': str(e)}), 500
 

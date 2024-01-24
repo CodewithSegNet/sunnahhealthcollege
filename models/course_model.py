@@ -13,9 +13,12 @@ class Course(db.Model):
     A class that defines the Course Description
     '''
     __tablename__ = 'courses'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    course_code = db.Column(db.String(20), primary_key=True, nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'), nullable=False)
     course_title = db.Column(db.String(255), nullable=False)
-    course_code = db.Column(db.String(20), nullable=False)
     credit = db.Column(db.Integer, nullable=False)
-    student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'))
-
+    ca_score = db.Column(db.Integer, nullable=True)
+    exam_score = db.Column(db.Integer, nullable=True)
+    total_score = db.Column(db.Integer, nullable=True)
+    grade = db.Column(db.String(5), nullable=True)
+    remark = db.Column(db.String(255), nullable=True)

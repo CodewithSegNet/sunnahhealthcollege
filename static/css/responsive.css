@@ -1,3 +1,8 @@
+html,
+body{
+	overflow-x: hidden;
+}
+
 .mobile-btn{
 	display: none;
 }
@@ -36,12 +41,58 @@
 	color: #333;
 }
 
-.new-box{
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.2);
+
+
+
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
+.red{
+	color: red;
+}
 
+.new_form{
+	display: flex;
+	padding: 0;
+}
 
+#search {
+    padding: 6px;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    outline: none;
+}
+
+#searchBtn {
+    background-color: #0d100e;
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#searchBtn:hover {
+    background-color: #45a049;
+}
+
+.admin_board{
+	width: 100%;
+}
+
+.brake{
+	padding: 0 2px;
+}
 /* =====================================
 
 ========================================*/  
@@ -449,6 +500,7 @@
 	.dashboard_container{
 			max-width: 680px;
 			position: relative;
+			padding-bottom: 2rem;
 	}
 
 	.icofont-navigation-menu{
@@ -606,6 +658,7 @@
 	.dashboard_container{
 			max-width: 680px;
 			position: relative;
+			padding-bottom: 2rem;
 
 	}
 

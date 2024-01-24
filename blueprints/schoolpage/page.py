@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response
+from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response, flash
 from models.student_model import Student
-from flask import send_from_directory
+from models.admin import Admin
+from controllers.grade_controller import StudentScoreForm
+from models.form import AdmissionForm
 from models.image import Image
 from app import cache, db
 from functools import wraps
+import traceback
+from controllers.models_controller import *
 import requests
 from urllib.parse import quote, unquote
 import jwt
@@ -151,6 +155,43 @@ def login():
             return redirect(url_for('pages.signinstudent'))    
     except Exception as e:
         return jsonify({'error': "An error occured: {}".format(str(e))})
+    
+
+
+@pages_bp.route('/admin', methods=['POST'])
+def admin():
+    """
+    A route that handles admin authentication
+    """
+    try:
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if email is None or password is None:
+            return jsonify({'error': 'Email and password are required.'}), 400
+
+        user = Admin.query.filter_by(email=email).first()
+        if user and user.check_password(password):
+            """
+            Create a JWT token
+            """
+            token = jwt.encode({
+                'admin_user_id': user.email,
+                'exp': datetime.utcnow() + timedelta(hours=2)  # Token expiration time
+            }, 'secret_key', algorithm='HS256')
+
+            session['admin_token'] = token  # Store the token in the session
+            session['admin_user_id'] = user.email  # Store user ID in the session
+
+            return redirect(url_for('pages.admindash'))
+        else:
+            return redirect(url_for('pages.signinadmin'))
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+
+
+
 
   # authenticate and authorize requests using JWT
 def token_required(func):
@@ -303,6 +344,19 @@ def application():
 
 
 
+
+@pages_bp.route('/form')
+@cache.cached(timeout=500)
+def form():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/application_form.html', user_image4 = image4)
+
+
+
 @pages_bp.route('/notfound')
 @cache.cached(timeout=500)
 def notfound():
@@ -312,6 +366,64 @@ def notfound():
     image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
     return render_template('pages/404.html', user_image4 = image4)
+
+
+
+def get_latest_image_info(admission_number):
+    if admission_number:
+        # Retrieve the latest image associated with the student
+        image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
+
+        if image and image.image_data:
+            return {
+                'image_data': image.image_data,
+                'mimetype': 'image/jpeg',  
+            }
+
+    return None
+
+
+
+@pages_bp.route('/admindash', methods=['GET'])
+def admindash():
+    if 'admin_user_id' in session:
+        email = session.get('admin_user_id')
+        token = session.get('admin_token')
+
+        if not email or not token:
+            return jsonify({'error': 'Unauthorized'}), 401
+    
+        user = Admin.query.filter_by(email=email).first()
+
+         # Retrieve student_info from the query parameters
+        student_info_param = request.args.get('student_info')
+
+        if student_info_param is None:
+            # Handle the case where student_info_param is None
+            student_info = None
+            image_info = None
+        else:
+            # Decode the URL-encoded JSON string
+            student_info_param_decoded = unquote(student_info_param)
+
+            # Decode again in case of double encoding
+            student_info = json.loads(unquote(student_info_param_decoded))
+
+            # Get image information
+            image_info = get_latest_image_info(student_info.get('admission_number'))
+
+        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+        form = StudentScoreForm()
+
+        return render_template('pages/admin.html', user=user, user_image=image1, os=os, student_info=student_info, image_info=image_info, form=form)
+    else:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+
+
+
+
 
 
 
@@ -328,8 +440,8 @@ def dashboard():
     courses = current_user.courses
     departments = current_user.departments  
     semesters = current_user.semesters
-    images = current_user.images 
-
+    images = current_user.images
+   
 
     # Manually replace slashes with %2F
     encoded_admission_number = current_user.admission_number.replace('/', '%2F')
@@ -375,6 +487,9 @@ def upload_image():
         return jsonify({'error': 'File upload failed'}), 500
 
 
+
+
+
 @pages_bp.route('/images', methods=['GET'])
 def get_image():
     admission_number = request.args.get('admission_number')
@@ -395,6 +510,14 @@ def get_image():
 
 
 
+@pages_bp.route('/logoutadmin', methods=['GET', 'POST'])
+def logoutadmin():
+    # Clear the user's session data
+    session.clear()
+
+    return redirect(url_for('pages.signinadmin'))
+
+
 
 
 
@@ -404,3 +527,73 @@ def logout():
     session.clear()
 
     return redirect(url_for('pages.signinstudent'))
+
+
+
+def calculate_grade_remark(total_score):
+    if total_score >= 70:
+        return 'A', 'Excellent'
+    elif 65 <= total_score < 70:
+        return 'B', 'V. Good'
+    elif 60 <= total_score < 65:
+        return 'C', 'Good'
+    elif 55 <= total_score < 60:
+        return 'D', 'Fair'
+    elif 50 <= total_score < 55:
+        return 'E', 'Pass'
+    else:
+        return 'F', 'Fail'
+
+
+
+@pages_bp.route('/add_scores', methods=['POST'])
+def add_scores():
+    form = StudentScoreForm()
+
+    if form.validate_on_submit():
+        # Retrieve the student and course based on the form data
+        student = Student.query.filter_by(admission_number=form.student_id.data).first()
+        course = Course.query.get(form.course_code.data)
+
+        if student and course:
+            # Calculate total score, grade, and remark
+            total_score = form.ca_score.data + form.exam_score.data
+            grade, remark = calculate_grade_remark(total_score)
+
+           # Update the existing Course record with the new grades
+            course.student_id =  form.student_id.data
+            course.course_code = form.course_code.data
+            course.ca_score = form.ca_score.data
+            course.exam_score = form.exam_score.data
+            course.total_score = total_score
+            course.grade = grade
+            course.remark = remark
+
+            # Commit the changes to the database
+            db.session.commit()
+
+            flash('Scores added successfully', 'success')
+            return redirect(url_for('pages.admindash'))
+        else:
+            flash('Invalid student or course ID', 'danger')
+
+    return render_template('pages/admin.html', form=form)
+
+
+
+ 
+
+@pages_bp.route('/admissionform', methods=['GET', 'POST'])
+def admission_form():
+    if request.method == 'POST':
+        applicant_data = request.form
+        admission_form = AdmissionForm(**applicant_data)
+        db.session.add(admission_form)
+        db.session.commit()
+        return redirect(url_for('pages.success'))
+
+    return render_template('admission_form.html')
+
+@pages_bp.route('/success')
+def success():
+    return 'Form submitted successfully!'
