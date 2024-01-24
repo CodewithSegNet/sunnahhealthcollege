@@ -622,7 +622,7 @@ def registration():
         # Check if the provided semester exists in the semesters table
         semester_name = data.get('semester')
         if semester_name:
-            semester = Semester.query.filter_by(semester=semester_name).first()
+            semester = Semester.query.filter_by(id=id).first()
             if semester is None:
                 new_semester = Semester(semester=semester_name)
                 new_user.semesters.append(new_semester)
@@ -643,7 +643,6 @@ def registration():
                 course.student_id = new_user.admission_number
         
         assign_courses(new_user, department_name, department_level, semester_name)
-
 
 
         db.session.commit()

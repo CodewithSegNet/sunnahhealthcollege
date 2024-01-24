@@ -553,7 +553,7 @@ def add_scores():
     if form.validate_on_submit():
         # Retrieve the student and course based on the form data
         student = Student.query.filter_by(admission_number=form.student_id.data).first()
-        course = Course.query.get(form.course_code.data)
+        course = Course.query.filter_by(course_code=form.course_code.data).first()
 
         if student and course:
             # Calculate total score, grade, and remark

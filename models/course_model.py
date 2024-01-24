@@ -13,7 +13,8 @@ class Course(db.Model):
     A class that defines the Course Description
     '''
     __tablename__ = 'courses'
-    course_code = db.Column(db.String(20), primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    course_code = db.Column(db.String(20), nullable=False)
     student_id = db.Column(db.String(50), db.ForeignKey('students.admission_number'), nullable=False)
     course_title = db.Column(db.String(255), nullable=False)
     credit = db.Column(db.Integer, nullable=False)
