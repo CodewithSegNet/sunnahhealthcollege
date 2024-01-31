@@ -7,6 +7,7 @@ from models.department_model import Department
 from models.semester import Semester
 from models.course_model import Course
 from models.admin import Admin
+from models.applicant import Applicant
 import json
 from app import db
 from datetime import datetime
@@ -729,6 +730,8 @@ def update_password():
 
     else:
         return jsonify({'message': 'Method not allowed'}), 405
+
+
 
 
 

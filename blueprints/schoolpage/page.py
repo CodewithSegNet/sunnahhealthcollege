@@ -369,6 +369,19 @@ def notfound():
 
 
 
+@pages_bp.route('/applicant')
+@cache.cached(timeout=500)
+def applicant():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/applicant.html', user_image4 = image4)
+
+
+
+
 def get_latest_image_info(admission_number):
     if admission_number:
         # Retrieve the latest image associated with the student
@@ -530,6 +543,8 @@ def logout():
 
 
 
+
+
 def calculate_grade_remark(total_score):
     if total_score >= 70:
         return 'A', 'Excellent'
@@ -592,8 +607,48 @@ def admission_form():
         db.session.commit()
         return redirect(url_for('pages.success'))
 
-    return render_template('admission_form.html')
+    return render_template('application_form.html')
 
 @pages_bp.route('/success')
 def success():
     return 'Form submitted successfully!'
+
+
+
+
+@pages_bp.route('/registerapplicant', methods=['POST'])
+def registerapplicant():
+    '''
+    A function that handles admin registration
+    '''
+    
+    try:
+        data = request.form
+
+        existing_email = Applicant.query.filter_by(email=data['email']).first()
+
+        if existing_email:
+            return jsonify({'error': 'Email Already Exists!'}), 400
+        
+
+
+        # Create a new user instance
+        new_user = Applicant(
+            email=data['email'],
+            phonenumber=data['phonenumber'],
+            password=generate_password_hash(data['password']),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+
+        # Return JSON successful message if data's works
+        return redirect('https://paystack.com/pay/vcrh2vy3te')    
+    
+    # Handles database issues (connection or constraint violation)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

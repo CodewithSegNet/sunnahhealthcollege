@@ -381,6 +381,7 @@
                     <option value="GCE">GCE</option>
                     <option value="WAEC">WAEC</option>
                     <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
                 </select>
             </td>
         </tr>
@@ -398,6 +399,7 @@
                     <option value="GCE">GCE</option>
                     <option value="WAEC">WAEC</option>
                     <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
                 </select>
             </td>
         </tr>
@@ -415,16 +417,17 @@
                     <option value="GCE">GCE</option>
                     <option value="WAEC">WAEC</option>
                     <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>4.</td>
-            <td><input type="text" name="school4" ></td>
-            <td><input type="date" name="from4" ></td>
-            <td><input type="date" name="to4" ></td>
+            <td><input type="text" name="school4" required></td>
+            <td><input type="date" name="from4" required></td>
+            <td><input type="date" name="to4" required></td>
             <td>
-                <select name="certificate4" >
+                <select name="certificate4" required>
                     <option value="" disabled selected>Select Certificate</option>
                     <option value="Primary School Certificate">Primary School Certificate</option>
                     <option value="JSSCE">JSSCE</option>
@@ -432,6 +435,7 @@
                     <option value="GCE">GCE</option>
                     <option value="WAEC">WAEC</option>
                     <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
                     <!-- Add more certificate options as needed -->
                 </select>
             </td>
@@ -470,6 +474,13 @@
         <div class="d-flex align-items-center justify-content-center">
             <label for="neco">NECO</label>
             <input type="checkbox" id="neco" name="examination" value="NECO">
+        </div>
+    </div>
+
+    <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="neco">NABTEB</label>
+            <input type="checkbox" id="NABTEB" name="examination" value="NABTEB">
         </div>
     </div>
 </div>
@@ -754,27 +765,27 @@
     <tbody>
         <tr>
             <td>1.</td>
-            <td><input type="text" name="national_diploma_subject_1" ></td>
-            <td><input type="text" name="grade1" ></td>
+            <td><input type="text" name="national_diploma_subject_1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade1" placeholder="OPTIONAL"></td>
             <td>4.</td>
-            <td><input type="text" name="national_diploma_subject_2" ></td>
-            <td><input type="text" name="grade2" ></td>
+            <td><input type="text" name="national_diploma_subject_2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade2" placeholder="OPTIONAL"></td>
         </tr>
         <tr>
             <td>2.</td>
-            <td><input type="text" name="national_diploma_subject_3" ></td>
-            <td><input type="text" name="grade3" ></td>
+            <td><input type="text" name="national_diploma_subject_3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade3" placeholder="OPTIONAL"></td>
             <td>5.</td>
-            <td><input type="text" name="national_diploma_subject_4" ></td>
-            <td><input type="text" name="grade4" ></td>
+            <td><input type="text" name="national_diploma_subject_4" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade4" placeholder="OPTIONAL"></td>
         </tr>
         <tr>
             <td>3.</td>
-            <td><input type="text" name="national_diploma_subject_5" ></td>
-            <td><input type="text" name="grade5" ></td>
+            <td><input type="text" name="national_diploma_subject_5" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade5" placeholder="OPTIONAL"></td>
             <td>6.</td>
-            <td><input type="text" name="national_diploma_subject_6" ></td>
-            <td><input type="text" name="grade6" ></td>
+            <td><input type="text" name="national_diploma_subject_6" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade6" placeholder="OPTIONAL"></td>
         </tr>
     </tbody>
 </table>
@@ -793,19 +804,19 @@
     </thead>
     <tbody>
         <tr>
-            <td><input type="text" name="employmentSector1" ></td>
-            <td><input type="text" name="postHeld1" ></td>
-            <td><input type="text" name="employmentDate1" ></td>
+            <td><input type="text" name="employmentSector1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate1" placeholder="OPTIONAL"></td>
         </tr>
         <tr>
-            <td><input type="text" name="employmentSector2" ></td>
-            <td><input type="text" name="postHeld2" ></td>
-            <td><input type="text" name="employmentDate2" ></td>
+            <td><input type="text" name="employmentSector2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate2" placeholder="OPTIONAL"></td>
         </tr>
         <tr>
-            <td><input type="text" name="employmentSector3" ></td>
-            <td><input type="text" name="postHeld3" ></td>
-            <td><input type="text" name="employmentDate3" ></td>
+            <td><input type="text" name="employmentSector3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate3" placeholder="OPTIONAL"></td>
         </tr>
     </tbody>
 </table>
@@ -817,11 +828,11 @@
           <div>
             <h3 class="pb-2">List of Credentials</h3>
             <ol>
-                <li><input type="text" name="credential1" ></li>
-                <li><input type="text" name="credential2" ></li>
-                <li><input type="text" name="credential3" ></li>
-                <li><input type="text" name="credential4" ></li>
-                <li><input type="text" name="credential5" ></li>
+                <li><input type="text" name="credential1" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential2" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential3" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential4" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential5" placeholder="OPTIONAL"></li>
             </ol>
 
           </div>
