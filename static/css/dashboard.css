@@ -1,0 +1,156 @@
+/* Reset some default styles */
+body, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-transform: capitalize;
+    overflow-x: hidden;
+  }
+  
+  /* Styles for the dashboard layout */
+  .dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  .black{
+    color: #000;
+  }
+  
+
+  .profile-pic {
+	width: 150px;
+	height: 150px;
+  }
+
+  /* Sidebar styles */
+  .sidebar {
+    width: 200px;
+    height: 1100px;
+    background-color: #f2f2f2;
+    transition: opacity 0.5s ease-in;
+  }
+    
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sidebar ul li a.active {
+    font-weight: bold;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #444;
+    color: #fff;
+    width: 100%;
+  }
+  
+  .navbar__left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+  .navbar__right img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Main Content Area styles */
+  .main-content {
+    flex: 1;
+    /* Additional styles as needed */
+  }
+  
+
+  ul.dropdown {
+    padding: 10px 0 0 10px;
+}
+
+  
+form {
+  background-color: #fff;
+  padding-right: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="email"],
+input[type="number"],
+input[type="state"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 7px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #333;
+}
+
+.student-status{
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.student-status h6{
+  font-size: .8rem;
+}
+
+
+.dash-btn {
+  display: block;
+  width: 100%;
+  text-transform: capitalize;
+ 
+  padding: 10px 20px;
+  font-weight: 500;
+  box-shadow: none;
+  display: inline-block;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  border: none;
+  border-radius: 0;
+  border-radius: 4px;
+}
+
+.dash-btn:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+.dash-btn.focus, .dash-btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}

@@ -1,0 +1,312 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Sunnah Health College">
+		<meta name="description" content="Sunnah Health College Mararaba New Karu Nassarawa">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+        <title>Dashboard - Sunnah Health College</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+		
+    </head>
+<body>
+
+
+   <!-- Nav -->
+   <nav class="navbar">
+    <div class="navbar__left">
+      <img src={{user_image}}>
+      <span>Hello, {{ user.email }}</span>
+    
+    </div>
+
+    <div class="navbar__right d-flex align-items-center justify-content-between">
+
+        <div class="navbar__burger">
+          <i class="icofont-navigation-menu"></i> 
+        </div>
+        
+      </div>
+
+    <div class="search-container">
+        <form class="new_form" action="{{ url_for('user.get_student_info', identifier='') }}" method="GET">
+            <input type="text" id="search" name="identifier" placeholder="Admission Number...">
+            <button id="searchBtn" type="submit">Search</button>
+        </form>
+    </div>
+      
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="#" class="dash-btn sidebar-item {{ 'active' if active_section == 'dashboard' else '' }}" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+            <li><a class="dash-btn" href="{{ url_for('pages.logoutadmin') }}" data-content=""><i class="icofont-exit"></i> Log Out</a></li>
+        </ul>
+    </aside>
+
+    
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div id="dashboard" class="content-section">
+            <div class="dashboard_container container px-5">
+              <div class="row">
+                <div class="admin_board pt-4">
+                
+                    <h1>Student Information</h1>
+
+                   <div class="row">
+                        <div class="col-md-12">
+                            {% if student_info.images %}
+                            <ul>
+                                {% for image in student_info.images %}
+                                    <div class="pt-2">
+                                        <img class="profile-pic" src="{{ url_for('pages.get_image', admission_number=student_info.admission_number) }}" alt="Student Image">
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+              
+
+
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <p class="red">Admission Number: {{ student_info.admission_number }}</p>
+                        <p>Name: {{ student_info.name }}</p>
+                        </div>
+                      
+                        <div class="col-md-6">
+                            <li>Department Name: {{ student_info.department_name }}</li>
+                            <li>State: {{ student_info.state }}</li>
+                            </div>
+                    </div>
+                    
+
+                    <div class="row">
+                        <div class="col-md-6">
+                        <li>Gender: {{ student_info.gender }}</li>
+                        <li>Email: {{ student_info.email }}</li>
+                        </div>
+
+                        <div class="col-md-6">
+                            {% if student_info.date_of_birth %}
+                            <p>Date of Birth: {{ student_info.date_of_birth }}</p>
+                        {% else %}
+                            <p>Date of Birth: N/A</p>
+                        {% endif %}
+                        <li>Phone Number: {{ student_info.phone_number }}</li>
+                            </div>
+                    </div>
+
+
+
+
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            {% if student_info.department %}
+                            <h2>Department</h2>
+                            <ul class="pt-2">
+                                <li>Level: {{ student_info.department.department_level }}</li>
+                                <li>Name: {{ student_info.department.department_name }}</li>
+                            </ul>
+                        {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            {% if student_info.semesters %}
+                        <h2>Semesters</h2>
+                        <ul class="pt-2">
+                            {% for semester in student_info.semesters %}
+                                <li>Semester: {{ semester.semester }}</li>
+                                <!-- Add other semester attributes as needed -->
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            {% if student_info.courses %}
+                            <h2>Courses</h2>
+                            <div class="pt-2">
+                                {% for course in student_info.courses %}
+                                    <span class="brake">[Course Code: <span style="color: green;">{{ course.course_code }} </span></span>
+                                    <span class="brake">Course Title: {{ course.course_title }}</span>
+                                    <span class="brake">Credit: {{ course.credit }}</span>
+                                    CA Score: <span style="color: red;">{{ course.ca_score }}, </span>
+                                            Exam Score: <span style="color: red;"> {{ course.exam_score }}, </span>
+                                            Total Score:<span style="color: red;"> {{ course.total_score }}</span> ,
+                                            Grade: {{ course.grade }},
+                                            Remark: <span style="color: red;">{{ course.remark }}, </span>]
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        </div>
+                    
+                    </div>
+                
+                
+       
+
+
+                    <div class="pt-5">
+                        <h2>Add Student Scores</h2>
+                        <form method="POST" action="{{ url_for('pages.add_scores') }}" id="scoreForm" class="flex-form">
+                            {{ form.hidden_tag() }}
+                    
+                            <div class="d-flex align-items-center flex-wrap">
+                                <div class="pr-3">
+                                    <label for="student_id">Student ID:</label>
+                                    {{ form.student_id(class="form-control", placeholder="Enter Student ID") }}
+                                </div>
+                    
+                                <div class="pr-3">
+                                    <label for="course_id">Course ID:</label>
+                                    {{ form.course_code(class="form-control", placeholder="Enter Course ID") }}
+                                </div>
+                    
+                                <div class="pr-3">
+                                    <label for="ca_score">CA Score:</label>
+                                    {{ form.ca_score(class="form-control", placeholder="Enter CA Score") }}
+                                </div>
+                    
+                                <div class="pr-3">
+                                    <label for="exam_score">Exam Score:</label>
+                                    {{ form.exam_score(class="form-control", placeholder="Enter Exam Score") }}
+                                </div>
+                            </div>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </form>
+                    </div>
+
+
+
+                    
+
+
+<div class="pt-5">
+
+    <h1>Update Password</h1>
+    
+    <form class="pt-3" method="post" action="{{ url_for('user.update_password', admission_number=student_info.admission_number) }}">
+        <!-- Include a hidden field to mimic the PUT method -->
+        <input type="hidden" name="_method" value="PUT">
+
+        <!-- Include a hidden field for the admission number -->
+        <input type="hidden" name="admission_number" value="{{ student_info.admission_number }}">
+
+        <label for="new_password">New Password:</label>
+        <input type="password" id="new_password" name="new_password" required>
+
+        <button class="btn btn-primary" type="submit">Update Password</button>
+    </form>
+
+
+</div>
+                  
+                </div>
+         
+              </div>
+            </div>
+          </div>
+
+
+
+          <div id="upload" class="content-section" style="display: none;">
+            <div class="dashboard_container container px-5">
+              <div class="row">
+                <div class="admin_board pt-4">
+                  
+
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+
+    </main>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+<!-- jquery Min JS -->
+<!-- Include jQuery before other scripts using it -->
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+<!-- jquery Min JS -->
+<!-- Include jQuery before other scripts using it -->
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+<!-- Include your other scripts -->
+<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+<!-- ... other scripts ... -->
+
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<!-- Your custom scripts -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- ... other custom scripts ... -->
+
+</body>
+</html>

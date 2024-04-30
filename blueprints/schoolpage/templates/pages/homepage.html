@@ -1,0 +1,608 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Sunnah Health College">
+		<meta name="description" content="Sunnah Health College Mararaba New Karu Nassarawa">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+        <title>Home - Sunnah Health College</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+		
+    </head>
+    <body>
+	
+		<!-- Preloader -->
+        <div class="preloader">
+            <div class="loader">
+                <div class="loader-outter"></div>
+                <div class="loader-inner"></div>
+
+                <div class="indicator"> 
+                    <svg width="16px" height="12px">
+                        <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                        <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- End Preloader -->
+		
+		
+	
+		<!-- Header Area -->
+		<header class="header" >
+			<!-- Topbar -->
+			<div class="topbar">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-md-5 col-12">
+							<!-- Contact -->
+							<ul class="top-link">
+								<li><a href="{{ url_for('pages.contact') }}">Contact</a></li>
+							</ul>
+							<!-- End Contact -->
+						</div>
+						<div class="col-lg-6 col-md-7 col-12">
+							<!-- Top Contact -->
+							<ul class="top-contact">
+								<li><i class="fa fa-phone"></i>+234 8082 147 327</li>
+								<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@sunnahhealthcollege.com</a></li>
+							</ul>
+							<!-- End Top Contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Topbar -->
+			<!-- Header Inner -->
+			<div class="header-inner">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-lg-3 col-12">
+								<!-- Start Logo -->
+								<div class="logo">
+									<a href="{{ url_for('pages.home') }}"><img src={{user_image4}}></a>
+								</div>
+								<!-- End Logo -->
+
+
+
+			<!-- Mobile Nav -->
+			<div class="mobile-nav">
+			
+				
+				
+						</div>
+						<!-- End Mobile Nav -->
+				
+				
+
+							
+							</div>
+							<div class="links col-lg-7 col-md-9 col-12 ">
+								<!-- Main Menu -->
+								<div class="main-menu">
+									<nav class="navigation ">
+										<ul class="nav menu">
+											<li class="active"><a href="{{ url_for('pages.home') }}">Home </a>
+											</li>
+											<li><a href="#">About Us <i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+													<li><a href="{{ url_for('pages.vision') }}">Vision, Mission and Core Value</a></li>
+													<li><a href="{{ url_for('pages.history') }}">Brief History</a></li>
+												</ul>
+											</li>
+											<li><a href="{{ url_for('pages.programmes') }}">Programmes</i></a>
+											</li>
+												<li><a href="{{ url_for('pages.admission') }}">Admission </a></li>
+
+											<li><a href="{{ url_for('pages.contact') }}">Contact Us</a></li>
+
+											<a href="{{ url_for('pages.signinstudent') }}" class="mobile-btn">Portal</a>
+										</ul>
+
+										
+
+									</nav>
+								</div>
+								<!--/ End Main Menu -->
+							</div>
+							<div class="apply col-lg-2 col-12">
+								<div class="get-quote">
+									<a href="{{ url_for('pages.signinstudent') }}" class="btn portal">Portal</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Header Inner -->
+		</header>
+		<!-- End Header Area -->
+
+
+
+
+
+
+		
+		<!-- Slider Area -->
+		<section class="slider">
+			<div class="hero-slider">
+				<!-- Start Single Slider -->
+				<div class="single-slider" style="background-image: url( {{url_for('static', filename='img/slider.jpg')}} )">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="text">
+									
+									<h1>Welcome To <span>Sunnah College Of Science,</span>  Health And  <span>Technology</span></h1>
+									<p>
+										The journey to higher education can be a significant step, and we aim to make the admission process as seamless as possible for our prospective students. </p>
+									<div class="button">
+										<a href="{{ url_for('pages.application') }}" class="btn">Apply Now</a>
+										<a href="{{ url_for('pages.admission') }}" class="btn primary">Learn More</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Single Slider -->
+				<!-- Start Single Slider -->
+				<div class="single-slider" style="background-image: url( {{url_for('static', filename='img/slider2.jpg')}} )">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="text">
+									
+									<h1>Welcome To <span>Sunnah College Of Science,</span>  Health And  <span>Technology</span></h1>
+									<p>
+										Our institution is committed to delivering a comprehensive and enriching learning experience that empowers students to thrive in their chosen fields.</p>
+									<div class="button">
+										<a href="{{ url_for('pages.application') }}" class="btn">Apply Now</a>
+										<a href="{{ url_for('pages.admission') }}" class="btn primary">Learn More</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Start End Slider -->
+				
+			</div>
+		</section>
+		<!--/ End Slider Area -->
+		
+		<!-- Start Schedule Area -->
+		<section class="schedule">
+			<div class="container">
+				<div class="schedule-inner">
+					<div class="row">
+						<div class="col-lg-4 col-md-6 col-12 ">
+							<!-- single-schedule -->
+							<div class="single-schedule first">
+								<div class="inner">
+									<div class="icon">
+										<i class="fa fa-ambulance"></i>
+									</div>
+									<div class="single-content">
+										<h4>Admissions</h4>
+										<p>For information that will assist 
+											our propective students
+											to study at Sunnah Health College Of Science.</p>
+										<a href="{{ url_for('pages.admission') }}">APPLY NOW<i class="fa fa-long-arrow-right"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<!-- single-schedule -->
+							<div class="single-schedule middle">
+								<div class="inner">
+									<div class="icon">
+										<i class="icofont-prescription"></i>
+									</div>
+									<div class="single-content">
+										<h4>Available Courses</h4>
+										<div class="single-content">
+											<ul class="time-sidual">
+												<li class="day"><i class="icofont-learn"></i> Community Health Extention </li>
+												<li class="day"><i class="icofont-learn"></i> Pharmacy Technician </li>
+												<li class="day"><i class="icofont-learn"></i> medical Laboratory Technician </li>
+											</ul>
+											<a href="{{ url_for('pages.admission') }}">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-12 col-12">
+							<!-- single-schedule -->
+							<div class="single-schedule last">
+								<div class="inner">
+									<div class="icon">
+										<i class="icofont-ui-clock"></i>
+									</div>
+									<div class="single-content">
+										<h4>Open Hours</h4>
+										<ul class="time-sidual">
+											<li class="day">Monday - Friday <span>8:00am-5:00pm</span></li>
+											<li class="day">Saturday <span>9:00am-12:30pm</span></li>
+											<li class="day">Sunday<span>Unavailable</span></li>
+										</ul>
+										<a href="{{ url_for('pages.contact') }}">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/End Start schedule Area -->
+
+		<!-- Start Feautes -->
+		<section class="Feautes section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>Quality Health Service Is Our Tradition </h2>
+							<img src={{user_image}} alt="#">
+							<p>Join us at Sunnah College of Science, Health, and Technology and embark on a transformative educational journey.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features">
+							<div class="signle-icon">
+								<i class="icofont icofont-ambulance-cross"></i>
+							</div>
+							<h3>Ethical Standards</h3>
+							<p>We equip future responders with the ethical framework necessary to provide immediate, 
+								compassionate care, upholding the highest standards in emergency situations.</p>
+						</div>
+						<!-- End Single features -->
+					</div>
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features">
+							<div class="signle-icon">
+								<i class="icofont icofont-medical-sign-alt"></i>
+							</div>
+							<h3>Pharmaceutical Practice</h3>
+							<p>Students are equipped with a comprehensive understanding of ethical principles 
+								to ensure the safe and responsible use of medications, 
+								promoting integrity within the pharmaceutical field.</p>
+						</div>
+						<!-- End Single features -->
+					</div>
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features last">
+							<div class="signle-icon">
+								<i class="icofont icofont-stethoscope"></i>
+							</div>
+							<h3>Medical Treatment Ethics</h3>
+							<p>Our curriculum emphasizes the ethical considerations in medical treatment, 
+								empowering future healthcare professionals to navigate ethical 
+								complexities while providing patient-centered care. </p>
+						</div>
+						<!-- End Single features -->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/ End Feautes -->
+		
+		<!-- Start Fun-facts -->
+		<div id="fun-facts" class="fun-facts section overlay">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Start Single Fun -->
+						<div class="single-fun">
+							<i class="icofont icofont-home"></i>
+							<div class="content">
+								<span class="counter">1</span>
+								<p>College</p>
+							</div>
+						</div>
+						<!-- End Single Fun -->
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Start Single Fun -->
+						<div class="single-fun">
+							<i class="icofont icofont-user-alt-3"></i>
+							<div class="content">
+								<span class="counter">100</span>
+								<p>Student</p>
+							</div>
+						</div>
+						<!-- End Single Fun -->
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Start Single Fun -->
+						<div class="single-fun">
+                            <i class="icofont-book"></i>							
+                            <div class="content">
+								<span class="counter">3</span>
+								<p>Faculties</p>
+							</div>
+						</div>
+						<!-- End Single Fun -->
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Start Single Fun -->
+						<div class="single-fun">
+							<i class="icofont-institution"></i>
+							<div class="content">
+								<span class="counter">2000</span>
+								<p>Year Sunnah Health College Was Founded</p>
+							</div>
+						</div>
+						<!-- End Single Fun -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Fun-facts -->
+		
+
+
+
+
+
+
+
+
+<!-- Start Blog Area -->
+<section class="blog section" id="blog">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="section-title">
+					<h2>Meet Our Students</h2>
+					<img src={{user_image}} alt="#">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-12">
+				<!-- Single Blog -->
+				<div class="single-news">
+					<div class="news-head">
+						<img src={{user_image3}} alt="#">
+					</div>
+					<div class="news-body">
+						<div class="news-content">
+							<h2><a>Rukkayat Muhammad</a></h2>
+							<p class="text">The strong sense of community at my school created a supportive network among students and faculty, Encouraging an environment conducive to academic growth and success.</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Single Blog -->
+
+			</div>
+
+
+			<div class="col-lg-4 col-md-6 col-12">
+				<!-- Single Blog -->
+				<div class="single-news">
+					<div class="news-head">
+						<img src={{user_image6}} alt="#">
+					</div>
+					<div class="news-body">
+						<div class="news-content">
+
+							<h2><a>Kabiru Ismail</a></h2>
+							<p class="text"> The community atmosphere within the College of Education has been incredibly supportive, creating an environment where I feel encouraged to grow both personally and professionally.</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Single Blog -->
+
+			</div>
+
+
+			<div class="col-lg-4 col-md-6 col-12">
+				<!-- Single Blog -->
+				<div class="single-news">
+					<div class="news-head">
+						<img src={{user_image5}} alt="#">
+					</div>
+					<div class="news-body">
+						<div class="news-content">
+
+							<h2><a>Ummi Ibrahim</a></h2>
+							<p class="text">My journey has been a transformative experience for me. The dedicated faculty and their innovative teaching methods have significantly enriched my learning journey.
+							</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Single Blog -->
+			</div>
+
+		
+		</div>
+	</div>
+</section>
+<!-- End Blog Area -->	
+
+		
+		<!-- Start Newsletter Area -->
+		<section class="newsletter section">
+			<div class="container">
+				<div class="row ">
+					<div class="col-lg-6  col-12">
+						<!-- Start Newsletter Form -->
+						<div class="subscribe-text ">
+							<h6>Sign up for newsletter</h6>
+							<p class="">Sign up for our newsletter to stay connected and receive the latest updates</p>
+						</div>
+						<!-- End Newsletter Form -->
+					</div>
+					<div class="col-lg-6  col-12">
+						<!-- Start Newsletter Form -->
+						<div class="subscribe-form ">
+							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+								<input name="EMAIL" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Your email address'" required="" type="email">
+								<button class="btn">Subscribe</button>
+							</form>
+						</div>
+						<!-- End Newsletter Form -->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /End Newsletter Area -->
+		
+		<!-- Footer Area -->
+		<footer id="footer" class="footer ">
+			<!-- Footer Top -->
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>About Us</h2>
+								<p>We are dedicated to fostering 
+									a tradition of excellence in providing top-notch education
+									 and unparalleled services in the fields of science, health, and technology.</p>
+								<!-- Social -->
+								<ul class="social">
+									<li><a href="#"><i class="icofont-facebook"></i></a></li>
+									<li><a href="#"><i class="icofont-instagram"></i></a></li>
+									<li><a href="#"><i class="icofont-twitter"></i></a></li>
+                                    <li><a href="#"><i class="icofont-youtube-play"></i>
+                                    </a></li>
+								</ul>
+								<!-- End Social -->
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer f-link">
+								<h2>Quick Links</h2>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+											<li><a href="{{ url_for('pages.home') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+											<li><a href="{{ url_for('pages.history') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+											<li><a href="{{ url_for('pages.admission') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Admission</a></li>
+											<li><a href="{{ url_for('pages.vision') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>why Sunnah</a></li>	
+										</ul>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+										
+											<li><a href="{{ url_for('pages.programmes') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Programmes</a></li>
+											<li><a href="{{ url_for('pages.contact') }}"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>	
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>Open Hours</h2>
+								<ul class="time-sidual">
+									<li class="day">Monday - Friday <span>8:00-5:00pm</span></li>
+									<li class="day">Saturday <span>9:00-12:30pm</span></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>Newsletter</h2>
+								<p>Sign up for our newsletter to stay connected and receive the latest updates, news, and insights from Sunnah College of Science, Health, and Technology.</p>
+								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Your email address'" required="" type="email">
+									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Footer Top -->
+			<!-- Copyright -->
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-12">
+							<div class="copyright-content">
+								<p>© Copyright 2023  |  All Rights Reserved.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Copyright -->
+		</footer>
+		<!--/ End Footer Area -->
+		
+		<!-- jquery Min JS -->
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/easing.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/colors.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/slicknav.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/niceselect.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/tilt.jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    </body>
+</html>
