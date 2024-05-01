@@ -4,5 +4,3 @@ test/
 myenv/
 *.pyc
 config_setup.py
-config.py
-passenger_wsgi.py

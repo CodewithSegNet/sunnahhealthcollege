@@ -33,7 +33,7 @@ class Config:
     # ssl={ "ca": "" }
 
 
-    Define SSL options in engine options
+    #Define SSL options in engine options
     SQLALCHEMY_ENGINE_OPTIONS = {
         'connect_args': {
             'ssl': {
