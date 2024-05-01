@@ -1,7 +1,7 @@
-html,
+/* html,
 body{
 	overflow-x: hidden;
-}
+} */
 
 .mobile-btn{
 	display: none;
@@ -1477,6 +1477,11 @@ body{
 	width: 80px;
 	line-height: 80px;
 }
+
+.applicant-dashboard{
+	padding: 1.5rem;
+}
+
 .Feautes .single-features::before {
 	display:none;
 }
@@ -1657,11 +1662,4 @@ body{
 .footer .footer-top {
 	padding: 65px 0px;
 }
-
-
-
-
-
-
-
 }

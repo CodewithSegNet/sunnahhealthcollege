@@ -1,0 +1,27 @@
+td, 
+th{
+    padding: 5px;
+}
+
+ol,
+li{
+    padding: 5px 0;
+}
+
+.round{
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.formImage{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-top: 3rem;
+}
+
+html,
+body{
+	overflow-x: hidden;
+}

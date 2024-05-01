@@ -40,6 +40,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/appform.css')}}">
 		
 		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
@@ -48,8 +49,13 @@
 <body>
     <div class="form-container">
         <form id="admissionForm" class="form-base fade-in-alt" action="/admissionform" method="post" enctype="multipart/form-data">
-            <h2 class="text-center pb-3 pt-5">ADMISSION FORM</h2>
+            <div class="formImage">
+                <img src="{{ user_image }}" alt="form image" class="round">
+
+            </div>
+            <h2 class="text-center">ADMISSION FORM</h2>
             <p class="text-center pb-5">Applicant Data</p>
+         
             <div class="row">
                 <div class="col-md-6">
                     <label for="fullnames">Full Names *</label>
@@ -64,7 +70,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="maritalstatus">Marital Status *</label>
-                    <select class="d-flex align-items-center justify-content-center text-center">
+                    <select id="maritalstatus" name="maritalstatus" class="d-flex align-items-center justify-content-center text-center" required>
+                        <option value="" disabled selected>Select Status</option>
                         <option value="single"> single </option>
                         <option value="married"> married </option>
                     </select>
@@ -140,34 +147,20 @@
 
 
             <div class="pt-3">
-                <h3 class="">Course applying (Please tick)</h3>
+                <h3 class="">Courses</h3>
         
 
-                <div class="d-flex pt-3 align-items-center justify-content-between w-70">
-                    <div class="d-flex align-items-center justify-content-between w-0 flex-wrap">
+                <div class="d-flex pt-3 align-items-center justify-content-between w-100">
+                    <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
                         <div class="col-md-12">
-                            <div class="d-flex  w-100 align-items-center justify-content-between">
-                                <label for="chew">Community Health Extension Worker (CHEW)</label>
-                                <input type="checkbox" style="width: 2%;" id="chew" name="chew" value="Community Health Extension">
-                            </div>
-                            
+                            <select id="courses" name="courses">
+                                <option value="" disabled selected>Select Course</option>
+                                <option value="Community Health Extension">Community Health Extension Worker (CHEW)</option>
+                                <option value="Pharmacy Technician">Pharmacy Technician</option>
+                                <option value="Medical Laboratory Technician">Medical Laboratory Technician (MLT)</option>
+                            </select>
                         </div>
-                        <div class="col-md-12">
-                            <div class="d-flex w-0 align-items-center justify-content-between">
-                                <label for="pharmacytech">Pharmacy Technician</label>
-                                <input type="checkbox" style="width: 2%;" id="pharmacytech" name="pharmacytech" value="Pharmacy Technician">
-                            </div>
-                            
-    
-                        </div>
-                        <div class="col-md-12 w-30">
-                            <div class="d-flex w-0 align-items-center justify-content-between">
-                                <label for="mlt">Medical Laboratory Technician (MLT)</label>
-                                <input type="checkbox" style="width: 2%;" id="mlt" name="mlt" value="Medical Laboratory Technician">
-                            </div>
-                       
-    
-                        </div>
+                      
                         
                     </div>
            
@@ -240,7 +233,7 @@
 
             <div class="pt-3"> 
 
-                <h3 class="pb-2">Name of Parent/Guardian</h3>
+                <h3 class="pb-2">Guardians</h3>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="parentguardianname">Name:</label>
@@ -421,25 +414,6 @@
                 </select>
             </td>
         </tr>
-        <tr>
-            <td>4.</td>
-            <td><input type="text" name="school4" required></td>
-            <td><input type="date" name="from4" required></td>
-            <td><input type="date" name="to4" required></td>
-            <td>
-                <select name="certificate4" required>
-                    <option value="" disabled selected>Select Certificate</option>
-                    <option value="Primary School Certificate">Primary School Certificate</option>
-                    <option value="JSSCE">JSSCE</option>
-                    <option value="SSCE">SSCE</option>
-                    <option value="GCE">GCE</option>
-                    <option value="WAEC">WAEC</option>
-                    <option value="NECO">NECO</option>
-                    <option value="NECO">NABTEB</option>
-                    <!-- Add more certificate options as needed -->
-                </select>
-            </td>
-        </tr>
     </tbody>
 </table>
 
@@ -452,35 +426,35 @@
 <div class="pb-3">
 <h6>Examinations</h6>
 <div class="d-flex align-items-center text-center justify-content-between w-50">
-    <div>
+    <div class="checked">
         <div class="d-flex align-items-center justify-content-center">
             <label for="ssce">SSCE</label>
-            <input type="checkbox" id="ssce" name="examination" value="SSCE">
+            <input type="checkbox" id="examination" name="examination" value="SSCE">
         </div>
     </div>
     <div>
         <div class="d-flex align-items-center justify-content-center">
             <label for="gce">GCE</label>
-            <input type="checkbox" id="gce" name="examination" value="GCE">
+            <input type="checkbox" id="examination" name="examination" value="GCE">
         </div>
     </div>
     <div>
         <div class="d-flex align-items-center justify-content-center">
             <label for="waec">WAEC</label>
-            <input type="checkbox" id="waec" name="examination" value="WAEC">
+            <input type="checkbox" id="examination" name="examination" value="WAEC">
         </div>
     </div>
     <div>
         <div class="d-flex align-items-center justify-content-center">
             <label for="neco">NECO</label>
-            <input type="checkbox" id="neco" name="examination" value="NECO">
+            <input type="checkbox" id="examination" name="examination" value="NECO">
         </div>
     </div>
 
     <div>
         <div class="d-flex align-items-center justify-content-center">
             <label for="neco">NABTEB</label>
-            <input type="checkbox" id="NABTEB" name="examination" value="NABTEB">
+            <input type="checkbox" id="examination" name="examination" value="NABTEB">
         </div>
     </div>
 </div>
@@ -650,35 +624,9 @@
                     <option value="E">F</option>
                 </select>
             </td>
-            <td>8.</td>
-            <td>
-                <select name="subject8" required>
-                    <option value="" disabled selected>Select Subject</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="English Language">English Language</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Geography">Geography</option>
-                    <option value="Economics">Economics</option>
-                    <option value="History">History</option>
-                    <option value="Government">Government</option>
-                    <option value="Agricultural Science">Agricultural Science</option>
-                    <option value="Commerce">Commerce</option>
-                </select>
-            </td>
+        
       
-            <td>
-                <select name="sgrade8" required>
-                    <option value="" disabled selected>Select Grade</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="E">F</option>
-                </select>
-            </td>
+         
         </tr>
         <tr>
             <td>4.</td>
@@ -732,7 +680,7 @@
             </td>
       
             <td>
-                <select name="sgrade6" required>
+                <select name="sgrade5" required>
                     <option value="" disabled selected>Select Grade</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -847,14 +795,14 @@
         <label>A. Will you be on any sponsorship during your study? </label>
         <div class="d-flex align-items-left justify-content-left w-30 text-left">
             <div class="d-flex align-items-left justify-content-between w-0 text-left">
-                <label for="sponsorshipyes">Yes</label>
-                <input type="checkbox" id="sponsorshipyes" name="sponsorshipyes" value="Yes" >
+                <label for="sponsorship">Yes</label>
+                <input type="checkbox" id="sponsorship" name="sponsorship" value="Yes" >
             </div>
           
 
             <div class="d-flex align-items-left justify-content-between w-0 text-left">
-                <label for="sponsorshipno">No</label>
-                <input type="checkbox" id="sponsorshipno" name="sponsorshipno" value="No" >
+                <label for="sponsorship">No</label>
+                <input type="checkbox" id="sponsorship" name="sponsorship" value="No" >
             </div>
         
 
@@ -872,7 +820,7 @@
 <label class="pt-3">C. If your answer is no, who will be responsible for your studies:</label>
 <input type="text" id="responsibleparty" name="responsibleparty">
 
-<label class="pt-3">D. Please attach your photograph:</label>
+<label class="pt-3">D. Please attach your photograph (Image should not exceed 1mb):</label>
 <input type="file" id="photograph" name="photograph" accept="image/*">
 
 
@@ -882,7 +830,7 @@
         <div>
             <div class="d-flex align-items-center justify-content-between w-0">
                 <label for="convicted">Yes</label>
-                <input type="checkbox" id="convictedYes" name="convicted" value="Yes" >
+                <input type="checkbox" id="convicted" name="convicted" value="Yes" >
             </div>
     
             <div class="d-flex align-items-center justify-content-between w-0">
@@ -906,7 +854,7 @@
         
     <div class="d-flex align-items-center justify-content-left">
         <label for="declarationparta">a. The particulars given on this form are to the best of my knowledge correct.</label>
-        <input type="checkbox" style="width: 2%;" id="declarationparta" name="declarationparta" value="The particulars given on this form are to the best of my knowledge correct" required>
+        <input type="radio" style="width: 2%;" id="declarationparta" name="declarationparta" value="The particulars given on this form are to the best of my knowledge correct" required>
 
     </div>
             </div>
@@ -917,7 +865,7 @@
         
     <div class="d-flex align-items-center justify-content-left">
         <label for="declarationpartb">b. If admitted, I shall regard myself bound by the rules and regulations of the institution.</label>
-        <input type="checkbox" style="width: 2%;" id="declarationpartb" name="declarationpartb" value="If admitted, I shall regard myself bound by the rules and regulations of the institution" required>
+        <input type="radio" style="width: 2%;" id="declarationpartb" name="declarationpartb" value="If admitted, I shall regard myself bound by the rules and regulations of the institution" required>
 
     </div>
             </div>
@@ -929,7 +877,7 @@
         
     <div class="d-flex align-items-center justify-content-left">
         <label for="declarationpartc">c. If at any time the school is reasonably satisfied that any of the information in this form is false or incorrect, I will be required to withdraw from the school or liable to prosecution or both.</label>
-        <input type="checkbox" style="width: 2%;" id="declarationpartc" name="declarationpartc" value="If at any time the school is reasonably satisfied that any of the information in this form is false or incorrect, I will be required to withdraw from the school or liable to prosecution or both." required>
+        <input type="radio" style="width: 2%;" id="declarationpartc" name="declarationpartc" value="If at any time the school is reasonably satisfied that any of the information in this form is false or incorrect, I will be required to withdraw from the school or liable to prosecution or both." required>
 
     </div>
             </div>

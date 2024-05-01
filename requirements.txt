@@ -11,4 +11,3 @@ retrying
 python-decouple
 Flask-cors
 gunicorn
-flask_wtf

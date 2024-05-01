@@ -11,6 +11,8 @@
 		
 		<!-- Title -->
         <title>Contact - Sunnah Health College</title>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -173,48 +175,46 @@
 								<div id="myMap">
 <img src={{user_image4}} alt="">
 
+
 								</div>
 								<!--/End Google-map -->
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="contact-us-form">
-								<h2>Contact With Us</h2>
+								<h2>Contact Us</h2>
 								<p>If you have any questions please fell free to contact with us.</p>
 								<!-- Form -->
-								<form class="form" method="post" action="mail/mail.php">
+								<form class="form" id="contactForm">
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="name" placeholder="Name" required="">
+												<input type="text" name="name" id="name" placeholder="Name" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="email" name="email" placeholder="Email" required="">
+												<input type="email" name="email" id="email" placeholder="Email" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="phone" placeholder="Phone" required="">
+												<input type="text" name="phone" id="phone" placeholder="Phone" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="subject" placeholder="Subject" required="">
+												<input type="text" name="subject" id="subject" placeholder="Subject" required="">
 											</div>
 										</div>
 										<div class="col-lg-12">
 											<div class="form-group">
-												<textarea name="message" placeholder="Your Message" required=""></textarea>
+												<textarea name="message" id="message" placeholder="Your Message" required=""></textarea>
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="form-group login-btn">
 												<button class="btn" type="submit">Send</button>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Do you want to subscribe our Newsletter ?</label>
 											</div>
 										</div>
 									</div>
@@ -347,6 +347,38 @@
 			<!--/ End Copyright -->
 		</footer>
 		<!--/ End Footer Area -->
+
+
+		<script>
+			$(document).ready(function () {
+				$('#contactForm').submit(function (e) {
+					e.preventDefault(); // Prevent form submission
+					var formData = {
+						name: $('#name').val(),
+						email: $('#email').val(),
+						phone: $('#phone').val(),
+						subject: $('#subject').val(),
+						message: $('#message').val()
+					};
+					$.ajax({
+						type: 'POST',
+						url: '/contactmessage',
+						contentType: 'application/json',
+						data: JSON.stringify(formData),
+						success: function (response) {
+							// Handle success response
+							alert(response.message); // Display success message
+							location.reload(); // Reload the page
+						},
+						error: function (xhr, status, error) {
+							// Handle error response
+							console.error(error);
+							alert("An error occurred while sending your message. Please try again later.");
+						}
+					});
+				});
+			});
+		</script>
 		
 		<!-- jquery Min JS -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

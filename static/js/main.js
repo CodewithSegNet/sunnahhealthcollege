@@ -47,11 +47,29 @@ $(document).ready(function() {
   });
 
 
+
+// $(document).ready(function() {
+//     $(window).on('scroll', function() {
+// 		console.log("Scroll event triggered.");
+//         // Check if the user has scrolled
+//         if ($(this).scrollTop() > 0) {
+//             // If scrolled, change the background color of the body to red
+//             $('body').css('background-color', 'red');
+//         } else {
+//             // If not scrolled, revert back to the default background color
+//             $('body').css('background-color', 'black'); // This will remove the inline style and let the CSS handle the background color
+//         }
+//     });
+// });
+
+
+
 (function($) {
     "use strict";
      $(document).on('ready', function() {
 	
         jQuery(window).on('scroll', function() {
+			console.log("Scroll event triggered.");
 			if ($(this).scrollTop() > 200) {
 				$('#header .header-inner').addClass("sticky");
 			} else {
@@ -63,6 +81,7 @@ $(document).ready(function() {
 			Sticky Header JS
 		======================================*/ 
 		jQuery(window).on('scroll', function() {
+			console.log("Scroll event triggered."); 
 			if ($(this).scrollTop() > 100) {
 				$('.header').addClass("sticky");
 			} else {
@@ -71,6 +90,7 @@ $(document).ready(function() {
 		});
 
 		jQuery(window).on('scroll', function() {
+			console.log("Scroll event triggered."); 
 			if ($(this).scrollTop() > 100) {
 				$('.logo').addClass("max");
 			} else {
@@ -329,21 +349,21 @@ $(document).ready(function() {
 		/*====================
 			Google Maps JS
 		======================*/
-		var map = new GMaps({
-				el: '#map',
-				lat: 23.011245,
-				lng: 90.884780,
-				scrollwheel: false,
-			});
-			map.addMarker({
-				lat: 23.011245,
-				lng: 90.884780,
-				title: 'Marker with InfoWindow',
-				infoWindow: {
-				content: '<p>welcome to Medipro</p>'
-			}
+		// var map = new GMaps({
+		// 		el: '#map',
+		// 		lat: 23.011245,
+		// 		lng: 90.884780,
+		// 		scrollwheel: false,
+		// 	});
+		// 	map.addMarker({
+		// 		lat: 23.011245,
+		// 		lng: 90.884780,
+		// 		title: 'Marker with InfoWindow',
+		// 		infoWindow: {
+		// 		content: '<p>welcome to Medipro</p>'
+		// 	}
 		
-		});
+		// });
 	});
 	
 	/*====================
@@ -380,3 +400,28 @@ $(document).ready(function() {
 	  $(this).siblings('.dropdown').slideToggle();
 	});
   });
+
+  $(document).ready(function() {
+    $('input[type="checkbox"][name="examination"]').click(function() {
+        if ($(this).prop("checked") == true) {
+            $('input[type="checkbox"][name="examination"]').not(this).prop("checked", false);
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('input[type="checkbox"][name="sponsorship"]').click(function() {
+        if ($(this).prop("checked") == true) {
+            $('input[type="checkbox"][name="sponsorship"]').not(this).prop("checked", false);
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('input[type="checkbox"][name="convicted"]').click(function() {
+        if ($(this).prop("checked") == true) {
+            $('input[type="checkbox"][name="convicted"]').not(this).prop("checked", false);
+        }
+    });
+});

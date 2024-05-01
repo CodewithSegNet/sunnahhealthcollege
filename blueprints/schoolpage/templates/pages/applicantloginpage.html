@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Registration - Sunnah Health College</title>
+        <title>Login - Sunnah Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -53,25 +53,23 @@
       <div class="card">
         <h2>Sign In</h2>
         <br>
-        <p>Welcome to Sunnah Health College Portal | Registration</p>
-        <form action="/registerapplicant" method="POST" id="registerapplicant">
+        <p>Welcome to Sunnah Health College Portal | Login</p>
+        <form action="/applicantpage" method="POST" id="applicantpage">
           <div class="group">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required>
           </div>
           <div class="group">
-            <label for="phonenumber">Phone Number</label>
-            <input type="text" id="phonenumber" name="phonenumber" required>
-          </div>
-          <div class="group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
           </div>
-          <button type="submit" class="btn">Register</button>
+
+          <button type="submit" class="btn">Login</button>
         </form>
+        
         <div class="input-group home">
           <a href="{{ url_for('pages.home') }}" class="forgot-password ">Back</a>
-          <a href="{{ url_for('pages.applicantboard') }}" class="forgot-password ">Admission Status</a>
+          <a href="{{ url_for('pages.applicant') }}" class="forgot-password ">Register</a>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ from models.semester import Semester
 from models.course_model import Course
 from models.admin import Admin
 from models.applicant import Applicant
+from models.special import Specialadmin
 import json
 from app import db
 from datetime import datetime
@@ -546,6 +547,44 @@ def register():
 
         # Create a new user instance
         new_user = Admin(
+            email=data['email'],
+            password=generate_password_hash(data['password']),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+
+        # Return JSON successful message if data's works
+        return jsonify({'message': 'Admin Registration Successfully Created!'}), 201
+    
+    # Handles database issues (connection or constraint violation)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    
+
+
+    
+@user_bp.route('/specialadminreg', methods=['POST'])
+def specialadminreg():
+    '''
+    A function that handles admin registration
+    '''
+    
+    try:
+        data = request.json
+        existing_email = Specialadmin.query.filter_by(email=data['email']).first()
+
+        if existing_email:
+            return jsonify({'error': 'Email Already Exists!'}), 400
+        
+
+
+        # Create a new user instance
+        new_user = Specialadmin(
             email=data['email'],
             password=generate_password_hash(data['password']),
             created_at=datetime.utcnow(),

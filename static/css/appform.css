@@ -21,7 +21,9 @@ label {
 input,
 select {
     width: 100%;
-    padding: 8px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
     box-sizing: border-box;
     margin-bottom: 10px;
 }
@@ -34,4 +36,10 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #45a049;
+}
+
+
+html,
+body{
+	overflow-x: hidden;
 }

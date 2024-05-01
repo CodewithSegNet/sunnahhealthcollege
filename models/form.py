@@ -2,22 +2,28 @@
 
 # Import
 from app import db
+import models.applicant
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
 
 class AdmissionForm(db.Model):
+
+    __tablename__ = 'admissionforms'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
+    form_number = db.Column(db.String(255), db.ForeignKey('applicants.email'))
     fullnames = db.Column(db.String(100), nullable=True)
     contactaddress = db.Column(db.String(200), nullable=True)
-    maritalstatus = db.Column(db.String(20), nullable=True)
+    maritalstatus = db.Column(db.String(50), nullable=True)
     stateoforigin = db.Column(db.String(50), nullable=True)
     emailaddress = db.Column(db.String(100), nullable=True)
     dateofbirth = db.Column(db.Date, nullable=True)
     lastschoolattended = db.Column(db.String(100), nullable=True)
     phonenumber = db.Column(db.String(20), nullable=True)
+    admissionstatus = db.Column(db.String(20), default='In Progress', nullable=True)
     
     # Course applying
-    chew = db.Column(db.String(50), nullable=True)
-    pharmacytech = db.Column(db.String(50), nullable=True)
-    mlt = db.Column(db.String(50), nullable=True)
+    courses = db.Column(db.String(255), nullable=True)
 
     # Next of Kin
     nextofkinname = db.Column(db.String(100), nullable=True)
@@ -49,16 +55,10 @@ class AdmissionForm(db.Model):
     to3 = db.Column(db.Date, nullable=True)
     certificate3 = db.Column(db.String(50), nullable=True)
 
-    school4 = db.Column(db.String(100), nullable=True)
-    from4 = db.Column(db.Date, nullable=True)
-    to4 = db.Column(db.Date, nullable=True)
-    certificate4 = db.Column(db.String(50), nullable=True)
 
     # Detailed Results
     examination = db.Column(db.String(10), nullable=True)
-    examination = db.Column(db.String(10), nullable=True)
-    examination = db.Column(db.String(10), nullable=True)
-    examination = db.Column(db.String(10), nullable=True)
+
 
 
 
@@ -76,8 +76,7 @@ class AdmissionForm(db.Model):
     sgrade6 = db.Column(db.String(10), nullable=True)
     subject7 = db.Column(db.String(100), nullable=True)
     sgrade7 = db.Column(db.String(10), nullable=True)
-    subject8 = db.Column(db.String(100), nullable=True)
-    sgrade8 = db.Column(db.String(10), nullable=True)
+   
 
 
 
@@ -119,8 +118,7 @@ class AdmissionForm(db.Model):
     credential5 = db.Column(db.String(100), nullable=True)
 
     # Sponsorship
-    sponsorshipyes = db.Column(db.String(100), nullable=True)
-    sponsorshipno = db.Column(db.String(100), nullable=True)
+    sponsorship = db.Column(db.String(20), nullable=True)
     sponsorname = db.Column(db.String(100), nullable=True)
     sponsoraddress = db.Column(db.String(200), nullable=True)
 
@@ -131,4 +129,8 @@ class AdmissionForm(db.Model):
     declarationpartb = db.Column(db.String(255), nullable=True)
     declarationpartc = db.Column(db.String(255), nullable=True)
 
+
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
         

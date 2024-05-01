@@ -3,7 +3,9 @@ from flask import current_app, Blueprint, render_template, jsonify, request, url
 from models.student_model import Student
 from models.admin import Admin
 from controllers.grade_controller import StudentScoreForm
+from models.contactmessage import ContactMessage
 from models.form import AdmissionForm
+from models.special import Specialadmin
 from models.image import Image
 from app import cache, db
 from functools import wraps
@@ -48,85 +50,6 @@ def home():
 
 
 
-
-# Function to establish a MySQL connection
-# def connect_to_mysql():
-#     return pymysql.connect(
-#         host=os.getenv('DATABASE_HOST'),
-#         user=os.getenv('DATABASE_USERNAME'),
-#         passwd=os.getenv('DATABASE_PASSWORD'),
-#         db=os.getenv('DATABASE')
-#     )
-
-# Function to reconnect to MySQL if the connection is lost
-# def mysql_reconnect(func):
-#     @wraps(func)
-#     def wrapper(*args, **kwargs):
-#         retry_count = 3  # Number of retry attempts
-#         while retry_count > 0:
-#             try:
-#                 db = connect_to_mysql()  # Establish a new connection
-#                 return func(db, *args, **kwargs)
-#             except OperationalError as e:
-#                 error_code = e.args[0]
-#                 if error_code == 2006:
-#                     print("MySQL server has gone away. Attempting to reconnect...")
-#                     time.sleep(1)  # You may adjust the sleep time between retries
-#                     retry_count -= 1
-#                 else:
-#                     raise  # Re-raise if it's a different error
-#         return jsonify({'error': 'Failed to reconnect to the database after multiple attempts.'}), 500
-#     return wrapper
-
-
-
-# Route for handling the student sign-in form submission
-# @pages_bp.route('/login', methods=['POST'])
-# @mysql_reconnect
-# def login(db):
-#     """
-#         a route that handles students authentication
-#     """
-#     try:
-#         admission_number = request.form['admission_number']
-#         password = request.form['password']
-
-#         if not admission_number or not password:
-#             return jsonify({'error': 'Invalid credentials provided.'}), 400
-
-
-#         #Using the provided 'db' connection object to execute the query
-#         cursor = db.cursor(pymysql.cursors.DictCursor)
-#         cursor.execute("SELECT * FROM students WHERE admission_number = %s LIMIT 1", (admission_number,))
-#         user = cursor.fetchone()
-
-#         if not user:
-#             return jsonify({'error': 'User not found.'}), 401
-
-#         # Check if both admission_number and password are provided
-#         if not admission_number or not password:
-#             return jsonify({'error': 'Invalid credentials provided.'}), 400
-    
-#         user = Student.query.filter_by(admission_number=admission_number).first()
-#         if user and user.check_password(password):
-#             #Generate JWT token with a configurable expiration time
-#             expiration_time = datetime.utcnow() + timedelta(hours=2)
-#             token = jwt.encode({
-#                 'user_id': user.admission_number,
-#                 'exp': expiration_time
-#             }, current_app.config['SECRET_KEY'], algorithm='HS256')
-
-#             # Store token and user ID in the session
-#             session['token'] = token
-#             session['user_id'] = user.admission_number
-
-#             return redirect(url_for('pages.dashboard'))
-#         else:
-#             return jsonify({'error': 'Invalid admission number or password.'}), 401
-#     except KeyError:
-#         return jsonify({'error': 'Missing admission number or password in request.'}), 400
-#     except Exception as e:
-#         return jsonify({'error': f"An error occurred: {str(e)}"}), 500
     
 @pages_bp.route('/login', methods=['POST'])
 def login():
@@ -236,8 +159,37 @@ def make_authorized_request(url, method='GET', data=None, token=None):
     return {'error': 'Token is missing'}
 
 
+@pages_bp.route('/applicantpage', methods=['POST', 'GET'])
+def applicantpage():
+    """
+    A route that handles applicant authentication
+    """
+    try:
+        email = request.form.get('email')
+        password = request.form.get('password')
 
+        if email is None or password is None:
+            return jsonify({'error': 'Email and password are required.'}), 400
 
+        user = Applicant.query.filter_by(email=email).first()
+        if user and user.check_password(password):
+            """
+            Create a JWT token
+            """
+            token = jwt.encode({
+                'admin_user_id': user.email,
+                'exp': datetime.utcnow() + timedelta(hours=2)  # Token expiration time
+            }, 'secret_key', algorithm='HS256')
+
+            session['applicant_token'] = token  # Store the token in the session
+            session['applicant_user_id'] = user.email  # Store user ID in the session
+
+            return redirect(url_for('pages.applicantboard'))
+        else:
+            return redirect(url_for('pages.applicantlogin'))
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
 
 
 
@@ -288,6 +240,8 @@ def admission():
     image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
     return render_template('pages/admission.html', user_image4 = image4)
+
+
 
 
 
@@ -353,7 +307,7 @@ def form():
     """
     image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
     
-    return render_template('pages/application_form.html', user_image4 = image4)
+    return render_template('pages/application_form.html', user_image = image4)
 
 
 
@@ -379,6 +333,32 @@ def applicant():
     
     return render_template('pages/applicant.html', user_image4 = image4)
 
+
+
+
+@pages_bp.route('/applicantlogin')
+@cache.cached(timeout=500)
+def applicantlogin():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/applicantloginpage.html', user_image4 = image4)
+
+
+
+
+
+@pages_bp.route('/speciallog')
+@cache.cached(timeout=500)
+def speciallog():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/special.html', user_image4 = image4)
 
 
 
@@ -432,6 +412,68 @@ def admindash():
         return render_template('pages/admin.html', user=user, user_image=image1, os=os, student_info=student_info, image_info=image_info, form=form)
     else:
         return jsonify({'error': 'Unauthorized'}), 401
+
+
+
+
+
+
+
+@pages_bp.route('/specialadmin', methods=['POST', 'GET'])
+def specialadmin():
+    """
+    A route that handles applicant authentication
+    """
+    try:
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if email is None or password is None:
+            return jsonify({'error': 'Email and password are required.'}), 400
+
+        user = Specialadmin.query.filter_by(email=email).first()
+        if user and user.check_password(password):
+            """
+            Create a JWT token
+            """
+            token = jwt.encode({
+                'special_user_id': user.email,
+                'exp': datetime.utcnow() + timedelta(hours=2)  # Token expiration time
+            }, 'secret_key', algorithm='HS256')
+
+            session['special_token'] = token  # Store the token in the session
+            session['special_user_id'] = user.email  # Store user ID in the session
+
+            return redirect(url_for('pages.specialadmindashboard'))
+        else:
+            return redirect(url_for('pages.speciallog'))
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+
+
+
+
+
+@pages_bp.route('/specialadmindashboard', methods=['GET'])
+def specialadmindashboard():
+    if 'special_user_id' in session:
+        email = session.get('special_user_id')
+        token = session.get('special_token')
+
+        if not email or not token:
+            return jsonify({'error': 'Unauthorized'}), 401
+    
+        user = Specialadmin.query.filter_by(email=email).first()
+
+        applicants = Applicant.query.options(db.joinedload('applicant_number')).all()
+
+        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
+        return render_template('pages/specialdashboard.html', user=user, user_image=image1, applicants=applicants)
+    else:
+        return jsonify({'error': 'Unauthorized'}), 401
+
 
 
 
@@ -498,6 +540,8 @@ def upload_image():
         # Log or print the exception for debugging
         print(f"An error occurred: {str(e)}")
         return jsonify({'error': 'File upload failed'}), 500
+    
+    
 
 
 
@@ -596,27 +640,11 @@ def add_scores():
 
 
 
- 
-
-@pages_bp.route('/admissionform', methods=['GET', 'POST'])
-def admission_form():
-    if request.method == 'POST':
-        applicant_data = request.form
-        admission_form = AdmissionForm(**applicant_data)
-        db.session.add(admission_form)
-        db.session.commit()
-        return redirect(url_for('pages.success'))
-
-    return render_template('application_form.html')
-
-@pages_bp.route('/success')
-def success():
-    return 'Form submitted successfully!'
 
 
 
 
-@pages_bp.route('/registerapplicant', methods=['POST'])
+@pages_bp.route('/registerapplicant', methods=['GET','POST'])
 def registerapplicant():
     '''
     A function that handles admin registration
@@ -644,11 +672,201 @@ def registerapplicant():
         db.session.add(new_user)
         db.session.commit()
 
+        session['reg_user_id'] = data['email']
 
         # Return JSON successful message if data's works
-        return redirect('https://paystack.com/pay/vcrh2vy3te')    
+        # return redirect('https://paystack.com/pay/vcrh2vy3te')
+        return redirect(url_for('pages.form'))     
     
     # Handles database issues (connection or constraint violation)
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
+    
+
+
+ 
+
+@pages_bp.route('/admissionform', methods=['POST'])
+def admission_form():
+    '''
+    a route that handles the applicant registration form
+    '''
+
+    user_email = session.get('reg_user_id')
+
+    if not user_email:
+        return redirect(url_for('pages.registerapplicant'))
+
+    if request.method == 'POST':
+        applicant_data = request.form.to_dict()
+        photograph_file = request.files.get('photograph')
+
+        if photograph_file:
+            #save the photograph
+            photo_data = photograph_file.read()
+
+            filename = secure_filename(photograph_file.filename)
+            photograph_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            applicant_data['photograph'] = photo_data
+
+             # Set the form_number to the user_email
+            applicant_data['form_number'] = user_email
+
+         # Check if an admission form already exists for the current user
+        existing_form = AdmissionForm.query.filter_by(form_number=user_email).first()
+
+        if existing_form:
+            # Update existing form if it already exists
+            existing_form.update(**applicant_data)
+        else:
+            # Create a new form if it doesn't exist
+            admission_form = AdmissionForm(**applicant_data)
+            db.session.add(admission_form)
+
+        # Commit changes to the database
+        db.session.commit()
+        return redirect(url_for('pages.success'))
+    return render_template('pages/application_form.html')
+
+@pages_bp.route('/success')
+def success():
+    """
+     A Route thats handles the application page
+    """
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    
+    return render_template('pages/successpage.html', user_image4 = image4)
+
+
+
+
+
+@pages_bp.route('/applicantboard', methods=['GET'])
+@cache.cached(timeout=500)
+def applicantboard():
+    """
+    A Route that handles the admission page
+    """
+    if 'applicant_user_id' in session:
+        email = session.get('applicant_user_id')
+        token = session.get('applicant_token')
+
+        if not email or not token:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        user = Applicant.query.filter_by(email=email).first()
+        
+        user_id = user.applicant_number
+
+        if not user:
+            return render_template('pages/applicantloginpage.html', message='User not found'), 400
+
+        image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+        # No need to check password here since the user is already authenticated at this point
+        return render_template('pages/applicantdashboard.html', user_image=image4, user=user, user_id=user_id)
+    # If 'reg_id' is not in the session, it means the user is not logged in
+    return redirect(url_for('pages.applicantlogin'))
+  
+
+
+@pages_bp.route('/approve_applicant/<string:email>', methods=['POST'])
+def approve_applicant(email):
+    # Find the applicant in the database
+    applicant = Applicant.query.filter_by(email=email).first()
+
+    if not applicant:
+        return jsonify({'error': 'Applicant not found'}), 404
+
+    # Update the admission status to "Approved"
+    for form in applicant.applicant_number:
+        form.admissionstatus = 'Approved'
+
+    # Commit changes to the database
+    db.session.commit()
+
+    # Redirect to dashboard or appropriate page
+    return redirect(url_for('pages.specialadmindashboard'))
+
+
+
+
+
+@pages_bp.route('/reject_applicant/<string:email>', methods=['POST'])
+def reject_applicant(email):
+    # Find the applicant in the database
+    applicant = Applicant.query.filter_by(email=email).first()
+
+    if not applicant:
+        return jsonify({'error': 'Applicant not found'}), 404
+
+    # Update the admission status to "Rejected"
+    for form in applicant.applicant_number:
+        form.admissionstatus = 'Rejected'
+
+    # Commit changes to the database
+    db.session.commit()
+
+    # Redirect to dashboard or appropriate page
+    return redirect(url_for('pages.specialadmindashboard'))
+
+
+
+
+
+
+@pages_bp.route('/delete_applicant/<string:email>', methods=['POST'])
+def delete_applicant(email):
+    # Find the applicant in the database
+    applicant = Applicant.query.filter_by(email=email).first()
+
+    if not applicant:
+        return jsonify({'error': 'Applicant not found'}), 404
+    
+    # Delete the applicant from the database
+    db.session.delete(applicant)
+
+    # Commit changes to the database
+    db.session.commit()
+
+    # Redirect to dashboard or appropriate page
+    return redirect(url_for('pages.specialadmindashboard'))
+
+
+
+
+
+@pages_bp.route('/view_applicant_info/<email>', methods=['GET'])
+def view_applicant_info(email):
+
+    applicant = Applicant.query.filter_by(email=email).first()
+
+    user_id = applicant.applicant_number
+
+    if applicant:
+        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+        return render_template('pages/viewapplicant.html', user_image=image1, applicant=applicant, user_id=user_id)
+    else:
+        return jsonify({'error': 'Applicant not found'}), 404
+
+
+
+@pages_bp.route('/contactmessage', methods=['POST'])
+def contactmessage():
+    if request.method == 'POST':
+        data = request.get_json() 
+        name = data.get('name')
+        email = data.get('email')
+        subject = data.get('subject')
+        phone = data.get('phone')
+        message = data.get('message')
+
+        # Create a new ContactMessage instance
+        new_message = ContactMessage(name=name, email=email, subject=subject, phone=phone, message=message)
+
+        db.session.add(new_message)
+        db.session.commit()
+
+        response_message = "We have received your message and will send a response promptly."
+        return jsonify({'message': response_message}), 200
+
