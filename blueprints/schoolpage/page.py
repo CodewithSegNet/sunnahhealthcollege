@@ -7,6 +7,7 @@ from models.contactmessage import ContactMessage
 from models.form import AdmissionForm
 from models.special import Specialadmin
 from models.image import Image
+from models.newsletter import Newsletter
 from app import cache, db
 from functools import wraps
 import traceback
@@ -867,6 +868,27 @@ def contactmessage():
         db.session.add(new_message)
         db.session.commit()
 
-        response_message = "We have received your message and will send a response promptly."
+        response_message = "Thank you for reaching out to us. Your message has been received, and we assure you that our team will promptly address your inquiry and provide a timely response"
         return jsonify({'message': response_message}), 200
+
+
+
+@pages_bp.route('/newsletter', methods=['POST'])
+def newsletter():
+    if request.method == 'POST':
+        data = request.get_json()
+        email = data.get('email')
+
+        if not email:
+            return jsonify({'error': 'Email address is required'}), 400
+
+        # Create a new Newsletter instance
+        subscriber = Newsletter(email=email)
+
+        db.session.add(subscriber)
+        db.session.commit()
+
+        response_message = "Thank you for subscribing! We appreciate your support and look forward to providing you with valuable content."
+        return jsonify({'message': response_message}), 200
+
 
