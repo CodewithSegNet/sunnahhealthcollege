@@ -11,6 +11,9 @@
 		
 		<!-- Title -->
         <title>Vision - Sunnah Health College</title>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -277,10 +280,9 @@
 							<div class="single-footer">
 								<h2>Newsletter</h2>
 								<p>Sign up for our newsletter to stay connected and receive the latest updates, news, and insights from Sunnah College of Science, Health, and Technology.</p>
-								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Your email address'" required="" type="email">
-									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
+								<form action="/newsletter" method="post" class="newsletter-inner" id="newsletter">
+									<input name="email" id="email" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'" required=""  type="text">
+									<button class="button" type="submit"><i class="icofont icofont-paper-plane"></i></button>
 								</form>
 							</div>
 						</div>
@@ -304,6 +306,35 @@
 		</footer>
 		<!--/ End Footer Area -->
 
+
+			
+		<script>
+			$(document).ready(function () {
+				$('.newsletter-inner').submit(function (e) {
+					e.preventDefault(); // Prevent form submission
+					var formData = {
+						email: $(this).find('.common-input').val()
+					};
+					var url = $(this).attr('action'); // Get the form's action URL
+					$.ajax({
+						type: 'POST',
+						url: url,
+						contentType: 'application/json',
+						data: JSON.stringify(formData),
+						success: function (response) {
+							// Handle success response
+							alert(response.message);
+							location.reload(); // Reload the page
+						},
+						error: function (xhr, status, error) {
+							// Handle error response
+							console.error(error);
+							alert("An error occurred while sending your message. Please try again later.");
+						}
+					});
+				});
+			});
+		</script>
 
 		<!-- jquery Min JS -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

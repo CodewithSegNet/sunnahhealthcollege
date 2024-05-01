@@ -590,19 +590,20 @@
 
 		<script>
 			$(document).ready(function () {
-				$('#newsletter').submit(function (e) {
+				$('.newsletter-inner').submit(function (e) {
 					e.preventDefault(); // Prevent form submission
 					var formData = {
-						email: $('#email').val()
+						email: $(this).find('.common-input').val()
 					};
+					var url = $(this).attr('action'); // Get the form's action URL
 					$.ajax({
 						type: 'POST',
-						url: '/newsletter',
+						url: url,
 						contentType: 'application/json',
 						data: JSON.stringify(formData),
 						success: function (response) {
 							// Handle success response
-							alert(response.message); 
+							alert(response.message);
 							location.reload(); // Reload the page
 						},
 						error: function (xhr, status, error) {
@@ -613,10 +614,6 @@
 					});
 				});
 			});
-
-
-
-			
 		</script>
 
 		

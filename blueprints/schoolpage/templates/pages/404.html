@@ -213,10 +213,9 @@
 							<div class="single-footer">
 								<h2>Newsletter</h2>
 								<p>Sign up for our newsletter to stay connected and receive the latest updates, news, and insights from Sunnah College of Science, Health, and Technology.</p>
-								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Your email address'" required="" type="email">
-									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
+								<form action="/newsletter" method="post" class="newsletter-inner" id="newsletter">
+									<input name="email" id="email" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'" required=""  type="text">
+									<button class="button" type="submit"><i class="icofont icofont-paper-plane"></i></button>
 								</form>
 							</div>
 						</div>
