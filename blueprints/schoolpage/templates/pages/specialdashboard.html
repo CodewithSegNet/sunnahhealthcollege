@@ -87,18 +87,17 @@
               <div class="grid-item">
                 <h2>{{ applicant.email }}</h2>
                 <!-- Display other applicant information -->
-                {% for form in applicant.applicant_number %}
-                <p>Form Number: {{ form.form_number }}</p>
+                <p>Form Number: {{ applicant.applicant_number.form_number }}</p>
                 <!-- Display other admission form fields -->
-                <p>Full Names: {{ form.fullnames }}</p>
-                <p>Contact Address: {{ form.contactaddress }}</p>
-                <p>Marital Status: {{ form.maritalstatus }}</p>
-                <p>State of Origin: {{ form.stateoforigin }}</p>
-                <p>Email Address: {{ form.emailaddress }}</p>
-                <p>Date of Birth: {{ form.dateofbirth }}</p>
-                <p>Last School Attended: {{ form.lastschoolattended }}</p>
-                <p>Phone Number: {{ form.phonenumber }}</p>
-                <p>Admission Status: <strong>{{ form.admissionstatus }}</strong></p>
+                <p>Full Names: {{ applicant.applicant_number.fullnames }}</p>
+                <p>Contact Address: {{ applicant.applicant_number.contactaddress }}</p>
+                <p>Marital Status: {{ applicant.applicant_number.maritalstatus }}</p>
+                <p>State of Origin: {{ applicant.applicant_number.stateoforigin }}</p>
+                <p>Email Address: {{ applicant.applicant_number.emailaddress }}</p>
+                <p>Date of Birth: {{ applicant.applicant_number.dateofbirth }}</p>
+                <p>Last School Attended: {{ applicant.applicant_number.lastschoolattended }}</p>
+                <p>Phone Number: {{ applicant.applicant_number.phonenumber }}</p>
+                <p>Admission Status: <strong>{{ applicant.applicant_number.admissionstatus }}</strong></p>
                 <!-- Add more fields as needed -->
                 {% endfor %}
 
