@@ -23,7 +23,7 @@ import pymysql
 from MySQLdb import OperationalError
 from dotenv import load_dotenv
 import time 
-
+import traceback
 
 
 
@@ -439,11 +439,11 @@ def specialadmin():
             """
             token = jwt.encode({
                 'special_user_id': user.email,
-                'exp': datetime.utcnow() + timedelta(hours=2)  # Token expiration time
+                'exp': datetime.utcnow() + timedelta(hours=2)  
             }, 'secret_key', algorithm='HS256')
 
-            session['special_token'] = token  # Store the token in the session
-            session['special_user_id'] = user.email  # Store user ID in the session
+            session['special_token'] = token  
+            session['special_user_id'] = user.email  
 
             return redirect(url_for('pages.specialadmindashboard'))
         else:
@@ -467,7 +467,7 @@ def specialadmindashboard():
     
         user = Specialadmin.query.filter_by(email=email).first()
 
-        applicants = Applicant.query.options(db.joinedload('applicant_number')).all()
+        applicants = Applicant.query.options(db.joinedload(Applicant.applicant_number)).all()
 
         image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
 
