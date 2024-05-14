@@ -60,15 +60,15 @@
 
     <div class="d-flex align-items-center justify-content-between pt-2" >
       <!-- Buttons for actions -->
-      <form style="background-color: #000;" action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
+      <form style="background-color: #444;" action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
         <button class="btn" type="submit" name="action" value="approve">Approve</button>
       </form>
 
-      <form style="background-color: #000;" action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
+      <form style="background-color: #444;" action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
         <button class="btn" type="submit" name="action" value="reject">Reject</button>
       </form>
 
-      <form style="background-color: #000;" action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
+      <form style="background-color: #444;" action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
 <button class="btn" type="submit" name="action" value="delete">Delete</button>
 </form>
 
@@ -97,7 +97,12 @@
     <main class="main-content applicant-dashboard">
       <div id="dashboard" class="content-section">
         <div class="dashboard_container container mt-4">
-       
+          {% if form_image %}
+          <img src="{{ url_for('pages.view_image', image_id=form_image.id) }}" alt="Applicant Photograph">
+      {% else %}
+          <p>No photograph available</p>
+      {% endif %}
+
              <div class="row pt-4">
         <div class="col-md-6">
             {% for form in user_id %}

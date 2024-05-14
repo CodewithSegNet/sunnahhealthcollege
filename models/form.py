@@ -3,6 +3,7 @@
 # Import
 from app import db
 import models.applicant
+from models.form_image import FormImage
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -123,11 +124,18 @@ class AdmissionForm(db.Model):
     sponsoraddress = db.Column(db.String(200), nullable=True)
 
     responsibleparty = db.Column(db.String (255), nullable=True)
-    photograph = db.Column(db.LargeBinary(length=1000))
     convicted = db.Column(db.String(255), nullable=True)
     declarationparta = db.Column(db.String(255), nullable=True)
     declarationpartb = db.Column(db.String(255), nullable=True)
     declarationpartc = db.Column(db.String(255), nullable=True)
+
+
+    
+    # Relationship with images
+    photograph = db.relationship('FormImage', backref='applicant_number', lazy=True)
+
+    # Define the relationship with Applicant
+    applicant = db.relationship('Applicant', back_populates='applicant_number')
 
 
     def update(self, **kwargs):

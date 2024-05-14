@@ -21,7 +21,6 @@ class Applicant(db.Model):
     
     # Relationship with Admission form
     applicant_number = db.relationship('AdmissionForm', backref='applicants')
-
     
     def set_password(self, password):
         self.password = generate_password_hash(password)

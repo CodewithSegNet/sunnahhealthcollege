@@ -77,52 +77,61 @@
     </aside>
 
 
+
     <main class="main-content applicant-dashboard">
       <div id="dashboard" class="content-section">
         <div class="dashboard_container container mt-4">
           <div class="row">
 
             <div class="grid-container">
-              {% for applicant in applicants %}
-              <div class="grid-item">
+      
+                {% for applicant in applicants %}
+                <div class="grid-item">
                   <h2>{{ applicant.email }}</h2>
                   <!-- Display other applicant information -->
-                  <p>Form Number: {{ applicant.applicant_number.form_number }}</p>
+                  {% for form in applicant.applicant_number %}
+                  <p>Form Number: {{ form.form_number }}</p>
                   <!-- Display other admission form fields -->
-                  <p>Full Names: {{ applicant.applicant_number.fullnames }}</p>
-                  <p>Contact Address: {{ applicant.applicant_number.contactaddress }}</p>
-                  <p>Marital Status: {{ applicant.applicant_number.maritalstatus }}</p>
-                  <p>State of Origin: {{ applicant.applicant_number.stateoforigin }}</p>
-                  <p>Email Address: {{ applicant.applicant_number.emailaddress }}</p>
-                  <p>Date of Birth: {{ applicant.applicant_number.dateofbirth }}</p>
-                  <p>Last School Attended: {{ applicant.applicant_number.lastschoolattended }}</p>
-                  <p>Phone Number: {{ applicant.applicant_number.phonenumber }}</p>
-                  <p>Admission Status: <strong>{{ applicant.applicant_number.admissionstatus }}</strong></p>
+                  <p>Full Names: {{ form.fullnames }}</p>
+                  <p>Contact Address: {{ form.contactaddress }}</p>
+                  <p>Marital Status: {{ form.maritalstatus }}</p>
+                  <p>State of Origin: {{ form.stateoforigin }}</p>
+                  <p>Email Address: {{ form.emailaddress }}</p>
+                  <p>Date of Birth: {{ form.dateofbirth }}</p>
+                  <p>Last School Attended: {{ form.lastschoolattended }}</p>
+                  <p>Phone Number: {{ form.phonenumber }}</p>
+                  <p>Admission Status: <strong>{{ form.admissionstatus }}</strong></p>
                   <!-- Add more fields as needed -->
+                  {% endfor %}
+
+
+                  
+              <div class="d-flex align-items-center justify-content-between pt-2">
+                <!-- Buttons for actions -->
+                <form action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
+                  <button class="btn" type="submit" name="action" value="approve">Approve</button>
+                </form>
+
+                <form action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
+                  <button class="btn" type="submit" name="action" value="reject">Reject</button>
+                </form>
+
+                <!-- <form action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
+          <button class="btn" type="submit" name="action" value="delete">Delete</button>
+      </form> -->
+
+                <form action="{{ url_for('pages.view_applicant_info', email=applicant.email) }}" method="get">
+                  <button class="btn" type="submit">View</button>
+                </form>
+
               </div>
+              </div>
+
+
              
           </div>
 
-                <div class="d-flex align-items-center justify-content-between pt-2">
-                  <!-- Buttons for actions -->
-                  <form action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
-                    <button class="btn" type="submit" name="action" value="approve">Approve</button>
-                  </form>
-
-                  <form action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
-                    <button class="btn" type="submit" name="action" value="reject">Reject</button>
-                  </form>
-
-                  <!-- <form action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
-            <button class="btn" type="submit" name="action" value="delete">Delete</button>
-        </form> -->
-
-                  <form action="{{ url_for('pages.view_applicant_info', email=applicant.email) }}" method="get">
-                    <button class="btn" type="submit">View</button>
-                  </form>
-
-                </div>
-
+     
 
               </div>
               {% endfor %}

@@ -7,6 +7,7 @@ from models.contactmessage import ContactMessage
 from models.form import AdmissionForm
 from models.special import Specialadmin
 from models.image import Image
+from models.form_image import FormImage
 from models.newsletter import Newsletter
 from app import cache, db
 from functools import wraps
@@ -419,7 +420,6 @@ def admindash():
 
 
 
-
 @pages_bp.route('/specialadmin', methods=['POST', 'GET'])
 def specialadmin():
     """
@@ -455,6 +455,18 @@ def specialadmin():
 
 
 
+def get_form_image_info(form_id):
+    if form_id:
+        # Retrieve the latest image associated with the form
+        image = FormImage.query.filter_by(form_id=form_id).order_by(FormImage.created_at.desc()).first()
+        if image and image.image_data:
+            return {
+                'image_data': image.image_data,
+                'mimetype': 'image/jpeg',
+            }
+    return None
+
+
 
 @pages_bp.route('/specialadmindashboard', methods=['GET'])
 def specialadmindashboard():
@@ -467,6 +479,7 @@ def specialadmindashboard():
     
         user = Specialadmin.query.filter_by(email=email).first()
 
+        # Fetch applicants
         applicants = Applicant.query.options(db.joinedload(Applicant.applicant_number)).all()
 
         image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
@@ -474,8 +487,6 @@ def specialadmindashboard():
         return render_template('pages/specialdashboard.html', user=user, user_image=image1, applicants=applicants)
     else:
         return jsonify({'error': 'Unauthorized'}), 401
-
-
 
 
 
@@ -546,8 +557,6 @@ def upload_image():
 
 
 
-
-
 @pages_bp.route('/images', methods=['GET'])
 def get_image():
     admission_number = request.args.get('admission_number')
@@ -564,6 +573,7 @@ def get_image():
 
     # Handle case where admission_number is not provided or image not found
     return jsonify({'error': 'Image not found'}), 404
+
 
 
 
@@ -645,7 +655,7 @@ def add_scores():
 
 
 
-@pages_bp.route('/registerapplicant', methods=['GET','POST'])
+@pages_bp.route('/registerapplicant', methods=['POST'])
 def registerapplicant():
     '''
     A function that handles admin registration
@@ -659,8 +669,6 @@ def registerapplicant():
         if existing_email:
             return jsonify({'error': 'Email Already Exists!'}), 400
         
-
-
         # Create a new user instance
         new_user = Applicant(
             email=data['email'],
@@ -686,8 +694,6 @@ def registerapplicant():
     
 
 
- 
-
 @pages_bp.route('/admissionform', methods=['POST'])
 def admission_form():
     '''
@@ -704,31 +710,41 @@ def admission_form():
         photograph_file = request.files.get('photograph')
 
         if photograph_file:
-            #save the photograph
+            # save the photograph
             photo_data = photograph_file.read()
 
             filename = secure_filename(photograph_file.filename)
             photograph_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            applicant_data['photograph'] = photo_data
+            
+            # Ensure user_email is not None before setting form_number
+            if user_email:
+                # Set the form_number to the user_email
+                applicant_data['form_number'] = user_email
 
-             # Set the form_number to the user_email
-            applicant_data['form_number'] = user_email
+            # Check if an admission form already exists for the current user
+            existing_form = AdmissionForm.query.filter_by(form_number=user_email).first()
 
-         # Check if an admission form already exists for the current user
-        existing_form = AdmissionForm.query.filter_by(form_number=user_email).first()
+            if existing_form:
+                form_id = existing_form.id
+            else:
+                # Create a new form if it doesn't exist
+                admission_form = AdmissionForm(**applicant_data)
+                db.session.add(admission_form)
+                db.session.commit()  # Commit the AdmissionForm
+                form_id = admission_form.id  # Get the form_id
 
-        if existing_form:
-            # Update existing form if it already exists
-            existing_form.update(**applicant_data)
-        else:
-            # Create a new form if it doesn't exist
-            admission_form = AdmissionForm(**applicant_data)
-            db.session.add(admission_form)
-
+            # Create a new FormImage instance with the form_id
+            form_image = FormImage(form_id=form_id, image_data=photo_data)
+            db.session.add(form_image)
+        
         # Commit changes to the database
         db.session.commit()
+        
         return redirect(url_for('pages.success'))
+    
     return render_template('pages/application_form.html')
+
+
 
 @pages_bp.route('/success')
 def success():
@@ -834,21 +850,32 @@ def delete_applicant(email):
     return redirect(url_for('pages.specialadmindashboard'))
 
 
-
-
-
 @pages_bp.route('/view_applicant_info/<email>', methods=['GET'])
 def view_applicant_info(email):
 
     applicant = Applicant.query.filter_by(email=email).first()
 
     user_id = applicant.applicant_number
+    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+
 
     if applicant:
-        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
         return render_template('pages/viewapplicant.html', user_image=image1, applicant=applicant, user_id=user_id)
     else:
         return jsonify({'error': 'Applicant not found'}), 404
+
+
+
+@pages_bp.route('/view_image/<image_id>', methods=['GET'])
+def view_image(image_id):
+    form_image = FormImage.query.get(image_id)
+    if form_image:
+        response = make_response(form_image.image_data)
+        response.headers['Content-Type'] = 'image/jpeg'  # Adjust content type as needed
+        return response
+    else:
+        return 'Image not found', 404
+
 
 
 
