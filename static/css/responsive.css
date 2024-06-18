@@ -674,7 +674,7 @@ body{
 	}
 
 	.header .logo {
-		margin-top: 18px;
+		margin-top: 10px;
 	}
 	
 	.max{
@@ -688,7 +688,7 @@ body{
 		font-size: 14px;
 		text-transform: capitalize;
 		font-weight: 500;
-		background: #1A76D1;
+		background: #c9a768;
 		position: relative;
 		box-shadow: none;
 		display: inline-block;
@@ -783,14 +783,14 @@ body{
 	margin:0;
 }
 .slicknav_nav li:hover a{
-	color:#1A76D1;
+	color:#c9a768;
 }
 .slicknav_nav li .dropdown li a{
 	color:#2C2D3F;
 	background:transparent;
 }
 .slicknav_nav li .dropdown li a:hover{
-	color:#1A76D1;
+	color:#c9a768;
 }
 .slicknav_nav li .slicknav_item{
 	background:transparent;
@@ -802,7 +802,7 @@ body{
 	font-weight:400;
 }
 .slicknav_menu .slicknav_icon-bar {
-	background-color: #1A76D1;
+	background-color: #c9a768;
 	box-shadow: none;
 	text-shadow: none;
 }
@@ -810,7 +810,7 @@ body{
 	color:#2C2D3F;
 }
 .slicknav_nav li:hover .slicknav_arrow{
-	color:#1A76D1;
+	color:#c9a768;
 }
 .slicknav_menu .slicknav_icon-bar {
 	display: block;

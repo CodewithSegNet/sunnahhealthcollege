@@ -331,7 +331,7 @@ def applicant():
     """
      A Route thats handles the application page
     """
-    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
     
     return render_template('pages/applicant.html', user_image4 = image4)
 
@@ -344,7 +344,7 @@ def applicantlogin():
     """
      A Route thats handles the application page
     """
-    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
     
     return render_template('pages/applicantloginpage.html', user_image4 = image4)
 

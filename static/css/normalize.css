@@ -32,7 +32,7 @@ img{
 }
 
 .logo{
-	max-width: 85%;
+	max-width: 75%;
 }
 
 .links{
@@ -345,7 +345,7 @@ Preloader Area CSS
 }
 
 .preloader .loader .indicator svg polyline#front {
-  stroke: #1A76D1;
+  stroke: #c9a768;
   stroke-dasharray: 12, 36;
   stroke-dashoffset: 48;
   -webkit-animation: dash 1s linear infinite;
@@ -360,7 +360,7 @@ Preloader Area CSS
   height: 100%;
   width: 60%;
   z-index: -1;
-  background: #1A76D1;
+  background: #c9a768;
   -webkit-transition: .9s;
   transition: .9s;
 }
@@ -451,7 +451,7 @@ Preloader Area CSS
 	font-size: 14px;
 	text-transform: capitalize;
 	font-weight: 500;
-	background: #1A76D1;
+	background: #c9a768;
 	position: relative;
 	box-shadow: none;
 	display: inline-block;
@@ -521,7 +521,7 @@ Preloader Area CSS
 	top:0;
 	height:100%;
 	width:100%;
-	background:#1a76d1;
+	background:#c9a768;
 	opacity:0.8;
 }
 /* Bread Crumbs */
@@ -604,7 +604,7 @@ Preloader Area CSS
 	border-radius: 4px;
 }
 .pagination .pagination-list li.active a,.pagination .pagination-list li:hover a{
-	background: #1A76D1;
+	background: #c9a768;
 	color: #fff;
 	border-color: transparent;
 }
