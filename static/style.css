@@ -4040,11 +4040,12 @@ body{
 .footer .single-footer.f-link li a {
 	display: block;
 	color: #fff;
+	font-size: 13px;
 	text-transform: capitalize;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
 	transition: all 0.4s ease;
-	font-weight: 350;
+	font-weight: 400;
 }
 .footer .single-footer.f-link li a:hover{
 	padding-left:8px;
