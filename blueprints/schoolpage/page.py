@@ -684,8 +684,8 @@ def registerapplicant():
         session['reg_user_id'] = data['email']
 
         # Return JSON successful message if data's works
-        # return redirect('https://paystack.com/pay/vcrh2vy3te')
-        return redirect(url_for('pages.form'))     
+        return redirect('https://paystack.com/pay/3agbxw7--0')
+        #return redirect(url_for('pages.form'))     
     
     # Handles database issues (connection or constraint violation)
     except SQLAlchemyError as e:
