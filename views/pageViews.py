@@ -8,6 +8,7 @@ from controllers.pageroute import pages_bp
 
 
 @pages_bp.route('/sign_in_student')
+@cache.cached(timeout=500)
 def signinstudent():
     """
      A Route thats handles the StudentSignIn
@@ -20,6 +21,7 @@ def signinstudent():
 
 
 @pages_bp.route('/sign_in_admin')
+@cache.cached(timeout=500)
 def signinadmin():
 
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
@@ -164,6 +166,7 @@ def applicantlogin():
 
 
 @pages_bp.route('/special_login')
+@cache.cached(timeout=500)
 def speciallog():
     """
      A Route thats handles the application page
