@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>SignIn - Braham Health College</title>
+        <title>Login - Braham Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -48,34 +48,51 @@
   <div class="container">
     <div class="side-by-side">
       <div class="image-container">
-        <img src={{user_image}} alt="School Logo">
+        <img src={{user_image4}} alt="School Logo">
       </div>
       <div class="card">
-        <h2>Sign In</h2>
-        <br>
-        <p>Welcome to Braham Health College Portal | Student</p>
-        <form action="/login" method="POST" id="signInForm">
+        <div class="mobile-img">
+          <img src={{user_image4}} alt="School Logo">
+        </div>
+        <h2 class="mb-2">Sign In</h2>
+        <p>Welcome to Braham Health College Portal | Login</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set shown = false %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if not shown %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% set shown = true %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+        <form action="/special_admin" method="POST" id="special_admin">
           <div class="group">
-            <label for="username">Admission Number</label>
-            <input type="text" id="admission_number" name="admission_number" required>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
           </div>
           <div class="group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
           </div>
-          <div class="group checkbox-group">
-            <input type="checkbox" id="rememberMe">
-            <label for="rememberMe">Remember me</label>
+
+          <div class="mt-3">
+            <button type="submit" class="btn">Login</button>
+
           </div>
-          <button type="submit" class="btn" value="Sign In">Sign in</button>
         </form>
-        <a href="#" class="forgot-password">Forgot password?</a>
-        <div class="input-group home">
-          <a href="{{ url_for('pages.home') }}" class="forgot-password "><i class="fa fa-long-arrow-right"></i> Home</a>
-          <a href="{{ url_for('pages.signinadmin') }}" class="forgot-password"><i class="fa fa-long-arrow-right"></i> Admin</a>
+        
+        <div class="input-group home mt-2">
+          <a href="{{ url_for('pages.home') }}" class=""><i class="larger-icon icofont-home"></i>  Home</a>
         </div>
       </div>
+    </div>
   </div>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Login - Braham Health College</title>
+        <title>Registration - Braham Health College</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
@@ -51,25 +51,29 @@
         <img src={{user_image4}} alt="School Logo">
       </div>
       <div class="card">
-        <h2>Sign In</h2>
-        <br>
-        <p>Welcome to Braham Health College Portal | Login</p>
-        <form action="/applicantpage" method="POST" id="applicantpage">
+        <div class="mobile-img">
+          <img src={{user_image}} alt="School Logo">
+        </div>
+        <h2 class="mb-2">Sign In</h2>
+        <p>Welcome to Braham Health College Portal | Registration</p>
+        <form action="/registerapplicant" method="POST" id="registerapplicant">
           <div class="group">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required>
           </div>
           <div class="group">
+            <label for="phonenumber">Phone Number</label>
+            <input type="text" id="phonenumber" name="phonenumber" required>
+          </div>
+          <div class="group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
           </div>
-
-          <button type="submit" class="btn">Login</button>
+          <button type="submit" class="btn">Register</button>
         </form>
-        
         <div class="input-group home">
-          <a href="{{ url_for('pages.home') }}" class="forgot-password "><i class="fa fa-long-arrow-right"></i> Home</a>
-          <a href="https://paystack.com/pay/3agbxw7--0" class="forgot-password "><i class="fa fa-long-arrow-right"></i> Register</a>
+          <a href="{{ url_for('pages.home') }}" class=""><i class="larger-icon icofont-home"></i> Home</a>
+          <a href="{{ url_for('pages.applicantboard') }}" class=""><i class="larger-icon icofont-loop"></i> Admission Status</a>
         </div>
       </div>
     </div>

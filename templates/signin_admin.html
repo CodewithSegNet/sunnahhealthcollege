@@ -12,6 +12,8 @@
 		<!-- Title -->
         <title>SignIn - Braham Health College</title>
 		
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
 		
@@ -39,6 +41,8 @@
 		
 		<!-- Medipro CSS -->
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css')}}">
+
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
         <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"> -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
@@ -51,12 +55,31 @@
         <img src={{user_image}} alt="School Logo">
       </div>
       <div class="card">
-        <h2>Sign In</h2>
-        <br>
+        <div class="mobile-img">
+          <img src={{user_image}} alt="School Logo">
+        </div>
+        <h2 class="mb-2">Sign In</h2>
         <p>Welcome to Braham Health College Portal | Admin</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set shown = false %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if not shown %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% set shown = true %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
         <form action="/admin" method="POST" id="signInForm">
           <div class="group">
-            <label for="email">Admin Name</label>
+            <label for="email">Admin Email</label>
             <input type="text" id="email" name="email" required>
           </div>
           <div class="group">
@@ -70,9 +93,9 @@
           <button type="submit" class="btn">Sign in</button>
         </form>
         <a href="#" class="forgot-password">Forgot password?</a>
-        <div class="input-group home">
-          <a href="{{ url_for('pages.home') }}"  class="forgot-password "><i class="fa fa-long-arrow-right"></i> Home</a>
-          <a href="{{ url_for('pages.signinstudent') }}" class="forgot-password"><i class="fa fa-long-arrow-right"></i> Student Portal</a>
+        <div class="input-group home mt-2">
+          <a href="{{ url_for('pages.home') }}"   class=""><i class="larger-icon icofont icofont-home"></i> Home</a>
+          <a href="{{ url_for('pages.signinstudent') }}"  class=""><i class="larger-icon icofont icofont-loop"></i> Student Portal</a>
         </div>
       </div>
     </div>

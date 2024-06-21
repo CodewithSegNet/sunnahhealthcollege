@@ -12,6 +12,8 @@
 		<!-- Title -->
         <title>Login - Braham Health College</title>
 		
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
 		
@@ -51,10 +53,28 @@
         <img src={{user_image4}} alt="School Logo">
       </div>
       <div class="card">
-        <h2>Sign In</h2>
-        <br>
+        <div class="mobile-img">
+          <img src={{user_image4}} alt="School Logo">
+        </div>
+        <h2 class="mb-2">Sign In</h2>
         <p>Welcome to Braham Health College Portal | Login</p>
-        <form action="/specialadmin" method="POST" id="specialadmin">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set shown = false %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if not shown %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% set shown = true %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+        <form action="/applicantpage" method="POST" id="applicantpage">
           <div class="group">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required>
@@ -66,9 +86,12 @@
 
           <button type="submit" class="btn">Login</button>
         </form>
+        <a href="#" class="forgot-password">Forgot password?</a>
+
         
-        <div class="input-group home">
-          <a href="{{ url_for('pages.home') }}" class=""><i class="fa fa-long-arrow-right"></i> Home</a>
+        <div class="input-group home mt-2">
+          <a href="{{ url_for('pages.home') }}" class=""><i class="larger-icon icofont-home"></i> Home</a>
+          <a href="https://paystack.com/pay/3agbxw7--0" class=""><i class="larger-icon icofont-loop"></i> Register</a>
         </div>
       </div>
     </div>

@@ -10,15 +10,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Registration - Braham Health College</title>
+        <title>SignIn - Braham Health College</title>
 		
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 		<!-- Favicon -->
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
 		
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
+
+
 		<!-- Bootstrap CSS -->
+
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 		<!-- Nice Select CSS -->
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
@@ -42,40 +47,78 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
         <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"> -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css')}}">
+
+
+        <!-- fonts CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icofont.eot') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icofont.svg') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icofont.ttf') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icofont.woff') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icofont.woff2') }}">
+
+
+
+
+
+
+
+
+
 		
     </head>
 <body>
   <div class="container">
     <div class="side-by-side">
       <div class="image-container">
-        <img src={{user_image4}} alt="School Logo">
+        <img src={{user_image}} alt="Sunnah Health ">
       </div>
       <div class="card">
+        <div class="mobile-img">
+          <img src={{user_image}} alt="School Logo">
+        </div>
         <h2>Sign In</h2>
-        <br>
-        <p>Welcome to Braham Health College Portal | Registration</p>
-        <form action="/registerapplicant" method="POST" id="registerapplicant">
+        <p>Welcome to Braham Health College Portal | Student</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set shown = false %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    {% if not shown %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% set shown = true %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+        <form action="/login" method="POST" id="signInForm">
           <div class="group">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" required>
-          </div>
-          <div class="group">
-            <label for="phonenumber">Phone Number</label>
-            <input type="text" id="phonenumber" name="phonenumber" required>
+            <label for="username">Admission Number</label>
+            <input type="text" id="admission_number" name="admission_number" required>
           </div>
           <div class="group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
           </div>
-          <button type="submit" class="btn">Register</button>
+          <div class="group checkbox-group">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember me</label>
+          </div>
+          <button type="submit" class="btn" value="Sign In">Sign in</button>
         </form>
-        <div class="input-group home">
-          <a href="{{ url_for('pages.home') }}" class="forgot-password "><i class="fa fa-long-arrow-right"></i> Home</a>
-          <a href="{{ url_for('pages.applicantboard') }}" class="forgot-password "><i class="fa fa-long-arrow-right"></i> Admission Status</a>
+        <a href="#" class="forgot-password">Forgot password?</a>
+        <div class="input-group home mt-2">
+          <a href="{{ url_for('pages.home') }}" class=""><i class="larger-icon icofont-home"></i> Home</a>
+          <a href="{{ url_for('pages.signinadmin') }}" class=""><i class="larger-icon icofont-loop"></i> Admin</a>
         </div>
       </div>
-    </div>
   </div>
-  <script src="script.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

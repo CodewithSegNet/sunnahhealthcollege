@@ -906,6 +906,11 @@ body{
 .fun-facts{
 	position:relative;
 }
+
+.number {
+    display: flex;
+  }
+
 .fun-facts.section{
 	padding:120px 0;
 }
