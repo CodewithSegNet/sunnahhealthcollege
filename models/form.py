@@ -135,7 +135,7 @@ class AdmissionForm(db.Model):
     photograph = db.relationship('FormImage', backref='applicant_number', lazy=True)
 
     # Define the relationship with Applicant
-    applicant = db.relationship('Applicant', back_populates='applicant_number')
+    applicant = db.relationship('Applicant', back_populates='applicant_number', overlaps="admission_forms, applicant")
 
 
     def update(self, **kwargs):

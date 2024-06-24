@@ -7,6 +7,7 @@ import traceback
 import requests
 from urllib.parse import quote, unquote
 import jwt
+import logging
 from io import BytesIO
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -18,7 +19,7 @@ from MySQLdb import OperationalError
 from dotenv import load_dotenv
 import time 
 import traceback
-from models import Student, Department, Semester, ContactMessage, Admin, AdmissionForm, FormImage, Newsletter, Specialadmin, Applicant, Image, Course 
+from models import Student, Department, Semester, ContactMessage, Admin, AdmissionForm, FormImage, Newsletter, Specialadmin, Applicant, Image, Course, PaymentStatus
 from controllers import StudentScoreForm
 from app import cache, db
 from views import *
@@ -27,6 +28,8 @@ from views import *
 
 
 
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 # /****************************************** GLOBAL ROUTES ************************************************/
@@ -35,8 +38,16 @@ from views import *
 pages_bp = Blueprint("pages", __name__, template_folder="templates")
 
 
+
+
 # Load environment variables from the .env file
 load_dotenv()
+
+
+# Print loaded environment variables
+print(os.getenv('PAYSTACK_SECRET_KEY'))
+
+
 
 @pages_bp.route('/')
 @cache.cached(timeout=500)
@@ -47,10 +58,10 @@ def home():
 
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'section-img.png')
     image2 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'slider.jpg')
-    image3 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'student.jpg')
-    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
-    image5 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics1.jpg')
-    image6 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics2.jpg')
+    image3 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'student.webp')
+    image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.avif')
+    image5 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics1.webp')
+    image6 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunPics2.webp')
     # image7 = os.path.join(app.config['UPLOAD_FOLDER'], 'icon-close.svg')
     return render_template('homepage.html', user_image = image1, user_image2 = image2, user_image3 = image3, user_image4 = image4, user_image5 = image5, user_image6 = image6)
 
@@ -62,9 +73,118 @@ def home():
 
 
 
-
-
 # /****************************************** STUDENT LOGIN & LOGIC ROUTES ************************************************/
+
+
+
+@pages_bp.route('/payment_callback', methods=['GET'])
+def paymentCallback():
+    reference = request.args.get('reference')
+    logging.debug("Reference: %s", reference)
+
+    if not reference:
+        logging.error("No reference provided")
+        return "No reference provided", 400
+
+    # Verify User payment
+    try:
+        response = requests.get(f'https://api.paystack.co/transaction/verify/{reference}', 
+                                headers={'Authorization': f"Bearer {os.getenv('PAYSTACK_SECRET_KEY')}"})
+        logging.debug("Paystack Response: %s", response.text)
+    except requests.RequestException as e:
+        logging.error("RequestException during Paystack verification: %s", e)
+        return "Failed to verify payment with Paystack", 500
+
+    if response.status_code == 200:
+        data = response.json().get('data', {})
+        status = data.get('status')
+        if status == 'success':
+            customer = data.get('customer', {})
+            email = customer.get('email')
+            if email:
+                logging.debug("Email: %s", email)
+
+                # Store user payment credentials in session
+                session['email'] = email
+                session['is_paid'] = True
+
+                # Check if the user already exists in the database
+                user = PaymentStatus.query.filter_by(email=email).first()
+                if user:
+                    user.is_paid = True
+                    db.session.commit()
+                else:
+                    # Create a new Paymentstatus if it doesn't exist
+                    new_user = PaymentStatus(email=email, is_paid=True)
+                    db.session.add(new_user)
+                    db.session.commit()
+                    logging.info("New PaymentStatus entry created for email: %s", email)
+
+                return redirect(url_for('pages.applicant'))
+            else:
+                logging.error("Email not found in Paystack response")
+                return "Email not found in Paystack response", 400
+        else:
+            logging.error("Payment verification failed: %s", status)
+            return f"Payment verification failed: {status}", 400
+    else:
+        logging.error("Failed to verify payment with Paystack, status code: %d", response.status_code)
+        return "Failed to verify payment with Paystack", 400
+
+
+def payment_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        email = session.get('email')
+        is_paid = session.get('is_paid')
+        current_app.logger.debug(f"email in session: {email}, is_paid: {is_paid}")
+
+        if not email or not is_paid:
+            return redirect(url_for('pages.admission'))
+
+        user = PaymentStatus.query.filter_by(email=email).first()
+
+        if not user or not user.is_paid:
+            current_app.logger.debug("User not found or not paid in database")
+            return redirect(url_for('pages.payment_callback'))
+
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+
+
+@pages_bp.route('/store_payment_status', methods=['POST'])
+def store_payment_status():
+    data = request.json
+    if 'email' not in data or 'is_paid' not in data:
+        return jsonify({'error': 'Email and is_paid fields are required'}), 400
+
+    email = data['email']
+    is_paid = data['is_paid']
+
+    try:
+        user = PaymentStatus.query.filter_by(email=email).first()
+        if user:
+            # Update the payment status if the user already exists
+            user.is_paid = is_paid
+        else:
+            # Create a new user entry if the user doesn't exist
+            user = PaymentStatus(email=email, is_paid=is_paid)
+            db.session.add(user)
+
+        db.session.commit()
+        return jsonify({'message': 'Payment status stored successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        logging.error("Error storing payment status: %s", e)
+        return jsonify({'error': 'Failed to store payment status'}), 500
+
+
+
+
+
 
     
 @pages_bp.route('/login', methods=['POST'])
@@ -513,43 +633,53 @@ def add_scores():
 
 
 
-@pages_bp.route('/register_applicant', methods=['POST'])
+@pages_bp.route('/register_applicant', methods=['GET', 'POST'])
 def registerapplicant():
     '''
     A function that handles admin registration
     '''
     
-    try:
-        data = request.form
+    if request.method == 'POST':
+        try:
+            if not session.get('is_paid'):
+                return jsonify({'error': 'Payment not verified'}), 400
+            
+            
+            data = request.form
+            email = session.get('email')
+            existing_email = Applicant.query.filter_by(email=data['email']).first()
 
-        existing_email = Applicant.query.filter_by(email=data['email']).first()
+            if existing_email:
+                return jsonify({'error': 'Email Already Exists!'}), 400
+            
+            # Create a new user instance
+            new_user = Applicant(
+                email=data['email'],
+                phonenumber=data['phonenumber'],
+                password=generate_password_hash(data['password']),
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+                is_paid = True
+            )
 
-        if existing_email:
-            return jsonify({'error': 'Email Already Exists!'}), 400
+            db.session.add(new_user)
+            db.session.commit()
+
+
+            #clear email and payment status from session
+            session.pop('email', None)
+            session.pop('is_paid', None)
+
+            session['reg_user_id'] = data['email']
+
+            # Return JSON successful message if data's works
+            return redirect(url_for('pages.form'))     
         
-        # Create a new user instance
-        new_user = Applicant(
-            email=data['email'],
-            phonenumber=data['phonenumber'],
-            password=generate_password_hash(data['password']),
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow(),
-            is_paid = False
-        )
-
-        db.session.add(new_user)
-        db.session.commit()
-
-        session['reg_user_id'] = data['email']
-
-        # Return JSON successful message if data's works
-        return redirect(url_for('pages.form'))     
-    
-    # Handles database issues (connection or constraint violation)
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
-    
+        # Handles database issues (connection or constraint violation)
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+        
 
 
 @pages_bp.route('/admission_form', methods=['POST'])
@@ -779,27 +909,3 @@ def newsletter():
 
 
 
-
-
-# @pages_bp.route('payment_callback', methods=['GET'])
-# def paymentCallback():
-#     reference = request.arg.get('reference')
-
-#     # verify User payment
-
-#     response = request.get(f'https://api.paystack.co/transaction/verify/{reference}', 
-#                            headers={'Authorization': f'bearer {current_app.config['PAYSTACK_SECRET_key']}'})
-    
-
-#     if response.status_code == 200 and response.json()['data']['status'] == 'success':
-#         email = response.json()['data']['customer']['email']
-
-
-#         # store user payment credentials in session
-#         session['email'] = email
-#         session['is_paid'] = True
-
-
-#         return redirect(url_for('pages_bp.registerapplicant'))
-
-#     return "Payment verification failed", 400

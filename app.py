@@ -38,6 +38,8 @@ def create_app():
 
     # secret key from the .env file using python-decouple
     secret_key = config('SECRET_KEY')
+    PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+
 
     # set key for app
     app.secret_key = secret_key

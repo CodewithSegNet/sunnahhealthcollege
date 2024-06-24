@@ -265,6 +265,7 @@
 }
 .slider .single-slider{
 	position:relative;
+	background-position: 0;
 }
 .slider .single-slider:before{
 	position:absolute;
@@ -575,6 +576,12 @@
 
 	.table-head{
 		width: 100%;
+	}
+
+	.number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 
@@ -947,6 +954,7 @@
 }
 .slider .single-slider{
 	position:relative;
+	background-position: 0;
 }
 .slider .single-slider:before{
 	position:absolute;
@@ -1384,6 +1392,18 @@
 }
 /* Mobile Screen */
 @media only screen and (max-width: 450px) {
+
+
+	.number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.slider .single-slider{
+		position:relative;
+		background-position: 75%;
+	}
 
 
 	.course_table thead tr th{

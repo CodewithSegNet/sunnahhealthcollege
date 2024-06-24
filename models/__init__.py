@@ -12,3 +12,5 @@ from .form import AdmissionForm
 from .image import Image
 from .form_image import FormImage
 from .newsletter import Newsletter
+from .payment import PaymentStatus
+

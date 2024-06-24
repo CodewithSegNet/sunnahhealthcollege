@@ -74,7 +74,8 @@
             </div>
         {% endif %}
     {% endwith %}
-        <form action="/applicantpage" method="POST" id="applicantpage">
+    
+        <form action="/applicant_page" method="POST" id="applicantpage">
           <div class="group">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required>
@@ -84,7 +85,7 @@
             <input type="password" id="password" name="password" required>
           </div>
 
-          <button type="submit" class="btn">Login</button>
+          <button type="submit" class="btn mt-2">Login</button>
         </form>
         <a href="#" class="forgot-password">Forgot password?</a>
 

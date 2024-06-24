@@ -1769,6 +1769,24 @@ body{
 .team .section-title p{
 	color:#fff;
 }
+
+.register a{
+    color: blue;
+  }
+
+  .success_link{
+
+  }
+
+  .success_link:hover{
+	color: #c9a768;
+
+  }
+
+  .register a:hover{
+    color: #c9a768;
+  }
+
 .team .single-team {
 	background: #fff;
 	-webkit-transition: all 0.3s ease;
