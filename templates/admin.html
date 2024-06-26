@@ -40,6 +40,7 @@
 		<!-- Medipro CSS -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/special.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
 		
@@ -50,7 +51,7 @@
    <!-- Nav -->
    <nav class="navbar">
     <div class="navbar__left">
-      <img src={{user_image}}>
+        <img src={{user_image}}>
       <span>Hello, {{ user.email }}</span>
     
     </div>
@@ -93,6 +94,21 @@
                 <div class="admin_board pt-4">
                 
                     <h1>Student Information</h1>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% set shown = false %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                {% if not shown %}
+                                    <div class="alert alert-{{ category }}">
+                                        {{ message }}
+                                    </div>
+                                    {% set shown = true %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
 
                    <div class="row">
                         <div class="col-md-12">
@@ -111,81 +127,98 @@
               
 
 
-                    <div class="row pt-3">
-                        <div class="col-md-6">
-                            <p class="red">Admission Number: {{ student_info.admission_number }}</p>
-                        <p>Name: {{ student_info.name }}</p>
+                    <div class="row pt-3 black">
+                        <div class="col-md-6 card">
+                            <p class="black"><strong>Admission Number: </strong> <span style="color: green;">  {{ student_info.admission_number }} </span></p>
+                        <p class="black"> <strong> Name: </strong> {{ student_info.name }}</p>
                         </div>
                       
-                        <div class="col-md-6">
-                            <li>Department Name: {{ student_info.department_name }}</li>
-                            <li>State: {{ student_info.state }}</li>
+                        <div class="col-md-6 card ">
+                            <li> <strong>Department Name:</strong>  {{ student_info.department_name }}</li>
+                            <li> <strong> State: </strong> {{ student_info.state }}</li>
                             </div>
                     </div>
                     
 
-                    <div class="row">
-                        <div class="col-md-6">
-                        <li>Gender: {{ student_info.gender }}</li>
-                        <li>Email: {{ student_info.email }}</li>
+                    <div class="row black">
+                        <div class="col-md-6 card ">
+                        <li><strong>Gender: </strong> {{ student_info.gender }}</li>
+                        <li><strong>Email: </strong> {{ student_info.email }}</li>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 card black">
                             {% if student_info.date_of_birth %}
-                            <p>Date of Birth: {{ student_info.date_of_birth }}</p>
+                            <p class="black"><strong>Date of Birth: </strong> {{ student_info.date_of_birth }}</p>
                         {% else %}
                             <p>Date of Birth: N/A</p>
                         {% endif %}
-                        <li>Phone Number: {{ student_info.phone_number }}</li>
+                        <li><strong>Phone Number: </strong> {{ student_info.phone_number }}</li>
                             </div>
                     </div>
 
 
 
 
-                    <div class="row pt-3">
-                        <div class="col-md-6">
+                    <div class="row pt-3 black">
+                        <div class="col-md-6 card">
                             {% if student_info.department %}
                             <h2>Department</h2>
                             <ul class="pt-2">
-                                <li>Level: {{ student_info.department.department_level }}</li>
-                                <li>Name: {{ student_info.department.department_name }}</li>
+                                <li><strong>Level: </strong> {{ student_info.department.department_level }}</li>
+                                <li><strong>Name: </strong> {{ student_info.department.department_name }}</li>
                             </ul>
                         {% endif %}
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 card black">
                             {% if student_info.semesters %}
                         <h2>Semesters</h2>
                         <ul class="pt-2">
                             {% for semester in student_info.semesters %}
-                                <li>Semester: {{ semester.semester }}</li>
-                                <!-- Add other semester attributes as needed -->
+                                <li><strong>Semester:</strong> {{ semester.semester }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
                         </div>
                     </div>
 
-
-                    <div class="row pt-3">
-                        <div class="col-md-12">
+                    <div class="row pt-3 black">
+                        <div class="col-md-12 card black">
                             {% if student_info.courses %}
                             <h2>Courses</h2>
                             <div class="pt-2">
-                                {% for course in student_info.courses %}
-                                    <span class="brake">[Course Code: <span style="color: green;">{{ course.course_code }} </span></span>
-                                    <span class="brake">Course Title: {{ course.course_title }}</span>
-                                    <span class="brake">Credit: {{ course.credit }}</span>
-                                    CA Score: <span style="color: red;">{{ course.ca_score }}, </span>
-                                            Exam Score: <span style="color: red;"> {{ course.exam_score }}, </span>
-                                            Total Score:<span style="color: red;"> {{ course.total_score }}</span> ,
-                                            Grade: {{ course.grade }},
-                                            Remark: <span style="color: red;">{{ course.remark }}, </span>]
-                                {% endfor %}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Course Code</th>
+                                            <th scope="col">Course Title</th>
+                                            <th scope="col">Credit</th>
+                                            <th scope="col">CA Score</th>
+                                            <th scope="col">Exam Score</th>
+                                            <th scope="col">Total Score</th>
+                                            <th scope="col">Grade</th>
+                                            <th scope="col">Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for course in student_info.courses %}
+                                        <tr>
+                                            <td>{{ course.course_code }}</td>
+                                            <td>{{ course.course_title }}</td>
+                                            <td>{{ course.credit }}</td>
+                                            <td>{{ course.ca_score }}</td>
+                                            <td>{{ course.exam_score }}</td>
+                                            <td>{{ course.total_score }}</td>
+                                            <td>{{ course.grade }}</td>
+                                            <td>{{ course.remark }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
-                        {% endif %}
+                            {% endif %}
                         </div>
+                    </div>
                     
                     </div>
                 

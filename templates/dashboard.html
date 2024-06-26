@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/special.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
 		
     </head>
@@ -98,17 +99,28 @@
           <div class="row">
             <div class="col-md-12 col-lg-5">
               <div class="card">
-                <div class="card-body card-shape">
+                <div class="card-body card-responsive card-shape">
                   {% if user_image_path %}
                   <img src="{{ user_image_path }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
                   {% endif %}
-                  <div class="text-left">
+                  <div class="text-left student-card w-100 ">
                 <h6 class="mt-3">Name: <span class="response"> {{ student.name }} </span></h6>
+                <hr class="mb-2 mt-0">
                     <p class="black"> Admission Number: <span class="response">  {{ student.admission_number }} </span></p>
+                    <hr class="mb-2 mt-0">
+
                     <p class="black">State: <span class="response">  {{ student.state }} </span></p>
+                    <hr class="mb-2 mt-0">
+
                     <p class="black">Gender: <span class="response">{{ student.gender }} </span></p>
+                    <hr class="mb-2 mt-0">
+
                     <p class="black">Date of Birth: <span class="response">{{ student.date_of_birth }} </span></p>
+                    <hr class="mb-2 mt-0">
+
                     <p class="black">Phone Number: <span class="response"> {{ student.phone_number}}</span></p>
+                    <hr class="mb-2 mt-0">
+
                     <p class="black">Email:  <span class="response">{{ student.email }} </span></p>
                   </div>
 
@@ -116,15 +128,29 @@
                 </div>
 
 
+               
+             
+              </div>
+
+              <div class="card mt-4 mb-4 px-3 pt-2 pb-2">
                 <form action="/upload_image" method="post" enctype="multipart/form-data">
                   <input type="file" name="pics" accept="image/*">
-                  <input class="btn" type="submit" value="Upload Image">
+                  <input class="upload-btn btn" type="submit" value="Upload Image">
                 </form>
                 <div class="d-flex">
-                  <p> Please ensure the image size remains under 1MB</p>
+                  <p> Please ensure the image size remains under 500kb</p>
                 </div>
+                
+  
               </div>
+      
             </div>
+
+
+
+
+
+
             <div class="col-md-12 col-lg-7">
               <div class="card">
                 <div class="card-body text-center">
@@ -187,7 +213,7 @@
         <!-- Assuming this is within the section where you want to display student information -->
 <div class="row mb-4">
   <div class="col-md-12">
-      <div class="card">
+      <div class="">
           <div class="card-body">
               <h4>Student Transcript</h4>
               <hr>
@@ -197,22 +223,26 @@
                 </div>
                 <div class="pb-4 pl-4 pr-4">
                   <h4 class="text-center pt-2">
-                    Braham COLLEGE OF HEALTH & SCIEENCE TECHOLOGY MARARABA-GURKU, KARU L.G.A OF NASARAWA STATE
+                    BRAHAM COLLEGE OF HEALTH & SCIEENCE TECHOLOGY MARARABA-GURKU, KARU L.G.A OF NASARAWA STATE
                   </h4>
                 </div>
                 <hr>
+
+                <div class="card-credential col-md-12">
                   <div class="col-md-6">
-                      <p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
-                      <p><strong>Name:</strong> {{ student.name }}</p>
-                      <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
-                      <!-- Add other student details here... -->
-                  </div>
-                  <div class="col-md-6">
-                      <p><strong>Email:</strong> {{ student.email }}</p>
-                      <p><strong>Phone Number:</strong> {{ student.phone_number }}</p>
-                      <p><strong>Department:</strong> {{ student.department_name }}</p>
-                      <!-- Add other student details here... -->
-                  </div>
+                    <p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
+                    <p><strong>Name:</strong> {{ student.name }}</p>
+                    <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                    <!-- Add other student details here... -->
+                </div>
+                <div class="col-md-5 ">
+                    <p><strong>Email:</strong> {{ student.email }}</p>
+                    <p><strong>Phone Number:</strong> {{ student.phone_number }}</p>
+                    <p><strong>Department:</strong> {{ student.department_name }}</p>
+                    <!-- Add other student details here... -->
+                </div>
+                </div>
+                 
               </div>
           </div>
       </div>
@@ -222,7 +252,7 @@
 
 
   <div class="col-md-12">
-    <div class="card">
+    <div class="">
         <div class="card-body">
           
 

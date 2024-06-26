@@ -1,6 +1,5 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
-
 <head>
   <!-- Meta Tags -->
   <meta charset="utf-8">
@@ -14,47 +13,45 @@
   <title>Dashboard - Braham Health College</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
 
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <!-- Nice Select CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
   <!-- Font Awesome CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
   <!-- icofont CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css') }}">
   <!-- Slicknav -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css') }}">
   <!-- Owl Carousel CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css') }}">
   <!-- Datepicker CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css') }}">
   <!-- Animate CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}">
   <!-- Magnific Popup CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
 
   <!-- Medipro CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/special.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 
 </head>
 
 <body>
 
-
   <!-- Nav -->
   <nav class="navbar">
     <div class="navbar__left">
-      <img src={{user_image}}>
+      <img src="{{ user_image }}">
     </div>
 
     <div class="navbar__right d-flex align-items-center justify-content-between">
@@ -62,125 +59,87 @@
         <i class="icofont-navigation-menu"></i>
       </div>
     </div>
-    </div>
   </nav>
 
   <div class="dashboard">
     <!-- Sidebar -->
     <aside class="sidebar">
       <ul>
-        <li><a href="#" class="dash-btn sidebar-item {{ 'active' if active_section == 'dashboard' else '' }}"
-            data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
-        <li><a class="dash-btn" href="{{ url_for('pages.logoutadmin') }}" data-content=""><i class="icofont-exit"></i>
-            Log Out</a></li>
+        <li><a href="#" class="dash-btn sidebar-item {{ 'active' if active_section == 'dashboard' else '' }}" data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+        <li><a class="dash-btn" href="{{ url_for('pages.logoutadmin') }}" data-content=""><i class="icofont-exit"></i> Log Out</a></li>
       </ul>
     </aside>
 
-
-
     <main class="main-content applicant-dashboard">
       <div id="dashboard" class="content-section">
-        <div class="dashboard_container container mt-4">
+        <div class="container mt-4">
           <div class="row">
-
-            <div class="grid-container">
-      
-                {% for applicant in applicants %}
-                <div class="grid-item">
-                  <h2>{{ applicant.email }}</h2>
-                  <!-- Display other applicant information -->
-                  {% for form in applicant.applicant_number %}
-                  <p>Form Number: {{ form.form_number }}</p>
-                  <!-- Display other admission form fields -->
-                  <p>Full Names: {{ form.fullnames }}</p>
-                  <p>Contact Address: {{ form.contactaddress }}</p>
-                  <p>Marital Status: {{ form.maritalstatus }}</p>
-                  <p>State of Origin: {{ form.stateoforigin }}</p>
-                  <p>Email Address: {{ form.emailaddress }}</p>
-                  <p>Date of Birth: {{ form.dateofbirth }}</p>
-                  <p>Last School Attended: {{ form.lastschoolattended }}</p>
-                  <p>Phone Number: {{ form.phonenumber }}</p>
-                  <p>Admission Status: <strong>{{ form.admissionstatus }}</strong></p>
-                  <!-- Add more fields as needed -->
-                  {% endfor %}
-
-
-                  
-              <div class="d-flex align-items-center justify-content-between pt-2">
-                <!-- Buttons for actions -->
-                <form action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
-                  <button class="btn" type="submit" name="action" value="approve">Approve</button>
-                </form>
-
-                <form action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
-                  <button class="btn" type="submit" name="action" value="reject">Reject</button>
-                </form>
-
-                <!-- <form action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
-          <button class="btn" type="submit" name="action" value="delete">Delete</button>
-      </form> -->
-
-                <form action="{{ url_for('pages.view_applicant_info', email=applicant.email) }}" method="get">
-                  <button class="btn" type="submit">View</button>
-                </form>
-
+            <div class="col-12">
+              <div class="row">
+                {% for applicant_item in applicants %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="grid-item card">
+                    {% if applicant_item.image %}
+                    <img src="{{ url_for('static', filename=applicant_item.image) }}" alt="Applicant Photo" class="img-fluid rounded-circle profile-pic">
+                    {% else %}
+                    <p>No Photo Available</p>
+                    {% endif %}
+    
+                    <h2>{{ applicant_item.applicant.email }}</h2>
+                    {% for form_item in applicant_item.forms %}
+                    <p>Form Number: {{ form_item.form_number }}</p>
+                    <p>Full Names: {{ form_item.fullnames }}</p>
+                    <p>Contact Address: {{ form_item.contactaddress }}</p>
+                    <p>Marital Status: {{ form_item.maritalstatus }}</p>
+                    <p>State of Origin: {{ form_item.stateoforigin }}</p>
+                    <p>Email Address: {{ form_item.emailaddress }}</p>
+                    <p>Date of Birth: {{ form_item.dateofbirth }}</p>
+                    <p>Last School Attended: {{ form_item.lastschoolattended }}</p>
+                    <p>Phone Number: {{ form_item.phonenumber }}</p>
+                    <p>Admission Status: <strong>{{ form_item.admissionstatus }}</strong></p>
+                    <!-- Add more fields as needed -->
+                    {% endfor %}
+                    <div class="d-flex align-items-center justify-content-between pt-2">
+                      <form class="approver" action="{{ url_for('pages.approve_applicant', email=applicant_item.applicant.email) }}" method="post">
+                        <button class="btn" type="submit" name="action" value="approve">Approve</button>
+                      </form>
+    
+                      <form class="approver" action="{{ url_for('pages.reject_applicant', email=applicant_item.applicant.email) }}" method="post">
+                        <button class="btn" type="submit" name="action" value="reject">Reject</button>
+                      </form>
+    
+                      <form class="approver" action="{{ url_for('pages.view_applicant_info', email=applicant_item.applicant.email) }}" method="get">
+                        <button class="btn" type="submit">View</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
-              </div>
-
-
-             
-          </div>
-
-     
-
-              </div>
-              {% endfor %}
             </div>
-
           </div>
         </div>
       </div>
     </main>
-
-
-
-
-
-
-
-
-
+    
   </div>
 
   <!-- jquery Min JS -->
   <!-- Include jQuery before other scripts using it -->
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
-
-  <!-- jquery Min JS -->
-  <!-- Include jQuery before other scripts using it -->
-  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-
-
   <!-- Include your other scripts -->
   <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
-  <!-- ... other scripts ... -->
-
-  <!-- Bootstrap JS -->
   <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
   <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
-
   <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   <!-- Your custom scripts -->
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-  <!-- ... other custom scripts ... -->
-
 </body>
-
 </html>

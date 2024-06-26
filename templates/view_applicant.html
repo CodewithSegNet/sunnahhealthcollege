@@ -54,7 +54,7 @@
   <!-- Nav -->
   <nav class="navbar">
     <div class="navbar__left">
-      <img src={{user_image}}>
+     <a  href="{{ url_for('pages.specialadmindashboard') }}"> <button class="btn">Back</button></a> 
     </div>
 
 
@@ -97,11 +97,11 @@
     <main class="main-content applicant-dashboard">
       <div id="dashboard" class="content-section">
         <div class="dashboard_container container mt-4">
-          {% if form_image %}
-          <img src="{{ url_for('pages.view_image', image_id=form_image.id) }}" alt="Applicant Photograph">
-      {% else %}
+          {% if user_image %}
+          <img src="{{ url_for('static', filename=user_image) }}" alt="Applicant Photograph" class="img-fluid rounded-circle profile-pic">
+        {% else %}
           <p>No photograph available</p>
-      {% endif %}
+        {% endif %}
 
              <div class="row pt-4">
         <div class="col-md-6">

@@ -2,8 +2,10 @@
 #!/usr/bin/env python3
 from flask import current_app, Blueprint, render_template, jsonify, request, url_for, session, redirect, send_file, send_from_directory, make_response, flash
 from functools import wraps
+from config import UPLOAD_FOLDER, allowed_file
 import json
 import traceback
+import base64
 import requests
 from urllib.parse import quote, unquote
 import jwt
@@ -150,6 +152,9 @@ def payment_required(f):
 
         return f(*args, **kwargs)
     return decorated_function
+
+
+
 
 
 
@@ -380,6 +385,9 @@ def get_latest_image_info(admission_number):
 
 
 
+
+
+
 @pages_bp.route('/admin_dashboard', methods=['GET'])
 def admindash():
     if 'admin_user_id' in session:
@@ -408,7 +416,7 @@ def admindash():
             # Get image information
             image_info = get_latest_image_info(student_info.get('admission_number'))
 
-        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.jpg')
+        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
 
         form = StudentScoreForm()
 
@@ -446,7 +454,7 @@ def specialadmin():
             session['special_token'] = token  
             session['special_user_id'] = user.email  
 
-            return redirect(url_for('pages.special_admin_dashboard'))
+            return redirect(url_for('pages.specialadmindashboard'))
         else:
             flash('Incorrect email or password. Please try agin.', 'danger')
             return redirect(url_for('pages.speciallog'))
@@ -458,17 +466,22 @@ def specialadmin():
 
 
 
+def get_latest_image_info(email):
+    if email:
+        # Retrieve the latest image associated with the applicant
+        form = AdmissionForm.query.filter_by(form_number=email).order_by(AdmissionForm.id.desc()).first()
 
-def get_form_image_info(form_id):
-    if form_id:
-        # Retrieve the latest image associated with the form
-        image = FormImage.query.filter_by(form_id=form_id).order_by(FormImage.created_at.desc()).first()
-        if image and image.image_data:
-            return {
-                'image_data': image.image_data,
-                'mimetype': 'image/jpeg',
-            }
+        if form:
+            image = FormImage.query.filter_by(form_id=form.id).order_by(FormImage.created_at.desc()).first()
+
+            if image and image.image_data:
+                return {
+                    'image_data': image.image_data,
+                    'mimetype': 'image/jpeg',  # Adjust mimetype as per your actual data
+                }
+
     return None
+
 
 
 
@@ -480,19 +493,37 @@ def specialadmindashboard():
 
         if not email or not token:
             return jsonify({'error': 'Unauthorized'}), 401
-    
+
         user = Specialadmin.query.filter_by(email=email).first()
 
         # Fetch applicants
         applicants = Applicant.query.options(db.joinedload(Applicant.applicant_number)).all()
 
+        # Fetch images for each applicant
+        applicants_with_images = []
+        for applicant in applicants:
+            form_number = applicant.email
+            image_info = get_latest_image_info(form_number)
+            if image_info:
+                image_path = image_info['image_data'].decode('utf-8') if isinstance(image_info['image_data'], bytes) else image_info['image_data']
+                # Ensure the path does not include "static/" prefix twice
+                if image_path.startswith("static/"):
+                    image_path = image_path[7:]
+                applicant_image = image_path
+            else:
+                applicant_image = None
+
+            applicants_with_images.append({
+                'applicant': applicant,
+                'image': applicant_image,
+                'forms': applicant.applicant_number
+            })
+
         image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
 
-        return render_template('special_dashboard.html', user=user, user_image=image1, applicants=applicants)
+        return render_template('special_dashboard.html', user=user, user_image=image1, applicants=applicants_with_images)
     else:
         return jsonify({'error': 'Unauthorized'}), 401
-
-
 
 
 
@@ -518,6 +549,11 @@ def dashboard():
     encoded_admission_number = current_user.admission_number.replace('/', '%2F')
 
     user_image_path = f"/images?admission_number={encoded_admission_number}"
+
+    
+    print("Image file exists:", os.path.exists(user_image_path))
+    print("User Image Path:", user_image_path)
+
       
     
     image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
@@ -539,9 +575,10 @@ def upload_image():
 
             file = request.files['pics']
 
-            if file:
-                # Read the image file data
-                image_data = file.read()
+            if file and allowed_file(file.filename):
+                filename = file.filename
+                image_data = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                file.save(image_data)
 
                 # Create a new image record and associate it with the student
                 image = Image(student_admission_number=admission_number, image_data=image_data)
@@ -560,6 +597,9 @@ def upload_image():
     
 
 
+    
+
+
 
 @pages_bp.route('/images', methods=['GET'])
 def get_image():
@@ -570,13 +610,27 @@ def get_image():
         image = Image.query.filter_by(student_admission_number=admission_number).order_by(Image.created_at.desc()).first()
 
         if image and image.image_data:
+
+            # Open the image file and read its content
+            with open(image.image_data, 'rb') as f:
+                image_data = f.read()
+
             # Create a Flask response with the image data and set the appropriate content type
-            response = make_response(image.image_data)
+            response = make_response(image_data)
             response.headers['Content-Type'] = 'image/jpeg'
+            
+            print("Response:", response)
+            print("Headers:", response.headers)
+
             return response
 
     # Handle case where admission_number is not provided or image not found
     return jsonify({'error': 'Image not found'}), 404
+
+
+
+
+
 
 
 
@@ -595,7 +649,6 @@ def calculate_grade_remark(total_score):
         return 'E', 'Pass'
     else:
         return 'F', 'Fail'
-
 
 
 @pages_bp.route('/add_scores', methods=['POST'])
@@ -630,6 +683,23 @@ def add_scores():
             flash('Invalid student or course ID', 'danger')
 
     return render_template('pages/admin.html', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -682,6 +752,19 @@ def registerapplicant():
         
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 @pages_bp.route('/admission_form', methods=['POST'])
 def admission_form():
     '''
@@ -697,13 +780,11 @@ def admission_form():
         applicant_data = request.form.to_dict()
         photograph_file = request.files.get('photograph')
 
-        if photograph_file:
+        if photograph_file and allowed_file(photograph_file.filename):
             # save the photograph
-            photo_data = photograph_file.read()
-
             filename = secure_filename(photograph_file.filename)
-            photograph_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            
+            filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            photograph_file.save(filepath)            
             # Ensure user_email is not None before setting form_number
             if user_email:
                 # Set the form_number to the user_email
@@ -722,7 +803,7 @@ def admission_form():
                 form_id = admission_form.id  # Get the form_id
 
             # Create a new FormImage instance with the form_id
-            form_image = FormImage(form_id=form_id, image_data=photo_data)
+            form_image = FormImage(form_id=form_id, image_data=filepath)
             db.session.add(form_image)
         
         # Commit changes to the database
@@ -744,10 +825,10 @@ def admission_form():
 
 
 @pages_bp.route('/applicant_board', methods=['GET'])
-@cache.cached(timeout=500)
+@cache.cached(timeout=500)  # Assuming you're using caching
 def applicantboard():
     """
-    A Route that handles the admission page
+    Route that handles the applicant dashboard page.
     """
     if 'applicant_user_id' in session:
         email = session.get('applicant_user_id')
@@ -756,19 +837,38 @@ def applicantboard():
         if not email or not token:
             return jsonify({'error': 'Unauthorized'}), 401
         
+        # Retrieve applicant details from database
         user = Applicant.query.filter_by(email=email).first()
-        
-        user_id = user.applicant_number
 
         if not user:
             return render_template('applicant_login_page.html', message='User not found'), 400
+        
+        # Fetch applicant number or other necessary details
+        user_id = user.applicant_number 
+        
+        # Assuming you have a function like get_latest_image_info
+        image_info = get_latest_image_info(user.email)  
+        
+        if image_info:
+            image_path = image_info['image_data'].decode('utf-8') if isinstance(image_info['image_data'], bytes) else image_info['image_data']
+            if image_path.startswith("static/"):
+                image_path = image_path[7:]
+            applicant_image = image_path
+        else:
+            applicant_image = 'sunnah_college_logo-removebg-preview.png'
+        
+        # Example default image if applicant_image is None
+        user_image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
 
-        image4 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
-        # No need to check password here since the user is already authenticated at this point
-        return render_template('applicant_dashboard.html', user_image=image4, user=user, user_id=user_id)
-    # If 'reg_id' is not in the session, it means the user is not logged in
+        # Render the template with the necessary data
+        return render_template('applicant_dashboard.html', user=user, user_id=user_id, applicant_image=applicant_image, user_image=user_image)
+    
+    # If 'applicant_user_id' is not in the session, redirect to login
     return redirect(url_for('pages.applicant_login'))
   
+
+
+
 
 
 @pages_bp.route('/approve_applicant/<string:email>', methods=['POST'])
@@ -787,7 +887,7 @@ def approve_applicant(email):
     db.session.commit()
 
     # Redirect to dashboard or appropriate page
-    return redirect(url_for('pages.special_admin_dashboard'))
+    return redirect(url_for('pages.specialadmindashboard'))
 
 
 
@@ -809,7 +909,7 @@ def reject_applicant(email):
     db.session.commit()
 
     # Redirect to dashboard or appropriate page
-    return redirect(url_for('pages.special_admin_dashboard'))
+    return redirect(url_for('pages.specialadmindashboard'))
 
 
 
@@ -831,20 +931,29 @@ def delete_applicant(email):
     db.session.commit()
 
     # Redirect to dashboard or appropriate page
-    return redirect(url_for('pages.special_admin_dashboard'))
+    return redirect(url_for('pages.specialadmindashboard'))
+
+
 
 
 @pages_bp.route('/view_applicant_info/<email>', methods=['GET'])
 def view_applicant_info(email):
-
     applicant = Applicant.query.filter_by(email=email).first()
-
-    user_id = applicant.applicant_number
-    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
-
-
+    
     if applicant:
-        return render_template('view_applicant.html', user_image=image1, applicant=applicant, user_id=user_id)
+        form_number = applicant.email
+        image_info = get_latest_image_info(form_number)
+        if image_info:
+            image_path = image_info['image_data'].decode('utf-8') if isinstance(image_info['image_data'], bytes) else image_info['image_data']
+            if image_path.startswith("static/"):
+                image_path = image_path[7:]
+            applicant_image = image_path
+        else:
+            applicant_image = 'sunnah_college_logo-removebg-preview.png'
+        
+        user_id = applicant.applicant_number
+        
+        return render_template('view_applicant.html', user_image=applicant_image, applicant=applicant, user_id=user_id)
     else:
         return jsonify({'error': 'Applicant not found'}), 404
 
@@ -856,7 +965,7 @@ def view_image(image_id):
     if form_image:
         response = make_response(form_image.image_data)
         response.headers['Content-Type'] = 'image/jpeg'
-        return response
+
     else:
         return 'Image not found', 404
 

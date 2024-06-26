@@ -43,6 +43,7 @@
   <!-- Medipro CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/special.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
 
@@ -50,23 +51,21 @@
 
 <body>
 
-
   <!-- Nav -->
   <nav class="navbar">
     <div class="navbar__left">
-      <img src={{user_image}}>
+      <img src="{{ user_image }}" alt="Applicant Photograph">
     </div>
 
     <div>
-      <p style="color: #fff;">Admission Status: {% for form in user_id %} {{ form.admissionstatus }}</p> {% endfor %}
-    </p>
+      <p style="color: #fff;"><span style="color: green;"> Admission Status: </span>{% for form in user_id %} {{ form.admissionstatus }}</p> {% endfor %}
+      </p>
     </div>
 
     <div class="navbar__right d-flex align-items-center justify-content-between">
       <div class="navbar__burger">
         <i class="icofont-navigation-menu"></i>
       </div>
-    </div>
     </div>
   </nav>
 
@@ -81,68 +80,50 @@
       </ul>
     </aside>
 
-
-
-
     <main class="main-content applicant-dashboard">
       <div id="dashboard" class="content-section">
-        <div class="dashboard_container container mt-4">
+        <div class="dashboard_container container pl-5 mt-4">
           <div class="row">
             <div class="admin_board">
+              <h1 class="applicant-font pb-3">Welcome to the Applicant Dashboard</h1>
 
-              <h1>Welcome to the Applicant Dashboard</h1>
-              <!-- 
+              <!-- Display Applicant Image -->
+              {% if applicant_image %}
+              <img src="{{ url_for('static', filename=applicant_image) }}" alt="Applicant Image"
+                class="img-fluid rounded-circle profile-pic">
+              {% else %}
+              <p>No image available</p>
+              {% endif %}
 
-          {% if image_info %}
-          <img src="{{ image_info }}" alt="Profile Picture" class="img-fluid rounded-circle profile-pic">
-          {% endif %} -->
+
+              {% for form in user_id %}
 
               <div class="row pt-4">
                 <div class="col-md-6">
-                  {% for form in user_id %}
                   <p>Form ID: {{ form.form_number }}</p>
-                  {% endfor %}
                 </div>
 
                 <div class="col-md-6">
-                  {% for form in user_id %}
                   <p>Full Names: {{ form.fullnames }}</p>
-                  {% endfor %}
                 </div>
-
               </div>
 
-
-
               <div class="row pt-4">
-
-
                 <div class="col-md-6">
-                  {% for form in user_id %}
                   <p>Date Of Birth: {{ form.dateofbirth }}</p>
                   <p>State of Origin: {{ form.stateoforigin }}</p>
-                  {% endfor %}
-
                 </div>
 
                 <div class="col-md-6">
-                  {% for form in user_id %}
                   <p>Course: {{ form.courses }}</p>
                   <p>Telephone: {{ form.phonenumber }}</p>
-                  {% endfor %}
                 </div>
               </div>
 
-
-
               <div class="row pt-4">
-
                 <div class="col-md-6">
-
-                  {% for form in user_id %}
                   <p>Last School attended: {{ form.lastschoolattended }}</p>
                   <p>Guardian Name: {{ form.parentguardianname }}</p>
-
                 </div>
 
                 <div class="col-md-6">
@@ -150,7 +131,6 @@
                   <p>Marital Status: {{ form.maritalstatus }}</p>
                 </div>
               </div>
-
 
               <div class="row pt-4">
                 <div class="col-md-6 w-100">
@@ -166,7 +146,6 @@
                   <p>To: {{ form.to2 }}</p>
                   <p>Certificate: {{ form.certificate2 }}</p>
                 </div>
-
               </div>
 
               <div class="row pt-4">
@@ -176,17 +155,13 @@
                   <p>To: {{ form.to3 }}</p>
                   <p>Certificate: {{ form.certificate3 }}</p>
                 </div>
-
               </div>
-
 
               <div class="row pt-4">
                 <div class="col-md-12">
-                  <p> <strong>Examination:</strong> {{ form.examination }}</p>
+                  <p><strong>Examination:</strong> {{ form.examination }}</p>
                 </div>
               </div>
-
-
 
               <div class="d-flex align-items-center justify-content-between pt-4">
                 <div class="col-md-8 w-100">
@@ -198,8 +173,6 @@
                 </div>
               </div>
 
-
-
               <div class="d-flex align-items-center justify-content-between">
                 <div class="col-md-8 w-100">
                   <p>Subject: {{ form.subject2 }}</p>
@@ -210,9 +183,6 @@
                 </div>
               </div>
 
-
-
-
               <div class="d-flex align-items-center justify-content-between">
                 <div class="col-md-8 w-100">
                   <p>Subject: {{ form.subject3 }}</p>
@@ -222,9 +192,6 @@
                   <p>Grade: {{ form.sgrade3 }}</p>
                 </div>
               </div>
-
-
-
 
               <div class="d-flex align-items-center justify-content-between">
                 <div class="col-md-8 w-100">
@@ -246,7 +213,6 @@
                 </div>
               </div>
 
-
               <div class="d-flex align-items-center justify-content-between">
                 <div class="col-md-8 w-100">
                   <p>Subject: {{ form.subject6 }}</p>
@@ -257,9 +223,7 @@
                 </div>
               </div>
 
-
               <div class="d-flex align-items-center justify-content-between">
-
                 <div class="col-md-8 w-100">
                   <p>Subject: {{ form.subject7 }}</p>
                 </div>
@@ -269,44 +233,33 @@
                 </div>
               </div>
 
+              {% endfor %}
             </div>
-            {% endfor %}
           </div>
         </div>
       </div>
+    </main>
   </div>
 
-  </main>
-  </div>
+  <!-- jquery Min JS -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
-<!-- jquery Min JS -->
-<!-- Include jQuery before other scripts using it -->
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <!-- Include your other scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
 
+  <!-- Bootstrap JS -->
+  <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
 
-<!-- jquery Min JS -->
-<!-- Include jQuery before other scripts using it -->
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-
-
-<!-- Include your other scripts -->
-<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
-<!-- ... other scripts ... -->
-
-<!-- Bootstrap JS -->
-<script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/steller.js') }}"></script>
-<script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
-
-<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<!-- Your custom scripts -->
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<!-- ... other custom scripts ... -->
+  <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <!-- Your custom scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 

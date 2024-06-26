@@ -8,6 +8,7 @@ from models import Semester
 from models import Course
 from models import Admin
 from models import Applicant
+from models import Image
 from models import Specialadmin
 import json
 from app import db
@@ -489,13 +490,16 @@ def get_student_info():
             }
 
         if student.images:
-            student_info['images'] = [
-                {
-                    'image_path': image.image_data.hex(),
-                    'mimetype': 'image/jpeg'
-                }
-                for image in student.images
-            ]
+                latest_image = Image.query.filter_by(student_admission_number=student.admission_number).order_by(Image.created_at.desc()).first()
+                if latest_image:
+                    student_info['images'] = [
+                        {
+                            'image_path': latest_image.image_data,
+                            'mimetype': 'image/jpeg'
+                        }
+                    ]
+                else:
+                    student_info['images'] = []
 
         if student.courses:
             student_info['courses'] = [
@@ -788,7 +792,7 @@ def update_password():
         # Commit changes to the database
         db.session.commit()
 
-        return redirect(url_for('pages.admin'))
+        return redirect(url_for('pages.admindash'))
 
     else:
         return jsonify({'message': 'Method not allowed'}), 405
