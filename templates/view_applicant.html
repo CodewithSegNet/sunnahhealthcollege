@@ -1,0 +1,372 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <!-- Meta Tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="keywords" content="Braham Health College">
+  <meta name="description" content="Braham Health College Mararaba New Karu Nassarawa">
+  <meta name='copyright' content=''>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  <title>Dashboard - Braham Health College</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+  <!-- Nice Select CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+  <!-- icofont CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+  <!-- Slicknav -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+  <!-- Datepicker CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+  <!-- Magnific Popup CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+
+  <!-- Medipro CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+
+</head>
+
+<body>
+
+
+  <!-- Nav -->
+  <nav class="navbar">
+    <div class="navbar__left">
+     <a  href="{{ url_for('pages.specialadmindashboard') }}"> <button class="btn">Back</button></a> 
+    </div>
+
+
+    <div class="d-flex align-items-center justify-content-between pt-2" >
+      <!-- Buttons for actions -->
+      <form style="background-color: #444;" action="{{ url_for('pages.approve_applicant', email=applicant.email) }}" method="post">
+        <button class="btn" type="submit" name="action" value="approve">Approve</button>
+      </form>
+
+      <form style="background-color: #444;" action="{{ url_for('pages.reject_applicant', email=applicant.email) }}" method="post">
+        <button class="btn" type="submit" name="action" value="reject">Reject</button>
+      </form>
+
+      <form style="background-color: #444;" action="{{ url_for('pages.delete_applicant', email=applicant.email) }}" method="post">
+<button class="btn" type="submit" name="action" value="delete">Delete</button>
+</form>
+
+    </div>
+
+    <div class="navbar__right d-flex align-items-center justify-content-between">
+      <div class="navbar__burger">
+        <i class="icofont-navigation-menu"></i>
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('pages.specialadmindashboard') }}" class="dash-btn sidebar-item"
+            data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+        <li><a class="dash-btn" href="{{ url_for('pages.logoutadmin') }}" data-content=""><i class="icofont-exit"></i>
+            Log Out</a></li>
+      </ul>
+    </aside>
+
+
+    <main class="main-content applicant-dashboard">
+      <div id="dashboard" class="content-section">
+        <div class="dashboard_container container mt-4">
+          {% if user_image %}
+          <img src="{{ url_for('static', filename=user_image) }}" alt="Applicant Photograph" class="img-fluid rounded-circle profile-pic">
+        {% else %}
+          <p>No photograph available</p>
+        {% endif %}
+
+             <div class="row pt-4">
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong>  Form ID:</strong> {{ form.form_number }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong>Full Names: </strong>  {{ form.fullnames }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong>Date Of Birth: </strong>  {{ form.dateofbirth }}</p>
+            <p><strong> State of Origin: </strong> {{ form.stateoforigin }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong>Course: </strong>  {{ form.courses }}</p>
+            <p><strong>Telephone: </strong>  {{ form.phonenumber }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong>Last School attended: </strong>  {{ form.lastschoolattended }}</p>
+            <p><strong>Guardian Name: </strong>  {{ form.parentguardianname }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            {% for form in user_id %}
+            <p><strong> Address:  </strong>{{ form.contactaddress }}</p>
+            <p><strong> Marital Status: </strong> {{ form.maritalstatus }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h5 class="pt-3">Schools Attended</h5>
+
+    <div class="row pt-4">
+        <div class="col-md-6 w-100">
+            {% for form in user_id %}
+            <p><strong> School:</strong>  {{ form.school1 }}</p>
+            <p>From: {{ form.from1 }}</p>
+            <p>To: {{ form.to1 }}</p>
+            <p>Certificate: {{ form.certificate1 }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6 w-100">
+            {% for form in user_id %}
+            <p><strong> School:</strong>  {{ form.school2 }}</p>
+            <p>From: {{ form.from2 }}</p>
+            <p>To: {{ form.to2 }}</p>
+            <p>Certificate: {{ form.certificate2 }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col-md-6 w-100">
+            {% for form in user_id %}
+            <p><strong> School:  </strong>{{ form.school3 }}</p>
+            <p>From: {{ form.from3 }}</p>
+            <p>To: {{ form.to3 }}</p>
+            <p>Certificate: {{ form.certificate3 }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6 w-100">
+          <p><strong>Admission Status: </strong> {% for form in user_id %} {{ form.admissionstatus }}</p> {% endfor %}
+        </p>
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col-md-12">
+            {% for form in user_id %}
+            <p><strong>Examination:</strong> {{ form.examination }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h5 class="pt-3">Subjects & Grade</h5>
+            {% for form in user_id %}
+           <div class="d-flex align-items-center justify-content-between pt-4">
+                <div class="col-md-8 w-100">
+                  <p><strong>Subject: </strong>  {{ form.subject1 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong>  {{ form.sgrade1 }}</p>
+                </div>
+              </div>
+
+
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p> <strong>Subject:</strong>  {{ form.subject2 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong> Grade:  </strong>{{ form.sgrade2 }}</p>
+                </div>
+              </div>
+
+
+
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p><strong> Subject: </strong> {{ form.subject3 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong>  {{ form.sgrade3 }}</p>
+                </div>
+              </div>
+
+
+
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p><strong> Subject: </strong> {{ form.subject4 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong> {{ form.sgrade4 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p><strong> Subject: </strong> {{ form.subject5 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong> {{ form.sgrade5 }}</p>
+                </div>
+              </div>
+
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p><strong> Subject: </strong> {{ form.subject6 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong> {{ form.sgrade6 }}</p>
+                </div>
+              </div>
+
+
+              <div class="d-flex align-items-center justify-content-between">
+
+                <div class="col-md-8 w-100">
+                  <p><strong> Subject: </strong>{{ form.subject7 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p><strong>Grade: </strong> {{ form.sgrade7 }}</p>
+                </div>
+              </div>
+
+
+
+
+              <div class="row pt-4">
+                <div class="col-md-6">
+                    <h5>Next of Kin</h5>
+                    <p><strong>Name:</strong> {{ form.nextofkinname }}</p>
+                    <p><strong>Address:</strong> {{ form.nextofkinaddress }}</p>
+                    <p><strong>State of Origin:</strong> {{ form.kinstateoforigin }}</p>
+                    <p><strong>Phone Number:</strong> {{ form.nextofkinphonenumber }}</p>
+                </div>
+        
+                <div class="col-md-6">
+                    <h5>Name of Parent/Guardian</h5>
+                    <p><strong>Name:</strong> {{ form.parentguardianname }}</p>
+                    <p><strong>Address:</strong> {{ form.parentguardianaddress }}</p>
+                    <p><strong>Place of Birth:</strong> {{ form.placeofbirthparent }}</p>
+                    <p><strong>State of Origin:</strong> {{ form.parentstateoforigin }}</p>
+                    <p><strong>Phone Number:</strong> {{ form.parentguardianphonenumber }}</p>
+                </div>
+            </div>
+        
+
+            <div class="row pt-4">
+              <div class="col-md-6">
+                  <h5>Sponsorship</h5>
+                  <p><strong>Type:</strong> {{ form.sponsorship }}</p>
+                  <p><strong>Sponsor Name:</strong> {{ form.sponsorname }}</p>
+                  <p><strong>Sponsor Address:</strong> {{ form.sponsoraddress }}</p>
+              </div>
+      
+              <div class="col-md-6">
+                  <h5>Declaration</h5>
+                  <p><strong>Responsible Party:</strong> {{ form.responsibleparty }}</p>
+                  <p><strong>Convicted:</strong> {{ form.convicted }}</p>
+              </div>
+          </div>
+            {% endfor %}
+        </div>
+
+        
+        
+
+        
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <!-- jquery Min JS -->
+  <!-- Include jQuery before other scripts using it -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+  <!-- jquery Min JS -->
+  <!-- Include jQuery before other scripts using it -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+  <!-- Include your other scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+  <!-- ... other scripts ... -->
+
+  <!-- Bootstrap JS -->
+  <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <!-- Your custom scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <!-- ... other custom scripts ... -->
+
+</body>
+
+</html>

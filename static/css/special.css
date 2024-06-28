@@ -1,0 +1,22 @@
+html,body{
+    overflow-x: hidden;
+}
+
+.card-credential{
+    display: flex;
+    flex-direction: row;
+    padding-left: 4rem;
+}
+
+input[type="submit"]:hover {
+    background-color: #7ca53f;
+}
+
+form.approver {
+    padding-right: 0;
+    background-color: none;
+}
+
+.applicant-font{
+    font-size: 1.5rem;
+}

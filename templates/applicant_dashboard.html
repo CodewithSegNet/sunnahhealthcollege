@@ -1,0 +1,266 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <!-- Meta Tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="keywords" content="Braham Health College">
+  <meta name="description" content="Braham Health College Mararaba New Karu Nassarawa">
+  <meta name='copyright' content=''>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  <title>Dashboard - Braham Health College</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+  <!-- Nice Select CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+  <!-- icofont CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+  <!-- Slicknav -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+  <!-- Datepicker CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+  <!-- Magnific Popup CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+
+  <!-- Medipro CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/special.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="navbar">
+    <div class="navbar__left">
+      <img src="{{ user_image }}" alt="Applicant Photograph">
+    </div>
+
+    <div>
+      <p style="color: #fff;"><span style="color: green;"> Admission Status: </span>{% for form in user_id %} {{ form.admissionstatus }}</p> {% endfor %}
+      </p>
+    </div>
+
+    <div class="navbar__right d-flex align-items-center justify-content-between">
+      <div class="navbar__burger">
+        <i class="icofont-navigation-menu"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" class="dash-btn sidebar-item {{ 'active' if active_section == 'dashboard' else '' }}"
+            data-content="dashboard"><i class="icofont-home"></i> Dashboard</a></li>
+        <li><a class="dash-btn" href="{{ url_for('pages.logoutadmin') }}" data-content=""><i class="icofont-exit"></i>
+            Log Out</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content applicant-dashboard">
+      <div id="dashboard" class="content-section">
+        <div class="dashboard_container container pl-5 mt-4">
+          <div class="row">
+            <div class="admin_board">
+              <h1 class="applicant-font pb-3">Welcome to the Applicant Dashboard</h1>
+
+              <!-- Display Applicant Image -->
+              {% if applicant_image %}
+              <img src="{{ url_for('static', filename=applicant_image) }}" alt="Applicant Image"
+                class="img-fluid rounded-circle profile-pic">
+              {% else %}
+              <p>No image available</p>
+              {% endif %}
+
+
+              {% for form in user_id %}
+
+              <div class="row pt-4">
+                <div class="col-md-6">
+                  <p>Form ID: {{ form.form_number }}</p>
+                </div>
+
+                <div class="col-md-6">
+                  <p>Full Names: {{ form.fullnames }}</p>
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-md-6">
+                  <p>Date Of Birth: {{ form.dateofbirth }}</p>
+                  <p>State of Origin: {{ form.stateoforigin }}</p>
+                </div>
+
+                <div class="col-md-6">
+                  <p>Course: {{ form.courses }}</p>
+                  <p>Telephone: {{ form.phonenumber }}</p>
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-md-6">
+                  <p>Last School attended: {{ form.lastschoolattended }}</p>
+                  <p>Guardian Name: {{ form.parentguardianname }}</p>
+                </div>
+
+                <div class="col-md-6">
+                  <p>Address: {{ form.contactaddress }}</p>
+                  <p>Marital Status: {{ form.maritalstatus }}</p>
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-md-6 w-100">
+                  <p>School: {{ form.school1 }}</p>
+                  <p>From: {{ form.from1 }}</p>
+                  <p>To: {{ form.to1 }}</p>
+                  <p>Certificate: {{ form.certificate1 }}</p>
+                </div>
+
+                <div class="col-md-6 w-100">
+                  <p>School: {{ form.school2 }}</p>
+                  <p>From: {{ form.from2 }}</p>
+                  <p>To: {{ form.to2 }}</p>
+                  <p>Certificate: {{ form.certificate2 }}</p>
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-md-12 w-100">
+                  <p>School: {{ form.school3 }}</p>
+                  <p>From: {{ form.from3 }}</p>
+                  <p>To: {{ form.to3 }}</p>
+                  <p>Certificate: {{ form.certificate3 }}</p>
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-md-12">
+                  <p><strong>Examination:</strong> {{ form.examination }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between pt-4">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject1 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade1 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject2 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade2 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject3 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade3 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject4 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade4 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject5 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade5 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject6 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade6 }}</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-8 w-100">
+                  <p>Subject: {{ form.subject7 }}</p>
+                </div>
+
+                <div class="col-md-4 w-100">
+                  <p>Grade: {{ form.sgrade7 }}</p>
+                </div>
+              </div>
+
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- jquery Min JS -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+  <!-- Include your other scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <!-- Your custom scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+</html>

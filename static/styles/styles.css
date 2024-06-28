@@ -14,7 +14,8 @@ body {
     height: 100vh;
     background-color: #f4f4f4;
   }
-  
+
+
 
   
   h2 {
@@ -22,8 +23,9 @@ body {
   }
   
   .group {
-    margin-bottom: 15px;
+    margin-bottom: 6px;
   }
+
 
 p{
     padding-bottom: 0.8rem;
@@ -45,11 +47,15 @@ p{
     cursor: pointer;
   }
   
-  .forgot-password {
+  .forgot-password{
     text-decoration: none;
     color: #007bff;
     display: block;
     margin-top: 10px;
+  }
+
+  a.forgot-password:visited{
+    color: #007bff;
   }
   
   .forgot-password:hover {
@@ -61,13 +67,7 @@ p{
 
 /* Your existing CSS styles */
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 80%;
-  }
+
   
   .side-by-side {
     display: flex;
@@ -101,19 +101,33 @@ p{
     width: 50px;
   }
 
+
+ 
+
   .home{
     width: 100%;
     display: flex;
     text-align: center;
     align-items: center;
+    justify-content: space-around;
   }
 
 
   .home a{
-    width: 100%;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
+    text-decoration: underline;
   }
 
+  
+  
+  .home a:hover{
+    color: #c9a768;
+    text-decoration: underline;
+  }
+
+  .larger-icon {
+    font-size: 20px; 
+}

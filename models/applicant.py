@@ -18,6 +18,7 @@ class Applicant(db.Model):
     password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    is_paid = db.Column(db.Boolean, default=datetime.utcnow)
     
     # Relationship with Admission form
     applicant_number = db.relationship('AdmissionForm', backref='applicants')

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 # Import
-from models.course_model import Course
-from models.department_model import Department
-from models.image import Image
+from models import Course
+from models import Department
+from models import Image
 from app import db
 from datetime import datetime
 import re

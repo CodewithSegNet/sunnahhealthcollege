@@ -906,6 +906,11 @@ body{
 .fun-facts{
 	position:relative;
 }
+
+.number {
+    display: flex;
+  }
+
 .fun-facts.section{
 	padding:120px 0;
 }
@@ -1764,6 +1769,24 @@ body{
 .team .section-title p{
 	color:#fff;
 }
+
+.register a{
+    color: blue;
+  }
+
+  .form-box{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .success_link:hover{
+	color: #c9a768;
+
+  }
+
+  .register a:hover{
+    color: #c9a768;
+  }
+
 .team .single-team {
 	background: #fff;
 	-webkit-transition: all 0.3s ease;

@@ -1,0 +1,921 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Braham Health College">
+		<meta name="description" content="Braham Health College Mararaba New Karu Nassarawa">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+        <title>Application Form - Braham Health College</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png')}}">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css')}}">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/icofont.css')}}">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css')}}">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/appform.css')}}">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}">
+		
+    </head>
+<body>
+    <div class="form-container">
+        <form id="admissionForm" class="form-base fade-in-alt" action="/admission_form" method="post" enctype="multipart/form-data">
+            <div class="formImage">
+                <img src="{{ user_image }}" alt="form image" class="round">
+
+            </div>
+            <h2 class="text-center">ADMISSION FORM</h2>
+            <p class="text-center pb-5">Applicant Data</p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="fullnames">Full Names *</label>
+                        <input type="text" id="fullnames" name="fullnames" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contactaddress">Contact Address *</label>
+                        <input type="text" id="contactaddress" name="contactaddress" required>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="maritalstatus">Marital Status *</label>
+                        <select id="maritalstatus" name="maritalstatus" class="d-flex align-items-center justify-content-center text-center" required>
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="single"> single </option>
+                            <option value="married"> married </option>
+                        </select>
+                    </div>
+    
+        
+         
+      
+                <div class="col-md-6">
+                    <label for="stateoforigin">State of Origin *</label>
+                    <select id="stateoforigin" name="stateoforigin" required>
+                        <option value="" disabled selected>Select State</option>
+                        <option value="Abia">Abia</option>
+                        <option value="Adamawa">Adamawa</option>
+                        <option value="Akwa Ibom">Akwa Ibom</option>
+                        <option value="Anambra">Anambra</option>
+                        <option value="Bauchi">Bauchi</option>
+                        <option value="Bayelsa">Bayelsa</option>
+                        <option value="Benue">Benue</option>
+                        <option value="Borno">Borno</option>
+                        <option value="Cross River">Cross River</option>
+                        <option value="Delta">Delta</option>
+                        <option value="Ebonyi">Ebonyi</option>
+                        <option value="Edo">Edo</option>
+                        <option value="Ekiti">Ekiti</option>
+                        <option value="Enugu">Enugu</option>
+                        <option value="Gombe">Gombe</option>
+                        <option value="Imo">Imo</option>
+                        <option value="Jigawa">Jigawa</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Katsina">Katsina</option>
+                        <option value="Kebbi">Kebbi</option>
+                        <option value="Kogi">Kogi</option>
+                        <option value="Kwara">Kwara</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Nasarawa">Nasarawa</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Ogun">Ogun</option>
+                        <option value="Ondo">Ondo</option>
+                        <option value="Osun">Osun</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Plateau">Plateau</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="Sokoto">Sokoto</option>
+                        <option value="Taraba">Taraba</option>
+                        <option value="Yobe">Yobe</option>
+                        <option value="Zamfara">Zamfara</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+            
+                <div class="col-md-6">
+                    <label for="emailaddress">Email Address *</label>
+                    <input type="email" id="emailaddress" name="emailaddress" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="dateofbirth">Date of Birth *</label>
+                    <input type="date" id="dateofbirth" name="dateofbirth" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="lastschoolattended">Last School Attended *</label>
+                    <input type="text" id="lastschoolattended" name="lastschoolattended" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="phonenumber">Phone Numbers *</label>
+                    <input type="text" id="phonenumber" name="phonenumber" required>
+                </div>
+            </div>
+
+
+            <div class="pt-3">
+                <h3 class="">Courses</h3>
+        
+
+                <div class="d-flex pt-3 align-items-center justify-content-between w-100">
+                    <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+                        <div class="col-md-12">
+                            <select id="courses" name="courses">
+                                <option value="" disabled selected>Select Course</option>
+                                <option value="Community Health Extension">Community Health Extension Worker (CHEW)</option>
+                                <option value="Pharmacy Technician">Pharmacy Technician</option>
+                                <option value="Medical Laboratory Technician">Medical Laboratory Technician (MLT)</option>
+                            </select>
+                        </div>
+                      
+                        
+                    </div>
+           
+                </div>
+            </div>
+
+
+            <div class="pt-3">
+                <h3 class="pb-2">Next of Kin</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="nextofkinname">Name:</label>
+                        <input type="text" id="nextofkinname" name="nextofkinname" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nextofkinaddress">Address:</label>
+                        <input type="text" id="nextofkinaddress" name="nextofkinaddress" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="kinstateoforigin">State of Origin *</label>
+                        <select id="kinstateoforigin" name="kinstateoforigin" required>
+                            <option value="" disabled selected>Select State</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Adamawa">Adamawa</option>
+                            <option value="Akwa Ibom">Akwa Ibom</option>
+                            <option value="Anambra">Anambra</option>
+                            <option value="Bauchi">Bauchi</option>
+                            <option value="Bayelsa">Bayelsa</option>
+                            <option value="Benue">Benue</option>
+                            <option value="Borno">Borno</option>
+                            <option value="Cross River">Cross River</option>
+                            <option value="Delta">Delta</option>
+                            <option value="Ebonyi">Ebonyi</option>
+                            <option value="Edo">Edo</option>
+                            <option value="Ekiti">Ekiti</option>
+                            <option value="Enugu">Enugu</option>
+                            <option value="Gombe">Gombe</option>
+                            <option value="Imo">Imo</option>
+                            <option value="Jigawa">Jigawa</option>
+                            <option value="Kaduna">Kaduna</option>
+                            <option value="Kano">Kano</option>
+                            <option value="Katsina">Katsina</option>
+                            <option value="Kebbi">Kebbi</option>
+                            <option value="Kogi">Kogi</option>
+                            <option value="Kwara">Kwara</option>
+                            <option value="Lagos">Lagos</option>
+                            <option value="Nasarawa">Nasarawa</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Ogun">Ogun</option>
+                            <option value="Ondo">Ondo</option>
+                            <option value="Osun">Osun</option>
+                            <option value="Oyo">Oyo</option>
+                            <option value="Plateau">Plateau</option>
+                            <option value="Rivers">Rivers</option>
+                            <option value="Sokoto">Sokoto</option>
+                            <option value="Taraba">Taraba</option>
+                            <option value="Yobe">Yobe</option>
+                            <option value="Zamfara">Zamfara</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nextofkinphonenumber">Phone Number:</label>
+                        <input type="tel" id="nextofkinphonenumber" name="nextofkinphonenumber" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-3"> 
+
+                <h3 class="pb-2">Guardians</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="parentguardianname">Name:</label>
+                        <input type="text" id="parentguardianname" name="parentguardianname" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="parentguardianname">Address:</label>
+                        <input type="text" id="" name="parentguardianaddress" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                        <div class="col-md-6">
+                            <label for="placeofbirthparent">Place of birth: </label>
+                            <select id="placeofbirthparent" name="placeofbirthparent" required>
+                                <option value="" disabled selected>Select State</option>
+                                <option value="Abia">Abia</option>
+                                <option value="Adamawa">Adamawa</option>
+                                <option value="Akwa Ibom">Akwa Ibom</option>
+                                <option value="Anambra">Anambra</option>
+                                <option value="Bauchi">Bauchi</option>
+                                <option value="Bayelsa">Bayelsa</option>
+                                <option value="Benue">Benue</option>
+                                <option value="Borno">Borno</option>
+                                <option value="Cross River">Cross River</option>
+                                <option value="Delta">Delta</option>
+                                <option value="Ebonyi">Ebonyi</option>
+                                <option value="Edo">Edo</option>
+                                <option value="Ekiti">Ekiti</option>
+                                <option value="Enugu">Enugu</option>
+                                <option value="Gombe">Gombe</option>
+                                <option value="Imo">Imo</option>
+                                <option value="Jigawa">Jigawa</option>
+                                <option value="Kaduna">Kaduna</option>
+                                <option value="Kano">Kano</option>
+                                <option value="Katsina">Katsina</option>
+                                <option value="Kebbi">Kebbi</option>
+                                <option value="Kogi">Kogi</option>
+                                <option value="Kwara">Kwara</option>
+                                <option value="Lagos">Lagos</option>
+                                <option value="Nasarawa">Nasarawa</option>
+                                <option value="Niger">Niger</option>
+                                <option value="Ogun">Ogun</option>
+                                <option value="Ondo">Ondo</option>
+                                <option value="Osun">Osun</option>
+                                <option value="Oyo">Oyo</option>
+                                <option value="Plateau">Plateau</option>
+                                <option value="Rivers">Rivers</option>
+                                <option value="Sokoto">Sokoto</option>
+                                <option value="Taraba">Taraba</option>
+                                <option value="Yobe">Yobe</option>
+                                <option value="Zamfara">Zamfara</option>
+                            </select>
+                        </div>
+                    
+                    <div class="col-md-6">
+                        <label for="parentstateoforigin">State of Origin: </label>
+                        <select id="parenttateoforigin" name="parentstateoforigin" required>
+                            <option value="" disabled selected>Select State</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Adamawa">Adamawa</option>
+                            <option value="Akwa Ibom">Akwa Ibom</option>
+                            <option value="Anambra">Anambra</option>
+                            <option value="Bauchi">Bauchi</option>
+                            <option value="Bayelsa">Bayelsa</option>
+                            <option value="Benue">Benue</option>
+                            <option value="Borno">Borno</option>
+                            <option value="Cross River">Cross River</option>
+                            <option value="Delta">Delta</option>
+                            <option value="Ebonyi">Ebonyi</option>
+                            <option value="Edo">Edo</option>
+                            <option value="Ekiti">Ekiti</option>
+                            <option value="Enugu">Enugu</option>
+                            <option value="Gombe">Gombe</option>
+                            <option value="Imo">Imo</option>
+                            <option value="Jigawa">Jigawa</option>
+                            <option value="Kaduna">Kaduna</option>
+                            <option value="Kano">Kano</option>
+                            <option value="Katsina">Katsina</option>
+                            <option value="Kebbi">Kebbi</option>
+                            <option value="Kogi">Kogi</option>
+                            <option value="Kwara">Kwara</option>
+                            <option value="Lagos">Lagos</option>
+                            <option value="Nasarawa">Nasarawa</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Ogun">Ogun</option>
+                            <option value="Ondo">Ondo</option>
+                            <option value="Osun">Osun</option>
+                            <option value="Oyo">Oyo</option>
+                            <option value="Plateau">Plateau</option>
+                            <option value="Rivers">Rivers</option>
+                            <option value="Sokoto">Sokoto</option>
+                            <option value="Taraba">Taraba</option>
+                            <option value="Yobe">Yobe</option>
+                            <option value="Zamfara">Zamfara</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="parentguardianphonenumber">Phone Number:</label>
+                        <input type="tel" id="parentguardianphonenumber" name="parentguardianphonenumber" required>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            
+
+            <div class="pt-3">
+           
+
+<h3 class="text-center pb-2">School Attended with Dates and Qualification Obtained</h3>
+<table class="text-center pt-2">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>SCHOOL</th>
+            <th>FROM</th>
+            <th>TO</th>
+            <th>CERTIFICATE OBTAINED</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>1.</td>
+            <td><input type="text" name="school1" required></td>
+            <td><input type="date" name="from1" required></td>
+            <td><input type="date" name="to1" required></td>
+            <td>
+                <select name="certificate1" required>
+                    <option value="" disabled selected>Select Certificate</option>
+                    <option value="Primary School Certificate">Primary School Certificate</option>
+                    <option value="JSSCE">JSSCE</option>
+                    <option value="SSCE">SSCE</option>
+                    <option value="GCE">GCE</option>
+                    <option value="WAEC">WAEC</option>
+                    <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td><input type="text" name="school2" required></td>
+            <td><input type="date" name="from2" required></td>
+            <td><input type="date" name="to2" required></td>
+            <td>
+                <select name="certificate2" required>
+                    <option value="" disabled selected>Select Certificate</option>
+                    <option value="Primary School Certificate">Primary School Certificate</option>
+                    <option value="JSSCE">JSSCE</option>
+                    <option value="SSCE">SSCE</option>
+                    <option value="GCE">GCE</option>
+                    <option value="WAEC">WAEC</option>
+                    <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td><input type="text" name="school3" required></td>
+            <td><input type="date" name="from3" required></td>
+            <td><input type="date" name="to3" required></td>
+            <td>
+                <select name="certificate3" required>
+                    <option value="" disabled selected>Select Certificate</option>
+                    <option value="Primary School Certificate">Primary School Certificate</option>
+                    <option value="JSSCE">JSSCE</option>
+                    <option value="SSCE">SSCE</option>
+                    <option value="GCE">GCE</option>
+                    <option value="WAEC">WAEC</option>
+                    <option value="NECO">NECO</option>
+                    <option value="NECO">NABTEB</option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+            </div>
+
+            <div class="pt-3">
+<h3 class="text-center">Detailed Results</h3>
+<div class="pb-3">
+<h6>Examinations</h6>
+<div class="d-flex align-items-center text-center justify-content-between w-50">
+    <div class="checked">
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="ssce">SSCE</label>
+            <input type="checkbox" id="examination" name="examination" value="SSCE">
+        </div>
+    </div>
+    <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="gce">GCE</label>
+            <input type="checkbox" id="examination" name="examination" value="GCE">
+        </div>
+    </div>
+    <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="waec">WAEC</label>
+            <input type="checkbox" id="examination" name="examination" value="WAEC">
+        </div>
+    </div>
+    <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="neco">NECO</label>
+            <input type="checkbox" id="examination" name="examination" value="NECO">
+        </div>
+    </div>
+
+    <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <label for="neco">NABTEB</label>
+            <input type="checkbox" id="examination" name="examination" value="NABTEB">
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+<table class="text-center pt-3 text-center">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>SUBJECTS</th>
+            <th>GRADE</th>
+            <th>S/N</th>
+            <th>SUBJECTS</th>
+            <th>GRADE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1.</td>
+            <td>
+                <select name="subject1" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade1" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+            <td>6.</td>
+            <td>
+                <select name="subject6" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade6" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td>
+                <select name="subject2" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade2" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+            <td>7.</td>
+            <td>
+                <select name="subject7" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade7" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td>
+                <select name="subject3" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade3" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+        
+      
+         
+        </tr>
+        <tr>
+            <td>4.</td>
+            <td>
+                <select name="subject4" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade4" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>5.</td>
+            <td>
+                <select name="subject5" required>
+                    <option value="" disabled selected>Select Subject</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Geography">Geography</option>
+                    <option value="Economics">Economics</option>
+                    <option value="History">History</option>
+                    <option value="Government">Government</option>
+                    <option value="Agricultural Science">Agricultural Science</option>
+                    <option value="Commerce">Commerce</option>
+                    
+                </select>
+            </td>
+      
+            <td>
+                <select name="sgrade5" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="E">F</option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+            </div>
+
+<div class="text-center">
+<h3 class="pb-3">National Diploma Detailed Result</h3>
+<table>
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>SUBJECTS</th>
+            <th>GRADE</th>
+            <th>S/N</th>
+            <th>SUBJECTS</th>
+            <th>GRADE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1.</td>
+            <td><input type="text" name="national_diploma_subject_1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade1" placeholder="OPTIONAL"></td>
+            <td>4.</td>
+            <td><input type="text" name="national_diploma_subject_2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade2" placeholder="OPTIONAL"></td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td><input type="text" name="national_diploma_subject_3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade3" placeholder="OPTIONAL"></td>
+            <td>5.</td>
+            <td><input type="text" name="national_diploma_subject_4" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade4" placeholder="OPTIONAL"></td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td><input type="text" name="national_diploma_subject_5" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade5" placeholder="OPTIONAL"></td>
+            <td>6.</td>
+            <td><input type="text" name="national_diploma_subject_6" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="grade6" placeholder="OPTIONAL"></td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+
+          <div class="text-center">
+<h3 class="pb-3">Record of Employment</h3>
+<table>
+    <thead>
+        <tr>
+            <th>NAME OF SECTOR</th>
+            <th>POST HELD</th>
+            <th>DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" name="employmentSector1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld1" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate1" placeholder="OPTIONAL"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="employmentSector2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld2" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate2" placeholder="OPTIONAL"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="employmentSector3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="postHeld3" placeholder="OPTIONAL"></td>
+            <td><input type="text" name="employmentDate3" placeholder="OPTIONAL"></td>
+        </tr>
+    </tbody>
+</table>
+          </div>
+
+
+
+
+          <div>
+            <h3 class="pb-2">List of Credentials</h3>
+            <ol>
+                <li><input type="text" name="credential1" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential2" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential3" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential4" placeholder="OPTIONAL"></li>
+                <li><input type="text" name="credential5" placeholder="OPTIONAL"></li>
+            </ol>
+
+          </div>
+
+
+
+
+            <div class="pt-3">
+<h3 class="pb-2">Sponsorship</h3>
+<div>
+    <div>
+        <label>A. Will you be on any sponsorship during your study? </label>
+        <div class="d-flex align-items-left justify-content-left w-30 text-left">
+            <div class="d-flex align-items-left justify-content-between w-0 text-left">
+                <label for="sponsorship">Yes</label>
+                <input type="checkbox" id="sponsorship" name="sponsorship" value="Yes" >
+            </div>
+          
+
+            <div class="d-flex align-items-left justify-content-between w-0 text-left">
+                <label for="sponsorship">No</label>
+                <input type="checkbox" id="sponsorship" name="sponsorship" value="No" >
+            </div>
+        
+
+        </div>
+    </div>
+   
+</div>
+
+<div id="sponsorDetails" >
+    <label class="pt-3">B. If yes, name your sponsor and address:</label>
+    <input class="mb-3" type="text" id="sponsorname" name="sponsorname" placeholder="Name">
+    <input type="text" id="sponsoraddress" name="sponsoraddress" placeholder="Address">
+</div>
+
+<label class="pt-3">C. If your answer is no, who will be responsible for your studies:</label>
+<input type="text" id="responsibleparty" name="responsibleparty">
+
+<label class="pt-3">D. Please attach your photograph (Image should not exceed 1mb):</label>
+<input type="file" id="photograph" name="photograph" accept="image/*">
+
+
+<div class="pt-3">
+    <label>E. Have you ever been convicted by any court law? </label>
+    <div class="d-flex align-items-center justify-content-between w-30">
+        <div>
+            <div class="d-flex align-items-center justify-content-between w-0">
+                <label for="convicted">Yes</label>
+                <input type="checkbox" id="convicted" name="convicted" value="Yes" >
+            </div>
+    
+            <div class="d-flex align-items-center justify-content-between w-0">
+                <label for="convicted">No</label>
+                <input type="checkbox" id="convicted" name="convicted" value="No" >
+            </div>
+        </div>
+    </div>
+    
+</div>
+            </div>
+
+
+            <div class="pt-4">
+<h3 class="pb-3">Sponsorship Declaration</h3>
+<div>
+    <label for="sponsorshipDeclaration">I hereby declare that:</label>
+</div>
+
+<div class="d-flex align-items-left justify-content-between w-100 text-left">
+        
+    <div class="d-flex align-items-center justify-content-left">
+        <label for="declarationparta">a. The particulars given on this form are to the best of my knowledge correct.</label>
+        <input type="radio" style="width: 2%;" id="declarationparta" name="declarationparta" value="The particulars given on this form are to the best of my knowledge correct" required>
+
+    </div>
+            </div>
+
+
+            
+<div class="d-flex align-items-left justify-content-between w-100 text-left">
+        
+    <div class="d-flex align-items-center justify-content-left">
+        <label for="declarationpartb">b. If admitted, I shall regard myself bound by the rules and regulations of the institution.</label>
+        <input type="radio" style="width: 2%;" id="declarationpartb" name="declarationpartb" value="If admitted, I shall regard myself bound by the rules and regulations of the institution" required>
+
+    </div>
+            </div>
+
+
+            
+            
+<div class="d-flex align-items-left justify-content-between w-100 text-left">
+        
+    <div class="d-flex align-items-center justify-content-left">
+        <label for="declarationpartc">c. If at any time the school is reasonably satisfied that any of the information in this form is false or incorrect, I will be required to withdraw from the school or liable to prosecution or both.</label>
+        <input type="radio" style="width: 2%;" id="declarationpartc" name="declarationpartc" value="If at any time the school is reasonably satisfied that any of the information in this form is false or incorrect, I will be required to withdraw from the school or liable to prosecution or both." required>
+
+    </div>
+            </div>
+            </div>
+
+
+<div class="col-md-12 text-center mb-4 mt-4">
+    <input type="submit" value="SUBMIT" id="submitBtn">
+</div>
+            </div>
+
+            
+        </form>
+    </div>
+
+
+    <!-- jquery Min JS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.0.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/easing.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/colors.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slicknav.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tilt.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/steller.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -2,13 +2,14 @@
 
 # Import
 from flask import Blueprint, request, jsonify, session, redirect, url_for, render_template
-from models.student_model import Student
-from models.department_model import Department
-from models.semester import Semester
-from models.course_model import Course
-from models.admin import Admin
-from models.applicant import Applicant
-from models.special import Specialadmin
+from models import Student, Department, Semester, ContactMessage, Course, Applicant, Specialadmin
+from models import Department
+from models import Semester
+from models import Course
+from models import Admin
+from models import Applicant
+from models import Image
+from models import Specialadmin
 import json
 from app import db
 from datetime import datetime
@@ -22,8 +23,7 @@ from sqlalchemy.exc import SQLAlchemyError
 user_bp = Blueprint('user', __name__)
 
 
-    
-
+# /****************************************** COURSES ************************************************/
 
 
 def assign_courses(user, department_name, department_level, semester_name):
@@ -418,9 +418,14 @@ def assign_courses(user, department_name, department_level, semester_name):
             user.courses.extend([course1, course2, course3, course4, course5, course6])
 
 
+# /****************************************** END OF COURSES ************************************************/
 
 
 
+
+
+
+# /****************************************** STUDENTS ROUTES ************************************************/
 
 
 def add_courses_to_user(user, courses_data):
@@ -485,13 +490,16 @@ def get_student_info():
             }
 
         if student.images:
-            student_info['images'] = [
-                {
-                    'image_path': image.image_data.hex(),
-                    'mimetype': 'image/jpeg'
-                }
-                for image in student.images
-            ]
+                latest_image = Image.query.filter_by(student_admission_number=student.admission_number).order_by(Image.created_at.desc()).first()
+                if latest_image:
+                    student_info['images'] = [
+                        {
+                            'image_path': latest_image.image_data,
+                            'mimetype': 'image/jpeg'
+                        }
+                    ]
+                else:
+                    student_info['images'] = []
 
         if student.courses:
             student_info['courses'] = [
@@ -526,8 +534,12 @@ def get_student_info():
     
 
 
+# /****************************************** END OF STUDENTS ************************************************/
 
 
+
+
+# /****************************************** ADMINS ROUTES ************************************************/
 
 
 @user_bp.route('/adminregister', methods=['POST'])
@@ -606,7 +618,13 @@ def specialadminreg():
 
 
 
+# /****************************************** END OF ADMINS ROUTES ************************************************/
 
+
+
+
+
+# /****************************************** REGISTERS ROUTES ************************************************/
 
 
 @user_bp.route('/register', methods=['POST'])
@@ -699,6 +717,15 @@ def registration():
 
 
 
+# /****************************************** ENDS OF REGISTERS ROUTES ************************************************/
+
+
+
+
+
+
+
+# /****************************************** UPDATES ROUTES ************************************************/
 
 
 
@@ -765,13 +792,14 @@ def update_password():
         # Commit changes to the database
         db.session.commit()
 
-        return redirect(url_for('pages.admin'))
+        return redirect(url_for('pages.admindash'))
 
     else:
         return jsonify({'message': 'Method not allowed'}), 405
 
 
 
+# /****************************************** END OF UPDATES ROUTES ************************************************/
 
 
 

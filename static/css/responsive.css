@@ -1,10 +1,16 @@
-/* html,
-body{
-	overflow-x: hidden;
-} */
+
 
 .mobile-btn{
 	display: none;
+}
+
+.mobile-img {
+	display: none;
+}
+
+.mobile-img{
+	max-width: 30%;
+	margin: 0 auto;
 }
 
 .icofont-navigation-menu{
@@ -18,6 +24,21 @@ body{
 	height: 100%;
 }
 
+.card-responsive{
+	display: flex;
+	flex-direction: row;
+}
+
+.dashboard_container{
+	max-width: 1300px;
+	position: relative;
+	padding-bottom: 2rem;
+
+}
+
+.student-card{
+	padding-left: 1rem;
+}
 
 .course_table thead tr th{
 	padding: 0.75rem;	
@@ -101,6 +122,10 @@ body{
 /* Header Sticky */
 .image-container{
 	display: none;
+}
+
+.mobile-img {
+	display: block;
 }
 
 
@@ -255,6 +280,7 @@ body{
 }
 .slider .single-slider{
 	position:relative;
+	background-position: 0;
 }
 .slider .single-slider:before{
 	position:absolute;
@@ -557,11 +583,20 @@ body{
 		}
 
 }
+
+
+
 /* Mobile Screen */
 @media only screen and (max-width: 767px) {
 
 	.table-head{
 		width: 100%;
+	}
+
+	.number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 
@@ -577,6 +612,14 @@ body{
 		width: 100%;
 	}
 
+	
+.card-credential{
+    display: flex;
+    flex-direction: column;
+	padding-left: 2rem;
+
+}
+
 	h6{
 		font-size: 1rem;
 	}
@@ -591,6 +634,11 @@ body{
 		width: 100%;
 		height: 100%;
 	}
+
+
+	  .mobile-img{
+		display: block;
+	  }
 
 	  .table-responsive-991 table,
 	  .table-responsive-991 thead,
@@ -929,6 +977,7 @@ body{
 }
 .slider .single-slider{
 	position:relative;
+	background-position: 0;
 }
 .slider .single-slider:before{
 	position:absolute;
@@ -1368,9 +1417,26 @@ body{
 @media only screen and (max-width: 450px) {
 
 
+	.number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.slider .single-slider{
+		position:relative;
+		background-position: 75%;
+	}
+
+
 	.course_table thead tr th{
 		padding: 0.75rem;	
 	}
+
+	.student-card {
+		padding-left: 0;
+	}
+
 
 	.contact-us .contact-us-form {
 		padding:30px 40px 40px 20px;
@@ -1380,6 +1446,16 @@ body{
 		height: 250px;
 	}
 	
+	.card-credential{
+		display: flex;
+		flex-direction: column;
+		padding-left: 2rem;
+	}
+
+	.card-responsive{
+		flex-direction: column;
+	}
+
 	.course_table tbody tr td{
 		padding: 0.92rem;
 		}
