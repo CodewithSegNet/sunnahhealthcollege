@@ -416,7 +416,7 @@ def admindash():
             # Get image information
             image_info = get_latest_image_info(student_info.get('admission_number'))
 
-        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
+        image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.avif')
 
         form = StudentScoreForm()
 
@@ -477,7 +477,7 @@ def get_latest_image_info(email):
             if image and image.image_data:
                 return {
                     'image_data': image.image_data,
-                    'mimetype': 'image/jpeg',  # Adjust mimetype as per your actual data
+                    'mimetype': 'image/jpeg',
                 }
 
     return None
@@ -556,7 +556,7 @@ def dashboard():
 
       
     
-    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
+    image1 = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.avif')
 
     return render_template('dashboard.html', student=current_user, departments=departments, semesters=semesters, courses=courses, user_image=image1, user_image_path=user_image_path, images=images, os=os)
 
@@ -858,7 +858,7 @@ def applicantboard():
             applicant_image = 'sunnah_college_logo-removebg-preview.png'
         
         # Example default image if applicant_image is None
-        user_image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnah_college_logo-removebg-preview.png')
+        user_image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'sunnahlogo.avif')
 
         # Render the template with the necessary data
         return render_template('applicant_dashboard.html', user=user, user_id=user_id, applicant_image=applicant_image, user_image=user_image)
