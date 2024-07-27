@@ -3,6 +3,7 @@ Flask-SQLAlchemy
 pymysql
 Werkzeug
 pyJWT
+flask_wtf
 Flask-Caching
 python-dotenv
 requests

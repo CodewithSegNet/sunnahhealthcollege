@@ -4,3 +4,7 @@ test/
 myenv/
 *.pyc
 config_setup.py
+purgeCss.py
+stderr.log
+venv/
+tmp/
