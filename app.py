@@ -7,12 +7,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_caching import Cache
 from decouple import config
 from flask_cors import CORS
+from flask_migrate import Migrate
+from flask_compress import Compress
 import os
 
 
 
 # create a sqlalchemy object
 db = SQLAlchemy()
+
 
 # create a cache object
 cache = Cache()
@@ -32,8 +35,12 @@ def create_app():
 
     # Initialize the database with the app
     db.init_app(app)
-
-  
+    
+    # Initialize Flask-Migrate
+    migrate = Migrate(app, db)
+    
+    
+    Compress(app)
 
 
     # secret key from the .env file using python-decouple

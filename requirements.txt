@@ -11,3 +11,5 @@ retrying
 python-decouple
 Flask-cors
 gunicorn
+Flask-Compress
+
