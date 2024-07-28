@@ -15,3 +15,7 @@ purgeCss.py
 safelist.json
 stderr.log
 css_backup
+purgeCss.py
+stderr.log
+venv/
+tmp/
