@@ -4,3 +4,14 @@ test/
 myenv/
 *.pyc
 config_setup.py
+.vscode
+node_modules
+venv
+eslint.config.js
+eslint.config.mjs
+package-lock.json
+package.json
+purgeCss.py
+safelist.json
+stderr.log
+css_backup

@@ -61,7 +61,7 @@ def assign_courses(user, department_name, department_level, semester_name):
             db.session.add_all([course1, course2, course3, course4, course5, course6, course7])
 
             # Assign the courses to the new user
-            user.courses.extend([course1, course2, course3, course4, course5, course6, course7, course8, course9])
+            user.courses.extend([course1, course2, course3, course4, course5, course6, course7])
         
         
         
