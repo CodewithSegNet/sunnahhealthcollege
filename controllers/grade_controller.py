@@ -12,13 +12,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 
+
 # Define student scores
 class StudentScoreForm(FlaskForm):
-    ca_score = IntegerField('CA Score', validators=[DataRequired()])
-    exam_score = IntegerField('Exam Score', validators=[DataRequired()])
-    course_code = StringField('Course code', validators=[DataRequired()])
-    student_id = StringField('Student ID', validators=[DataRequired()])
-    submit = SubmitField('Add Scores')
-
-
-
+    ca_score = IntegerField("CA Score", validators=[DataRequired()])
+    exam_score = IntegerField("Exam Score", validators=[DataRequired()])
+    course_code = StringField("Course code", validators=[DataRequired()])
+    student_id = StringField("Student ID", validators=[DataRequired()])
+    submit = SubmitField("Add Scores")

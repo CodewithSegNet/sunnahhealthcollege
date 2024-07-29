@@ -5,5 +5,5 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-wsgi = imp.load_source('wsgi', 'run.py')
+wsgi = imp.load_source("wsgi", "run.py")
 application = wsgi.create_app()

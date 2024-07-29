@@ -10,9 +10,9 @@ from sqlalchemy.orm import relationship
 
 class AdmissionForm(db.Model):
 
-    __tablename__ = 'admissionforms'
+    __tablename__ = "admissionforms"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=True)
-    form_number = db.Column(db.String(255), db.ForeignKey('applicants.email'))
+    form_number = db.Column(db.String(255), db.ForeignKey("applicants.email"))
     fullnames = db.Column(db.String(100), nullable=True)
     contactaddress = db.Column(db.String(200), nullable=True)
     maritalstatus = db.Column(db.String(50), nullable=True)
@@ -21,8 +21,8 @@ class AdmissionForm(db.Model):
     dateofbirth = db.Column(db.Date, nullable=True)
     lastschoolattended = db.Column(db.String(100), nullable=True)
     phonenumber = db.Column(db.String(20), nullable=True)
-    admissionstatus = db.Column(db.String(20), default='In Progress', nullable=True)
-    
+    admissionstatus = db.Column(db.String(20), default="In Progress", nullable=True)
+
     # Course applying
     courses = db.Column(db.String(255), nullable=True)
 
@@ -38,7 +38,6 @@ class AdmissionForm(db.Model):
     placeofbirthparent = db.Column(db.String(50), nullable=True)
     parentstateoforigin = db.Column(db.String(20), nullable=True)
     parentguardianphonenumber = db.Column(db.String(20), nullable=True)
-
 
     # Schools attended
     school1 = db.Column(db.String(100), nullable=True)
@@ -56,12 +55,8 @@ class AdmissionForm(db.Model):
     to3 = db.Column(db.Date, nullable=True)
     certificate3 = db.Column(db.String(50), nullable=True)
 
-
     # Detailed Results
     examination = db.Column(db.String(10), nullable=True)
-
-
-
 
     subject1 = db.Column(db.String(100), nullable=True)
     sgrade1 = db.Column(db.String(10), nullable=True)
@@ -77,12 +72,6 @@ class AdmissionForm(db.Model):
     sgrade6 = db.Column(db.String(10), nullable=True)
     subject7 = db.Column(db.String(100), nullable=True)
     sgrade7 = db.Column(db.String(10), nullable=True)
-   
-
-
-
-
-
 
     # National Diploma Detailed Result
     national_diploma_subject_1 = db.Column(db.String(100), nullable=True)
@@ -123,22 +112,22 @@ class AdmissionForm(db.Model):
     sponsorname = db.Column(db.String(100), nullable=True)
     sponsoraddress = db.Column(db.String(200), nullable=True)
 
-    responsibleparty = db.Column(db.String (255), nullable=True)
+    responsibleparty = db.Column(db.String(255), nullable=True)
     convicted = db.Column(db.String(255), nullable=True)
     declarationparta = db.Column(db.String(255), nullable=True)
     declarationpartb = db.Column(db.String(255), nullable=True)
     declarationpartc = db.Column(db.String(255), nullable=True)
 
-
-    
     # Relationship with images
-    photograph = db.relationship('FormImage', backref='applicant_number', lazy=True)
+    photograph = db.relationship("FormImage", backref="applicant_number", lazy=True)
 
     # Define the relationship with Applicant
-    applicant = db.relationship('Applicant', back_populates='applicant_number', overlaps="admission_forms, applicant")
-
+    applicant = db.relationship(
+        "Applicant",
+        back_populates="applicant_number",
+        overlaps="admission_forms, applicant",
+    )
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        
